@@ -1,16 +1,27 @@
 import {
+  Badge,
+  Banner,
+  Bubble,
   Button,
   ButtonStack,
+  Card,
+  Chip,
   colors,
   Container,
+  Dialog,
   Grid,
   Ground,
+  IconButton,
+  Media,
+  Skeleton,
+  Spinner,
   Stack,
   Text,
+  TextField,
   type GroundKind,
   type TextRole,
 } from '@metaagent/design-system';
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import styles from './Gallery.module.css';
 import { useI18n } from './i18n';
 
@@ -56,6 +67,65 @@ function EveryButton({ kind }: { kind: GroundKind }) {
         </ButtonStack>
       </Stack>
     </Ground>
+  );
+}
+
+function Choices() {
+  const { t } = useI18n();
+  const [size, setSize] = useState<'S' | 'M' | 'L'>('M');
+  return (
+    <Stack gap="m">
+      <Stack direction="row" gap="xs">
+        <Chip selected={size === 'S'} onClick={() => setSize('S')}>
+          {t('size.small')}
+        </Chip>
+        <Chip selected={size === 'M'} onClick={() => setSize('M')}>
+          {t('size.medium')}
+        </Chip>
+        <Chip selected={size === 'L'} onClick={() => setSize('L')}>
+          {t('size.large')}
+        </Chip>
+        <Chip selected={false} disabled>
+          {t('size.soldOut')}
+        </Chip>
+      </Stack>
+      <Stack direction="row" gap="xs">
+        <Badge>{t('badge.brand')}</Badge>
+        <Badge tone="strong">{t('badge.new')}</Badge>
+      </Stack>
+      <Stack direction="row" gap="xs">
+        <IconButton icon="plus" label={t('action.add')} prominence="primary" />
+        <IconButton icon="minus" label={t('action.remove')} />
+        <IconButton icon="close" label={t('action.close')} prominence="quiet" />
+      </Stack>
+    </Stack>
+  );
+}
+
+function ConfirmDialog() {
+  const { t } = useI18n();
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button icon="check" onClick={() => setOpen(true)}>
+        {t('action.openDialog')}
+      </Button>
+      <Dialog
+        open={open}
+        title={t('dialog.title')}
+        onClose={() => setOpen(false)}
+        actions={
+          <ButtonStack>
+            <Button prominence="secondary" onClick={() => setOpen(false)}>
+              {t('action.cancel')}
+            </Button>
+            <Button onClick={() => setOpen(false)}>{t('action.confirm')}</Button>
+          </ButtonStack>
+        }
+      >
+        <Text>{t('dialog.body')}</Text>
+      </Dialog>
+    </>
   );
 }
 
@@ -123,6 +193,78 @@ export function Gallery() {
 
           <Panel name={t('panel.buttonsOnPage')}>
             <EveryButton kind="plain" />
+          </Panel>
+
+          <Panel name={t('panel.form')}>
+            <Ground className={styles.screen}>
+              <Card as="form">
+                <TextField
+                  label={t('form.nameLabel')}
+                  placeholder={t('form.namePlaceholder')}
+                  hint={t('form.nameHint')}
+                />
+                <TextField
+                  label={t('form.mobileLabel')}
+                  type="tel"
+                  defaultValue="0100"
+                  error={t('form.mobileError')}
+                />
+                <TextField
+                  label={t('form.messageLabel')}
+                  placeholder={t('form.messagePlaceholder')}
+                  multiline
+                />
+                <ConfirmDialog />
+              </Card>
+            </Ground>
+          </Panel>
+
+          <Panel name={t('panel.chat')}>
+            <Ground className={styles.screen}>
+              <Stack gap="s">
+                <Bubble from="self">{t('chat.shopper')}</Bubble>
+                <Bubble from="other">{t('chat.assistant')}</Bubble>
+                <Card as="article">
+                  <Media src="/missing-sample-photo.jpg" alt={t('media.jacket')} ratio="landscape" />
+                  <Stack direction="row" gap="xs">
+                    <Badge>{t('badge.brand')}</Badge>
+                  </Stack>
+                  <Text role="headline" as="h3">
+                    {t('product.name')}
+                  </Text>
+                  <Text role="supporting" tone="accent" as="p">
+                    {format.money(SAMPLE_PRICE_PIASTERS)}
+                  </Text>
+                </Card>
+              </Stack>
+            </Ground>
+          </Panel>
+
+          <Panel name={t('panel.choices')}>
+            <Ground className={styles.screen}>
+              <Choices />
+            </Ground>
+            <Ground kind="plain" className={styles.screen}>
+              <Choices />
+            </Ground>
+          </Panel>
+
+          <Panel name={t('panel.messages')}>
+            <Ground className={styles.screen}>
+              <Stack gap="s">
+                <Banner>{t('message.info')}</Banner>
+                <Banner tone="success">{t('message.success')}</Banner>
+                <Banner tone="error">{t('message.error')}</Banner>
+                <Card>
+                  <Spinner label={t('message.loading')} />
+                  <Stack gap="xs">
+                    <Skeleton shape="block" />
+                    <Skeleton />
+                    <Skeleton />
+                  </Stack>
+                </Card>
+              </Stack>
+            </Ground>
           </Panel>
 
           <Panel name={t('panel.type')}>

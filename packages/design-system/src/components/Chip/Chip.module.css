@@ -1,0 +1,60 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xxs);
+  min-block-size: var(--touch-minimum);
+  min-inline-size: var(--touch-minimum);
+  padding-block: var(--space-xxs);
+  padding-inline: var(--space-m);
+  border: 0;
+  border-radius: var(--radius-action);
+  background: var(--button-secondary-fill);
+  color: var(--button-secondary-label);
+  font-family: var(--type-button-family);
+  font-size: var(--type-supporting-size);
+  font-weight: var(--type-button-weight);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--motion-pop-duration) var(--motion-pop-easing),
+    filter var(--motion-quick-duration) var(--motion-quick-easing);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--button-primary-fill);
+  color: var(--button-primary-label);
+}
+
+@media (hover: hover) {
+  .chip:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+}
+
+.chip:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--ground-text);
+  outline-offset: 2px;
+}
+
+/* Struck through as well as faded, so sold out never depends on color alone. */
+.chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+@media (forced-colors: active) {
+  .chip {
+    border: 1px solid ButtonText;
+  }
+
+  .chip[aria-pressed='true'] {
+    border-width: 3px;
+  }
+}

@@ -11,6 +11,8 @@ export const motion = {
   quick: { durationMs: 200, easing: 'ease-out' },
   /** One turn of a loading spinner. */
   spin: { durationMs: 800, easing: 'linear' },
+  /** One breath of a loading placeholder. It stands still under reduced motion. */
+  pulse: { durationMs: 1500, easing: 'ease-in-out' },
 } as const satisfies Record<string, MotionToken>;
 
 export type MotionName = keyof typeof motion;

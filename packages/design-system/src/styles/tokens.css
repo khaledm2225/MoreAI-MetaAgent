@@ -74,6 +74,8 @@
   --motion-quick-easing: ease-out;
   --motion-spin-duration: 800ms;
   --motion-spin-easing: linear;
+  --motion-pulse-duration: 1500ms;
+  --motion-pulse-easing: ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

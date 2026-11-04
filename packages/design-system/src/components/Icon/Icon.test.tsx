@@ -11,7 +11,7 @@ describe('Icon', () => {
     expect(svg).toHaveAttribute('data-icon', 'trash');
   });
 
-  it.each(['arrowForward', 'arrowBack'] as const)('flips %s for right to left', (name) => {
+  it.each(['arrowForward', 'arrowBack', 'chevronForward', 'chevronBack', 'send'] as const)('flips %s for right to left', (name) => {
     const { container } = render(<Icon name={name} />);
     expect(container.querySelector('svg')).toHaveAttribute('data-mirrored', 'true');
   });
