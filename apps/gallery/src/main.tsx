@@ -25,7 +25,6 @@ createRoot(container).render(
     <I18nProvider
       catalogs={{ ar, en }}
       store={createWebLocaleStore(browserStorage())}
-      languages={navigator.languages}
       root={document.documentElement}
     >
       <Gallery />

@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import { createFormatters, type Formatters } from './format';
-import { directionOf, matchLocale, type Direction, type Locale } from './locale';
+import { DEFAULT_LOCALE, directionOf, type Direction, type Locale } from './locale';
 import type { LocaleStore } from './locale-store';
 import { createTranslator, type Catalog, type Translator } from './translator';
 
@@ -23,8 +23,6 @@ export interface I18nValue<Key extends string> {
 export interface I18nProviderProps<Key extends string> {
   readonly catalogs: Readonly<Record<Locale, Catalog<Key>>>;
   readonly store: LocaleStore;
-  /** The browser's languages, in the person's order. */
-  readonly languages: readonly string[];
   /** The element that carries the page's `lang` and `dir`: the `html` element. */
   readonly root: HTMLElement;
   readonly children: ReactNode;
@@ -34,8 +32,8 @@ export interface I18nProviderProps<Key extends string> {
 export function createI18nContext<Key extends string>() {
   const Context = createContext<I18nValue<Key> | null>(null);
 
-  function I18nProvider({ catalogs, store, languages, root, children }: I18nProviderProps<Key>) {
-    const [locale, setLocaleState] = useState<Locale>(() => store.read() ?? matchLocale(languages));
+  function I18nProvider({ catalogs, store, root, children }: I18nProviderProps<Key>) {
+    const [locale, setLocaleState] = useState<Locale>(() => store.read() ?? DEFAULT_LOCALE);
     const direction = directionOf(locale);
 
     // Before the browser paints, so a page never flashes in the wrong direction.

@@ -5,10 +5,10 @@ export {
   type I18nValue,
 } from './i18n-context';
 export {
+  DEFAULT_LOCALE,
   directionOf,
   isLocale,
   locales,
-  matchLocale,
   tagOf,
   type Direction,
   type Locale,

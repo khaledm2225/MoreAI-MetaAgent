@@ -25,14 +25,14 @@ function Screen() {
   );
 }
 
-function setup({ languages = ['en-US'], saved }: { languages?: string[]; saved?: 'ar' | 'en' } = {}) {
+function setup({ saved }: { saved?: 'ar' | 'en' } = {}) {
   const store = createMemoryLocaleStore();
   if (saved !== undefined) {
     store.write(saved);
   }
   const root = document.createElement('html');
   render(
-    <I18nProvider catalogs={catalogs} store={store} languages={languages} root={root}>
+    <I18nProvider catalogs={catalogs} store={store} root={root}>
       <Screen />
     </I18nProvider>,
   );
@@ -40,19 +40,18 @@ function setup({ languages = ['en-US'], saved }: { languages?: string[]; saved?:
 }
 
 describe('I18nProvider', () => {
-  it('follows the browser language on the first visit', () => {
-    setup({ languages: ['ar-EG'] });
+  it('starts in English on the first visit', () => {
+    const { root } = setup();
+    expect(screen.getByText('Hello')).toBeInTheDocument();
+    expect(screen.getByTestId('details')).toHaveTextContent('en ltr 1,200');
+    expect(root.lang).toBe('en');
+    expect(root.dir).toBe('ltr');
+  });
+
+  it('starts in Arabic for someone who chose it before', () => {
+    const { root } = setup({ saved: 'ar' });
     expect(screen.getByText('أهلا')).toBeInTheDocument();
     expect(screen.getByTestId('details')).toHaveTextContent('ar rtl 1,200');
-  });
-
-  it('prefers what the person chose before', () => {
-    setup({ languages: ['ar-EG'], saved: 'en' });
-    expect(screen.getByText('Hello')).toBeInTheDocument();
-  });
-
-  it('sets the language and direction on the page root', () => {
-    const { root } = setup({ languages: ['ar'] });
     expect(root.lang).toBe('ar');
     expect(root.dir).toBe('rtl');
   });
