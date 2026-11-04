@@ -13,6 +13,10 @@ export const motion = {
   spin: { durationMs: 800, easing: 'linear' },
   /** One breath of a loading placeholder. It stands still under reduced motion. */
   pulse: { durationMs: 1500, easing: 'ease-in-out' },
+  /** The wait between list items popping in, one after another. */
+  stagger: { durationMs: 120, easing: 'linear' },
+  /** One piece of confetti falling. */
+  confetti: { durationMs: 2600, easing: 'ease-in' },
 } as const satisfies Record<string, MotionToken>;
 
 export type MotionName = keyof typeof motion;

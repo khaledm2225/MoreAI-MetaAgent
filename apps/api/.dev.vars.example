@@ -1,0 +1,3 @@
+# Copy to .dev.vars, and add your own key from dev.meta.ai. Never commit .dev.vars.
+MODEL_API_KEY=
+ADMIN_TOKEN=

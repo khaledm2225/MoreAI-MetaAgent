@@ -1,0 +1,38 @@
+import { defineCatalogs } from '@metaagent/i18n';
+
+export const strings = defineCatalogs(
+  {
+    title: 'My cart',
+    subtitle: 'One cart across brands, with one order for each brand.',
+    emptyTitle: 'Your cart is empty',
+    emptyBody: 'Ask MoreAI to find something you like.',
+    openChat: 'Ask MoreAI',
+    size: 'Size {size}',
+    soldOut: 'Sold out. Remove it to continue.',
+    priceChanged: 'The price changed from {price}.',
+    less: 'One less',
+    more: 'One more',
+    quantity: 'Quantity',
+    remove: 'Remove',
+    total: 'Total before delivery',
+    checkout: 'Go to checkout',
+    fixFirst: 'Remove what’s sold out to continue',
+  },
+  {
+    title: 'الأوردر',
+    subtitle: 'أوردر واحد لكل البراندات، وطلب لكل براند.',
+    emptyTitle: 'الأوردر فاضي',
+    emptyBody: 'اطلب من MoreAI يدورلك على حاجة تعجبك.',
+    openChat: 'اسأل MoreAI',
+    size: 'مقاس {size}',
+    soldOut: 'خلصت. امسحها عشان تكمل.',
+    priceChanged: 'السعر اتغير من {price}.',
+    less: 'قلل واحدة',
+    more: 'زوّد واحدة',
+    quantity: 'العدد',
+    remove: 'امسح',
+    total: 'الإجمالي قبل التوصيل',
+    checkout: 'كمل الطلب',
+    fixFirst: 'امسح اللي خلص عشان تكمل',
+  },
+);

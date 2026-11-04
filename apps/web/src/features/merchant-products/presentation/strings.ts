@@ -1,0 +1,36 @@
+import { defineCatalogs } from '@metaagent/i18n';
+
+export const strings = defineCatalogs(
+  {
+    title: 'My products',
+    add: 'Add a product',
+    statusLabel: 'Product status',
+    draft: 'Draft',
+    live: 'Live',
+    hidden: 'Hidden',
+    archived: 'Archived',
+    emptyTitle: 'No products yet',
+    emptyBody: 'Add your first product. The AI reads the photo for you.',
+    emptyStatus: 'Nothing here right now.',
+    hide: 'Hide',
+    show: 'Make live',
+    archive: 'Archive',
+    failed: 'That didn’t save. Please try again.',
+  },
+  {
+    title: 'منتجاتي',
+    add: 'ضيف منتج',
+    statusLabel: 'حالة المنتج',
+    draft: 'مسودة',
+    live: 'شغال',
+    hidden: 'مخفي',
+    archived: 'مؤرشف',
+    emptyTitle: 'لسه مفيش منتجات',
+    emptyBody: 'ضيف أول منتج. الذكاء الاصطناعي هيقرا الصورة ليك.',
+    emptyStatus: 'مفيش حاجة هنا دلوقتي.',
+    hide: 'اخفي',
+    show: 'شغّله',
+    archive: 'أرشف',
+    failed: 'ماتحفظش. جرب تاني لو سمحت.',
+  },
+);

@@ -1,0 +1,10 @@
+.page {
+  padding-block: var(--space-l);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+  margin-block-end: var(--space-l);
+}

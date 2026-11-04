@@ -1,0 +1,1802 @@
+[
+ {
+  "id": "product-1-1",
+  "text": "Black Washed Zip-Up Jacket. An oversized black long-sleeve zip-up jacket in lightweight washed fabric with a pointed shirt collar, full front zip closure, two lower flap pockets with snap buttons, and ribbed knit cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-1-2",
+  "text": "Beige Cropped Fleece Hoodie. A cream-beige pullover hoodie in soft fleece sweatshirt fabric with a relaxed slightly cropped cut, drawstring hood, long sleeves with ribbed cuffs, front kangaroo pocket, and ribbed hem.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-hoodies",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-1-3",
+  "text": "Navy Oversized Crewneck Sweatshirt. Navy blue oversized long-sleeve crewneck sweatshirt in soft sweatshirt knit fabric with dropped shoulders, ribbed round neckline, ribbed cuffs and hem, and a plain front with no graphics.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-1-4",
+  "text": "Olive Cropped Textured Knit Sweater. Olive green cropped long-sleeve crew-neck sweater in soft textured knit fabric with a relaxed fit and ribbed detailing at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-knitwear",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-1-5",
+  "text": "Burgundy Baggy Barrel-Leg Jeans. High-waisted baggy jeans in deep burgundy denim with a loose barrel-leg cut, five-pocket styling, belt loops and a button-front closure.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jeans",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-1-6",
+  "text": "Grey Linen Cropped Pants. Light gray flat-front cropped trousers with a straight tapered cut in a textured linen-like fabric featuring belt loops, slanted side pockets, and a front fly closure.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-pants",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-1-7",
+  "text": "Brown Linen Shirt Dress. A loose oversized brown linen midi shirt dress with a collared neckline, full front button closure, long wide sleeves with cuffs, and two side seam pockets.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-dresses",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-1-8",
+  "text": "Cream Pleated Linen Mini Skirt. Off-white high-waisted pleated mini skirt in textured linen-like fabric with a wide waistband, belt loops, front pleats, side slant pockets, and a visible back zip.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-skirts",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-1-9",
+  "text": "Black Leather Mesh Sneakers. Black low-top lace-up chunky sneaker made of smooth leather overlays and breathable mesh with black laces and a thick textured sole.",
+  "metadata": {
+   "pricePiasters": 125000,
+   "categoryId": "category-shoes",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-1-10",
+  "text": "Beige Canvas Tassel Flap Bag. Small beige rectangular canvas flap bag with rounded corners, front snap-button closure, stitched edging, and gold-tone side clasps with beige tassel pulls.",
+  "metadata": {
+   "pricePiasters": 25000,
+   "categoryId": "category-bags",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-2-1",
+  "text": "Black Two-Button Tailored Jacket. A black single-breasted tailored blazer in smooth matte fabric with notched lapels, two-button front closure, long sleeves, and two front flap pockets.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-2-2",
+  "text": "Burgundy Relaxed Fleece Sweatshirt. A solid burgundy crewneck sweatshirt in a relaxed long-sleeve cut made of soft fleece-like fabric with ribbed detailing at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 35000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-2-3",
+  "text": "Grey Fine Knit Crewneck Sweater. A heather gray long-sleeve crewneck pullover sweater in a regular cut made of fine-knit fabric with ribbed trim at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-knitwear",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-2-4",
+  "text": "Brown Corduroy Straight-Leg Jeans. Brown straight-leg corduroy pants with a high-rise waist, five-pocket styling, front button closure, belt loops, and fine ribbed texture.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-jeans",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-2-5",
+  "text": "Cream Pleated Cotton Pants. Off-white pleated straight tapered trousers in soft cotton fabric with a high waist, single-button closure, belt loops, slanted side pockets, and pressed front creases.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-pants",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-2-6",
+  "text": "Black Cable-Knit Turtleneck Dress. A black long-sleeve turtleneck knit midi sweater dress in chunky cable-knit fabric with vertical cable patterns, ribbed collar, cuffs and hem, and two front patch pockets.",
+  "metadata": {
+   "pricePiasters": 115000,
+   "categoryId": "category-dresses",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-2-7",
+  "text": "Beige Pleated Pocket Midi Skirt. A beige high-waisted midi pencil skirt in smooth cotton-twill-like fabric with front waist pleats, belt loops, slanted side pockets, a single button closure and a front center seam.",
+  "metadata": {
+   "pricePiasters": 35000,
+   "categoryId": "category-skirts",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-2-8",
+  "text": "Navy Knit Shearling Collar Sneakers. Front view of a navy blue low-top lace-up sneaker with a ribbed knit fabric upper, cream faux-shearling collar lining, matching navy laces, and a dark rubber sole.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-shoes",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-2-9",
+  "text": "Olive Pebbled Push-Lock Bag. Olive green structured rectangular top-handle handbag in pebbled leather with a curved front flap and gold-tone push-lock clasp.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-bags",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-2-10",
+  "text": "Burgundy Diamond-Quilted Zip Jacket. A burgundy diamond-quilted zip-front jacket in a relaxed straight cut with a high fuzzy fleece-lined stand collar, long sleeves with ribbed cuffs, and two front flap patch pockets.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-jackets",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-3-1",
+  "text": "Black Cropped Bomber Jacket. Black cropped bomber jacket in smooth lightweight fabric with a stand collar, full-length front zipper, long sleeves with ribbed cuffs, ribbed hem, and two diagonal zippered front pockets.",
+  "metadata": {
+   "pricePiasters": 39900,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-3-2",
+  "text": "Cream Cable Knit Sweater. Off-white relaxed-fit long-sleeve crewneck sweater in soft textured knit fabric with cable-knit detailing on shoulders and sleeves and ribbed neckline, cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-knitwear",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-3-3",
+  "text": "Black Frayed Wide-Leg Jeans. Black high-waisted cropped wide-leg denim jeans with five-pocket styling, button closure, belt loops, and frayed raw hems.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-jeans",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-3-4",
+  "text": "Beige Wide-Leg Cargo Pants. Light beige wide-leg cargo pants in a soft washed cotton fabric with a high elastic waist with drawstring tie and belt loops, pleated front, slanted side pockets, and large flap cargo pockets on both thighs.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-pants",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-3-5",
+  "text": "Navy Linen Button Front Dress. A navy blue short-sleeve mini dress with a square neckline, fitted bodice with waist seam, and center-front button closure made from textured linen fabric.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-dresses",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-3-6",
+  "text": "Olive Cotton Drawstring Skirt. An olive-green loose A-line midi skirt in cotton fabric with an elasticated drawstring waist, soft gathers, and large slanted side pockets.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-skirts",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-3-7",
+  "text": "Burgundy Suede Perforated Sneakers. A burgundy low-top lace-up sneaker made of suede with matching laces, a perforated toe box, and a contrasting off-white rubber sole.",
+  "metadata": {
+   "pricePiasters": 130000,
+   "categoryId": "category-shoes",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-3-8",
+  "text": "Grey Canvas Flap Bag. A washed gray slouchy canvas shoulder tote bag with a relaxed oversized cut, fold-over flap with snap button closure, dual long straps, and side slip pockets.",
+  "metadata": {
+   "pricePiasters": 30000,
+   "categoryId": "category-bags",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-3-9",
+  "text": "Brown Cropped Suede Jacket. A brown cropped suede-textured button-up jacket with a boxy cut, pointed shirt collar, long sleeves with buttoned cuffs, front button closure, and two front flap patch pockets.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-jackets",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-3-10",
+  "text": "Cream Fleece Drawstring Hoodie. Cream off-white pullover hoodie in soft fleece fabric with a relaxed long-sleeve cut featuring a drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-hoodies",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-4-1",
+  "text": "Black Teddy Fleece Zip Jacket. A black full-zip teddy fleece jacket in a relaxed straight cut with a high stand collar, long sleeves, ribbed cuffs and hem, and two front patch pockets.",
+  "metadata": {
+   "pricePiasters": 48500,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-4-2",
+  "text": "Navy High-Rise Straight-Leg Jeans. Dark indigo high-rise straight-leg denim jeans with classic five-pocket styling, belt loops, and front fly closure.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-jeans",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-4-3",
+  "text": "Olive Fleece Drawstring Pants. Olive green fleece jogger sweatpants with a relaxed tapered cut, elastic drawstring waistband, side pockets, and ribbed ankle cuffs.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-pants",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-4-4",
+  "text": "Burgundy Linen Button Shirt Dress. A burgundy long-sleeve midi shirt dress in a lightweight textured linen-like fabric with a relaxed straight cut, featuring a pointed collar, full front button placket, two patch pockets, and buttoned cuffs.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-dresses",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-4-5",
+  "text": "Grey Ribbed Knit Midi Skirt. A light gray high-waisted A-line midi skirt in a fuzzy chunky rib-knit fabric with a wide ribbed elastic waistband and soft gathered vertical pleats.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-skirts",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-4-6",
+  "text": "Brown Canvas Suede Sneakers. Brown low-top lace-up sneaker with canvas and suede upper, suede toe cap, brown laces and eyelets, and thick white midsole with brown rubber outsole.",
+  "metadata": {
+   "pricePiasters": 110000,
+   "categoryId": "category-shoes",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-4-7",
+  "text": "Cream Teddy Sherpa Bag. Off-white square-shaped top-handle handbag in fluffy teddy sherpa fabric with short rounded handles and a gold-tone zip closure on top.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-bags",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-4-8",
+  "text": "Black Single-Button Jacket. Black single-breasted tailored blazer in a soft matte-textured fabric with notched lapels, single-button front closure, long sleeves, a left chest welt pocket and two front flap patch pockets.",
+  "metadata": {
+   "pricePiasters": 110000,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-4-9",
+  "text": "Beige Fluffy Fleece Hoodie. A light beige fluffy fleece pullover hoodie with a relaxed cut, drawstring hood, long sleeves with ribbed cuffs, ribbed hem, and a front kangaroo pocket.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-hoodies",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-4-10",
+  "text": "Navy Fleece Crewneck Sweatshirt. A dark navy blue long-sleeve crewneck sweatshirt in a soft medium-weight knit fleece fabric with a relaxed straight cut, ribbed round neckline, ribbed cuffs and ribbed hem in a plain solid design with no logos.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-5-1",
+  "text": "Burgundy Wide-Leg Denim Jeans. High-waisted burgundy wide-leg denim jeans with a loose full-length straight cut, five-pocket styling, belt loops and a button-front closure.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-jeans",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-5-2",
+  "text": "Grey High-Waisted Cotton Pants. Light gray high-waisted cropped straight-leg trousers in a soft cotton-like fabric with belt loops, single-button closure, front fly, slanted side pockets, and hemmed ankles.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-pants",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-5-3",
+  "text": "Brown Linen Button Shirt Dress. A loose straight-cut chocolate-brown midi shirt dress in lightweight crinkled linen-like fabric with a pointed collar, full front button closure, rolled long sleeves, and two side patch pockets.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-dresses",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-5-4",
+  "text": "Cream Linen Pleated Mini Skirt. An off-white high-waisted straight mini skirt in textured linen fabric with front pleats, slanted side pockets, belt loops, and a single-button fly closure.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-skirts",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-5-5",
+  "text": "Black Mesh Chunky Sneakers. All-black chunky low-top lace-up sneaker with a mixed mesh and suede-like upper with synthetic overlays, featuring black laces, mesh toe and side panels, a padded collar, and a thick sculpted ridged rubber sole.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-shoes",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-5-6",
+  "text": "Beige Leather Flap Bag. A light beige structured rectangular top-handle handbag in smooth leather with a flap front closure, short arched top handle, visible edge stitching, and a small square front clasp.",
+  "metadata": {
+   "pricePiasters": 35000,
+   "categoryId": "category-bags",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-5-7",
+  "text": "Navy Relaxed Button-Front Cotton Jacket. Dark navy relaxed-fit button-front jacket in lightweight cotton fabric with a pointed collar, long sleeves with ribbed cuffs, straight hem, and two slanted front patch pockets.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-jackets",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-5-8",
+  "text": "Olive Cropped Fleece Hoodie. Olive green pullover hoodie in soft sweatshirt fleece with a relaxed cropped cut, featuring a drawstring hood, long sleeves with ribbed cuffs, a front kangaroo pocket, and a ribbed hem.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-hoodies",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-5-9",
+  "text": "Burgundy Oversized Dropped-Shoulder Sweatshirt. A burgundy oversized long-sleeve crewneck sweatshirt in soft sweatshirt fleece fabric with a relaxed dropped-shoulder cut, ribbed round neckline, ribbed cuffs and hem, and a plain solid front with no graphics.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-5-10",
+  "text": "Grey Cropped Knit Sweater. A heather light gray long-sleeve crewneck knit sweater with a relaxed slightly cropped cut featuring ribbed trim at the neckline, hem and cuffs.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-knitwear",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-6-1",
+  "text": "Cream Pleated Cuffed Pants. Off-white high-waisted pleated tapered trousers in a lightweight textured woven fabric with belt loops, front double pleats, pressed front creases, side pockets and turned-up cuffed ankle hems.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-pants",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-6-2",
+  "text": "Black Chunky Ribbed Dress. Black turtleneck long-sleeve knit sweater dress in a straight relaxed mini cut with chunky ribbed fabric, vertical cable-knit details on the front, and ribbed turtleneck collar, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-dresses",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-6-3",
+  "text": "Beige Linen Pleated Skirt. A beige high-waisted A-line midi skirt in textured linen fabric with front pleats, belt loops, a button closure, side pockets, and a center front seam.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-skirts",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-6-4",
+  "text": "Navy Ribbed Knit Sneakers. A navy blue lace-up sneaker with a ribbed knit fabric upper, fuzzy fleece collar lining, bow-tied matching laces, and a chunky textured rubber sole viewed from the front.",
+  "metadata": {
+   "pricePiasters": 115000,
+   "categoryId": "category-shoes",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-6-5",
+  "text": "Olive Pebbled Leather Flap Bag. Olive green structured rectangular pebbled leather flap handbag with a gold-tone push-lock clasp and stitched front pocket.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-bags",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-6-6",
+  "text": "Burgundy Fuzzy Sherpa Zip-Up Jacket. A burgundy fuzzy sherpa zip-up jacket with a collared neckline, long sleeves with ribbed cuffs, ribbed hem, and two front patch pockets.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-jackets",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-6-7",
+  "text": "Grey Soft Fleece Hoodie. A light gray pullover hoodie in soft fleece fabric with a relaxed cut, raglan long sleeves, drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-hoodies",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-6-8",
+  "text": "Brown Brushed Fleece Sweatshirt. A solid chocolate-brown crewneck sweatshirt in a relaxed long-sleeve cut made of soft brushed fleece fabric with a ribbed neckline, cuffs and hem and a plain unprinted front.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-6-9",
+  "text": "Cream Ribbed Fine-Knit Sweater. Cream-colored long-sleeve crewneck sweater with a relaxed fit in a soft fine-knit fabric featuring ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-knitwear",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-6-10",
+  "text": "Black Velvet Straight-Leg Jeans. Black straight-leg five-pocket jeans in a soft velvety fabric with belt loops, button closure, and a fuzzy fleece-like lining visible at the waistband.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jeans",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-7-1",
+  "text": "Navy Linen Button-Front Dress. Navy blue linen-textured two-piece set featuring a short puff-sleeve cropped top with round neckline and front buttons paired with a matching button-front mini skirt with side pockets.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-dresses",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-7-2",
+  "text": "Olive Button-Front Pleated Maxi Skirt. Olive green high-waisted pleated A-line maxi skirt in lightweight cotton fabric with front button closure, belt loops and slanted side pockets.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-skirts",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-7-3",
+  "text": "Burgundy Perforated Suede Sneakers. A burgundy low-top lace-up sneaker in suede and perforated mesh fabric with matching burgundy laces, perforated toe cap, and thick off-white sole.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-shoes",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-7-4",
+  "text": "Grey Wrinkled Canvas Bag. A large light gray slouchy shoulder bag with a soft unstructured rectangular cut made of wrinkled cotton canvas featuring a long wide shoulder strap and an open top.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-bags",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-7-5",
+  "text": "Brown Suede Trucker Jacket. A cropped brown suede trucker jacket with a pointed collar, full front button closure, long sleeves with button cuffs, and two front flap patch pockets.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-jackets",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-7-6",
+  "text": "Cream Oversized Fleece Hoodie. A cream-colored oversized pullover hoodie in soft brushed fleece fabric with a lined drawstring hood, dropped shoulders, a front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-hoodies",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-7-7",
+  "text": "Black Cropped Boxy Sweatshirt. A black cropped crewneck sweatshirt in soft fleece knit with a relaxed boxy cut, long sleeves, and ribbed crew neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 35000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-7-8",
+  "text": "Beige Textured Oversized Sweater. An oatmeal-beige oversized crewneck sweater in soft textured knit with dropped shoulders, long sleeves, and ribbed trim at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-knitwear",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-7-9",
+  "text": "Navy High-Waisted Straight Jeans. Dark indigo blue high-waisted straight-leg cropped denim jeans featuring five-pocket styling with a small coin pocket, belt loops, front button and zip closure, and subtle whiskered fading on the thighs and knees.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-jeans",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-7-10",
+  "text": "Olive Drawstring Wide-Leg Cotton Pants. Olive green loose wide-leg cotton twill pants with a high elastic waistband, front drawstring tie, soft pleats, belt loops, and slanted side pockets.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-pants",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-8-1",
+  "text": "Grey Ribbed Knit Skirt. A light heather gray straight-cut midi skirt in soft ribbed knit fabric with an elasticated waistband and vertical ribbed texture.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-skirts",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-8-2",
+  "text": "Brown Suede Lace-Up Sneakers. Brown low-top lace-up sneaker with round toe in suede fabric featuring tonal criss-cross laces tied in a bow, perforated side panels, stitched toe cap, and matching brown rubber sole.",
+  "metadata": {
+   "pricePiasters": 120000,
+   "categoryId": "category-shoes",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-8-3",
+  "text": "Cream Quilted Faux Fur Bag. Cream-colored puffy quilted top-handle handbag made of soft plush faux-fur fabric with diamond stitching, short padded handles, and a top zipper closure.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-bags",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-8-4",
+  "text": "Black Single-Breasted Tailored Jacket. Black single-breasted tailored blazer in smooth matte fabric with notch lapels, front button closure, two flap hip pockets, and buttoned cuffs.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-8-5",
+  "text": "Beige Fleece Drawstring Hoodie. A light beige pullover hoodie in soft fleece fabric with a relaxed long-sleeve cut, drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-hoodies",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-8-6",
+  "text": "Navy Brushed Fleece Sweatshirt. A navy blue long-sleeve crewneck sweatshirt with a relaxed fit in a soft brushed fleece knit featuring a ribbed neckline, cuffs and hem with a plain unadorned front.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-8-7",
+  "text": "Olive Fuzzy Knit Sweater. Olive green long-sleeve crewneck sweater with a relaxed boxy cut in a textured fuzzy knit fabric featuring ribbed trim at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-knitwear",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-8-8",
+  "text": "Burgundy Slim Straight Jeans. Deep burgundy slim straight-leg denim jeans with classic five-pocket styling, belt loops, front button closure, and visible contrast stitching.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-jeans",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-8-9",
+  "text": "Grey Fleece Drawstring Pants. Heather gray fleece sweatpants with a relaxed tapered cut, elastic drawstring waistband, side slash pockets, and turned-up cuffs at the ankles.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-pants",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-8-10",
+  "text": "Brown Linen Belted Dress. A brown long-sleeve midi shirt dress in a textured linen-like fabric with a pointed collar, full front button closure, self-tie waist belt, two button-flap hip pockets, and buttoned cuffs.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-dresses",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-9-1",
+  "text": "Black Mesh Lace-Up Sneakers. A black low-top lace-up chunky sneaker with a mesh and suede-like fabric upper, rounded toe, black laces through metal eyelets, and a thick sculpted rubber sole.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-shoes",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-9-2",
+  "text": "Beige Pebbled Flap Bag. Small light beige rectangular pebbled-leather crossbody bag with rounded edges, a curved front flap closed by a gold-tone stud button, a front slip pocket and fine edge stitching.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-bags",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-9-3",
+  "text": "Navy Cotton Button Front Jacket. A navy blue relaxed-fit cotton button-up jacket with a point collar, full front button closure, long sleeves with ribbed cuffs, ribbed hem, and two button-flap patch pockets.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jackets",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-9-4",
+  "text": "Olive Relaxed Kangaroo Pocket Hoodie. Olive green pullover hoodie in soft fleece-like fabric with a relaxed slightly cropped cut, featuring a drawstring hood, front kangaroo pocket, long sleeves, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-hoodies",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-9-5",
+  "text": "Burgundy Dropped Shoulder Sweatshirt. A relaxed-cut burgundy crewneck sweatshirt in soft fleece fabric with dropped shoulders, long sleeves, ribbed neckline, cuffs and hem, and a plain front with no graphics.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-9-6",
+  "text": "Grey Relaxed Cropped Sweater. A heather gray long-sleeve crewneck sweater in a relaxed cropped cut crafted from a soft fine-knit fabric with ribbed detailing at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-knitwear",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-9-7",
+  "text": "Brown Loose Wide-Leg Jeans. High-rise loose wide-leg jeans in faded mocha-brown washed denim with five-pocket styling, belt loops, front button closure, and straight stitched hems.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-jeans",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-9-8",
+  "text": "Cream Linen Tapered Pants. Off-white high-waisted tapered ankle-length trousers in a textured linen-like fabric with belt loops, button and zip front closure, slanted side pockets, and hemmed cuffs.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-pants",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-9-9",
+  "text": "Black Linen Shirt Dress. A black oversized midi-length long-sleeve shirtdress in textured linen fabric with a point collar, full front button closure, buttoned cuffs, and two side patch pockets.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-dresses",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-9-10",
+  "text": "Beige Linen Zip Mini Skirt. Light beige high-waisted linen mini skirt with straight short cut, front zip fly, belt loops, front pleats and slanted side pockets.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-skirts",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-10-1",
+  "text": "Olive Canvas Push-Lock Bag. Structured rectangular olive green canvas top-handle handbag with brown leather trim and handles, front flap closure with gold-tone push-lock clasp.",
+  "metadata": {
+   "pricePiasters": 25000,
+   "categoryId": "category-bags",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-10-2",
+  "text": "Burgundy Quilted Full-Zip Jacket. A burgundy quilted full-zip jacket with a relaxed hip-length cut in quilted padded fabric, featuring a high stand collar with fuzzy lining, long sleeves with ribbed cuffs, and two large front patch pockets.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-jackets",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-10-3",
+  "text": "Grey Fleece Drawstring Hoodie. Light gray pullover hoodie in soft fleece fabric with a relaxed long-sleeve cut featuring a drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-hoodies",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-10-4",
+  "text": "Brown Relaxed Fleece Sweatshirt. A solid medium-brown long-sleeve crewneck sweatshirt with a relaxed fit in soft fleece fabric featuring a ribbed neckline, ribbed cuffs, and ribbed hem with no graphics or embellishments.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-10-5",
+  "text": "Cream Fuzzy Knit Sweater. Cream long-sleeve crewneck sweater in a soft fuzzy knit with a relaxed fit featuring a ribbed round neckline, ribbed cuffs, and ribbed hem.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-knitwear",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-10-6",
+  "text": "Black Sherpa Lined Jeans. Black high-waisted straight-leg denim jeans with a cream sherpa fleece lining visible at the inner waistband and front pocket edges, featuring a button closure and classic five-pocket styling.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-jeans",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-10-7",
+  "text": "Beige Double Pleat Pants. Beige high-rise straight-leg pleated chino trousers in cotton twill with belt loops, button closure, double front pleats, slanted side pockets and pressed front creases.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-pants",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-10-8",
+  "text": "Navy Cable-Knit Sweater Dress. Navy blue long-sleeve midi cable-knit sweater dress in a relaxed straight cut with round crew neckline, textured chunky knit fabric, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-dresses",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-10-9",
+  "text": "Olive Front Button Twill Skirt. Olive-green long straight-cut skirt in matte cotton-twill fabric with high waist, full-length front button placket, belt loops, side slant pockets and waist pleats.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-skirts",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-10-10",
+  "text": "Burgundy Shearling High-Top Sneakers. A burgundy high-top lace-up ankle boot with rounded toe, suede and textured knit upper, cream faux shearling collar lining, matching burgundy laces, and thick cream rubber sole viewed from the front.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-shoes",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-11-1",
+  "text": "Brown Cotton Bomber Jacket. A brown waist-length bomber jacket in smooth cotton fabric with a stand collar, full-length front zipper, long sleeves with ribbed cuffs, ribbed hem, and slanted side welt pockets.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-jackets",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-11-2",
+  "text": "Cream Relaxed Fleece Hoodie. Cream-colored relaxed-fit pullover hoodie in soft fleece fabric with a drawstring hood, front kangaroo pocket, ribbed cuffs and ribbed hem.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-hoodies",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-11-3",
+  "text": "Black Cropped Fleece Sweatshirt. A black long-sleeve crewneck sweatshirt in a relaxed slightly cropped fit made of soft fleece fabric with ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-11-4",
+  "text": "Beige Textured Drop-Shoulder Sweater. A light beige oversized crewneck sweater in a soft textured knit fabric with a relaxed drop-shoulder cut, long sleeves, and ribbed detailing at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-knitwear",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-11-5",
+  "text": "Navy Cropped Frayed Hem Jeans. Dark indigo high-rise cropped straight-leg denim jeans with classic five-pocket styling, belt loops, button front closure, subtly faded wrinkled wash, and raw frayed hems.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-jeans",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-11-6",
+  "text": "Olive Cotton Drawstring Pants. Olive green loose straight-leg cotton pants with an elasticated waistband, front drawstring tie, belt loops, front pleats, and slanted side pockets.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-pants",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-11-7",
+  "text": "Burgundy Linen Patch Pocket Dress. A burgundy linen-textured short-sleeve button-front mini dress with a camp collar, boxy cropped top layer, and straight skirt with two front patch pockets and matching buttons down the center.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-dresses",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-11-8",
+  "text": "Grey Crinkled Linen Skirt. A gray long gathered midi skirt in lightweight crinkled linen fabric with an elastic drawstring waist and two side patch pockets.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-skirts",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-11-9",
+  "text": "Brown Suede Canvas Sneakers. Brown low-top lace-up sneaker with a suede and canvas upper, perforated round toe, matching brown flat laces, and a beige rubber sole.",
+  "metadata": {
+   "pricePiasters": 115000,
+   "categoryId": "category-shoes",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-11-10",
+  "text": "Cream Canvas Slouchy Shoulder Bag. A large off-white canvas slouchy shoulder tote bag with a relaxed soft-sided shape, wide open top, visible side stitching, and a long shoulder strap.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-bags",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-12-1",
+  "text": "Beige Plush Fleece Hoodie. A cream-beige relaxed-fit pullover hoodie made of soft fuzzy plush fleece with a drawstring hood, long sleeves with ribbed cuffs, ribbed hem, and a front kangaroo pocket.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-hoodies",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-12-2",
+  "text": "Navy Relaxed Crewneck Sweatshirt. A navy blue long-sleeve crewneck sweatshirt in a relaxed cut made from soft sweatshirt-knit fabric with a ribbed round neckline, ribbed cuffs and hem, and a plain front.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-12-3",
+  "text": "Olive Cable-Knit Sweater. Olive green relaxed-fit long-sleeve crewneck pullover sweater in chunky textured knit with vertical cable-knit panels and ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-knitwear",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-12-4",
+  "text": "Burgundy Straight Leg Jeans. Deep burgundy straight-leg denim jeans with a mid-rise waist, five-pocket styling, belt loops, button-front closure and visible topstitching.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-jeans",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-12-5",
+  "text": "Grey Cuffed Fleece Jogger Pants. Heather gray jogger sweatpants in soft fleecy fabric with a relaxed tapered cut, elastic waistband with front drawstring, side slash pockets, and ribbed ankle cuffs.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-pants",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-12-6",
+  "text": "Brown Pocket Flared Midi Dress. A medium-brown long-sleeve midi shirt dress in textured linen fabric with a pointed collar, full front button closure, cuffed sleeves, side pockets, and a fitted bodice with flared skirt.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-dresses",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-12-7",
+  "text": "Cream Cable-Knit Midi Skirt. A cream cable-knit midi skirt with a ribbed high waistband, relaxed A-line cut, and vertical twisted cable details in a soft knit fabric finished with a ribbed hem.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-skirts",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-12-8",
+  "text": "Black Canvas Lace-Up Sneakers. A black low-top lace-up sneaker with a canvas upper, smooth toe cap, black laces threaded through eyelets, and a textured black rubber sole.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-shoes",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-12-9",
+  "text": "Beige Teddy Quilted Bag. A small light beige boxy top-handle handbag in soft fluffy teddy sherpa fabric featuring diamond quilting, a fold-over flap with a small metal clasp, short fuzzy handles, ribbed piping trim and side slip pockets.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-bags",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-12-10",
+  "text": "Navy Three-Button Cotton Jacket. A navy blue single-breasted tailored blazer in matte textured cotton fabric with notch lapels, three-button front closure, one chest welt pocket and two flap hip pockets.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-jackets",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-13-1",
+  "text": "Burgundy Oversized Fleece Sweatshirt. An oversized burgundy crewneck sweatshirt in soft fleece fabric with a relaxed cut, dropped shoulders, long sleeves, and ribbed crew neckline, cuffs, and hem with a plain solid front.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-13-2",
+  "text": "Grey Cropped Fine Knit Sweater. A heather gray cropped long-sleeve crewneck sweater in a soft fine-knit fabric with ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-knitwear",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-13-3",
+  "text": "Brown Wide-Leg Button Jeans. High-waisted wide-leg jeans in faded brown denim with a button closure, belt loops, front scoop pockets with a coin pocket, and loose full-length legs.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-jeans",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-13-4",
+  "text": "Cream Linen Pleated Pants. Off-white high-waisted tapered trousers in lightweight textured linen fabric with front pleats, belt loops, button closure, slanted side pockets, and rolled cuffs at the cropped ankles.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-pants",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-13-5",
+  "text": "Black Cotton Sweatshirt Dress. An oversized black long-sleeve crew-neck sweatshirt dress in soft wrinkled cotton jersey with a loose straight knee-length cut, ribbed cuffs and neckline, side seam pockets, and small side slits at the hem.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-dresses",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-13-6",
+  "text": "Beige Linen Button Front Skirt. A light beige high-waisted linen mini skirt with a straight cut, full-length center-front button closure, belt loops, and scoop side pockets.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-skirts",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-13-7",
+  "text": "Navy Quilted Suede Sneakers. A navy blue lace-up chunky sneaker made of suede, perforated mesh and quilted nylon with a thick textured sole, padded puffy tongue and dark laces viewed from the front.",
+  "metadata": {
+   "pricePiasters": 120000,
+   "categoryId": "category-shoes",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-13-8",
+  "text": "Olive Pebbled Flap Bag. Small olive-green structured rectangular flap handbag in pebbled leather-textured material with a stitched front flap and gold-tone rectangular push-lock clasp.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-bags",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-13-9",
+  "text": "Burgundy Cotton Button-Front Jacket. A burgundy relaxed-fit cotton button-front jacket with a pointed collar, boxy hip-length cut, long sleeves with rolled cuffs, and two slanted side pockets.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-jackets",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-13-10",
+  "text": "Grey Cropped Fleece Hoodie. A heather gray cropped long-sleeve hoodie in soft heathered fleece-knit fabric with a drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-hoodies",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-14-1",
+  "text": "Cream Ribbed Crewneck Sweater. Cream-colored long-sleeve crewneck sweater with a relaxed cut in a soft fuzzy knit fabric with ribbed detailing at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-knitwear",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-14-2",
+  "text": "Black Fleece-Lined Straight Jeans. Black high-waisted straight-leg denim jeans with five-pocket styling, belt loops, front button closure, and light gray fleece lining visible inside the waistband.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-jeans",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-14-3",
+  "text": "Beige Pleated Linen Pants. Light beige pleated straight tapered-leg trousers in a lightweight linen-textured fabric with a high waist, belt loops, single-button closure, slanted side pockets, front pleats, and pressed front creases.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-pants",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-14-4",
+  "text": "Navy Cable Knit Sweater Dress. A navy blue long-sleeve cable-knit sweater dress with a straight knee-length cut, chunky textured knit fabric with vertical cable patterns, and ribbed crew neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 110000,
+   "categoryId": "category-dresses",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-14-5",
+  "text": "Olive Button-Front Pleated Skirt. Olive green high-waisted pleated midi-length A-line skirt in matte cotton twill fabric with a button-front closure, belt loops, side slash pockets, and stitched hem.",
+  "metadata": {
+   "pricePiasters": 30000,
+   "categoryId": "category-skirts",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-14-6",
+  "text": "Burgundy Quilted Velvet Sneakers. A burgundy low-top lace-up sneaker with a quilted velvety fabric upper, fuzzy sherpa collar lining, matching laces, and a chunky beige lug sole.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-shoes",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-14-7",
+  "text": "Grey Pebbled Buckle Flap Bag. Structured medium gray pebbled leather top-handle satchel with a flap closure, central front buckle strap with silver-tone hardware, stitched rectangular front pocket and dual rolled handles.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-bags",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-14-8",
+  "text": "Brown Quilted Corduroy Jacket. A brown quilted corduroy button-up jacket in a relaxed long-sleeve cut with a cream sherpa fold collar, front button closure, and two front flap patch pockets.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jackets",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-14-9",
+  "text": "Cream Kangaroo Pocket Hoodie. Cream-colored pullover hooded sweatshirt in soft fleece fabric with a relaxed long-sleeve cut, drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-hoodies",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-14-10",
+  "text": "Black Fleece Drawstring Sweatshirt. A black pullover hoodie in soft fleece fabric with a relaxed cut featuring a lined drawstring hood, long sleeves with ribbed cuffs, ribbed hem, and a front kangaroo pocket.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-15-1",
+  "text": "Navy Button Fly Jeans. Dark blue high-waisted straight-leg cropped denim jeans with five-pocket styling, copper rivets, button fly closure, subtle fading, and frayed raw hems.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jeans",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-15-2",
+  "text": "Olive Wide-Leg Cargo Pants. Olive green loose wide-leg cargo pants in a lightweight woven fabric with a pleated elastic drawstring waist, slanted front pockets, and large flap cargo pockets on the thighs.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-pants",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-15-3",
+  "text": "Burgundy Linen Button Front Dress. A burgundy two-piece linen set featuring a short-sleeve collared V-neck button-front cropped top and a matching straight mini skirt with side pockets.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-dresses",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-15-4",
+  "text": "Grey Linen Drawstring Maxi Skirt. A gray ankle-length A-line maxi skirt in lightweight wrinkled linen-like fabric with an elastic gathered waistband, front drawstring tie, soft pleats, and side pockets.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-skirts",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-15-5",
+  "text": "Brown Perforated Toe Sneakers. A brown low-top lace-up sneaker in suede fabric with matching flat laces, perforated toe box, and gum-colored sole.",
+  "metadata": {
+   "pricePiasters": 125000,
+   "categoryId": "category-shoes",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-15-6",
+  "text": "Cream Quilted Puffer Pocket Bag. An off-white oversized puffer tote bag in soft quilted padded fabric with a slouchy rectangular shape, thick padded shoulder handles, and a large front patch pocket.",
+  "metadata": {
+   "pricePiasters": 25000,
+   "categoryId": "category-bags",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-15-7",
+  "text": "Black Cropped Knit Bomber Jacket. Black cropped long-sleeve bomber-style jacket in a soft matte knit fabric with a stand collar, full-length front zip, two diagonal zippered side pockets, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-15-8",
+  "text": "Beige Relaxed Kangaroo Hoodie. A light beige pullover hoodie in soft fleece fabric with a relaxed loose cut, drawstring hood, long sleeves with ribbed cuffs, ribbed hem, and a front kangaroo pocket.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-hoodies",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-15-9",
+  "text": "Navy Cropped Boxy Sweatshirt. Navy blue cropped long-sleeve crewneck sweatshirt with a relaxed boxy cut in soft fleece-like fabric featuring ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-15-10",
+  "text": "Olive Relaxed Dropped-Shoulder Sweater. Olive green relaxed-fit crewneck pullover sweater in a soft fuzzy knit fabric with ribbed neckline, cuffs and hem and dropped shoulders.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-knitwear",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-16-1",
+  "text": "Grey Fleece Tapered Jogger Pants. Medium gray jogger-style sweatpants made of soft plush fleece with a tapered leg cut, elastic waistband with drawstring, side slash pockets, and ribbed ankle cuffs.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-pants",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-16-2",
+  "text": "Brown Relaxed Linen Dress. A brown relaxed-fit knee-length linen shirt dress with a pointed collar, full front button closure, long sleeves with button cuffs, and side seam pockets.",
+  "metadata": {
+   "pricePiasters": 115000,
+   "categoryId": "category-dresses",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-16-3",
+  "text": "Cream Ribbed Knit Midi Skirt. Cream-colored ribbed knit midi skirt with an elastic waistband and a slightly flared A-line cut.",
+  "metadata": {
+   "pricePiasters": 35000,
+   "categoryId": "category-skirts",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-16-4",
+  "text": "Black Rubber Toe Cap Sneakers. Black low-top lace-up canvas sneaker with black laces, dark eyelets, and a textured black rubber toe cap and sole.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-shoes",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-16-5",
+  "text": "Beige Quilted Teddy Bag. A beige structured top-handle handbag with rectangular shape and flap closure featuring vertical channel quilting made from soft fluffy teddy faux-fur fleece fabric.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-bags",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-16-6",
+  "text": "Navy Three-Button Tailored Jacket. A navy blue single-breasted tailored blazer in smooth fabric with notch lapels, three-button front closure, long sleeves and two front flap pockets.",
+  "metadata": {
+   "pricePiasters": 105000,
+   "categoryId": "category-jackets",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-16-7",
+  "text": "Olive Sherpa-Lined Fleece Hoodie. Olive green pullover hoodie in soft fleece with a relaxed long-sleeve cut, featuring a cream sherpa-lined drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-hoodies",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-16-8",
+  "text": "Burgundy Relaxed Fleece Crewneck Sweatshirt. A burgundy long-sleeve crewneck sweatshirt in soft fleece-like fabric with a relaxed straight cut, ribbed neckline, cuffs and hem, and a plain solid front with no prints.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-16-9",
+  "text": "Grey Cable-Knit Sweater. Light gray long-sleeve crewneck sweater in a chunky cable-knit fabric with a relaxed straight cut, ribbed crew neckline, cuffs and hem, and allover vertical cable and rib knit detailing.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-knitwear",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-16-10",
+  "text": "Brown High-Rise Straight-Leg Jeans. A pair of brown high-rise straight-leg denim jeans with five-pocket styling, button closure, belt loops, and a faded wash.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-jeans",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-17-1",
+  "text": "Black Balloon Sleeve Dress. A black loose-fitting midi dress in textured lightweight fabric with a round crew neckline, long voluminous balloon sleeves with fitted ribbed cuffs, a relaxed straight cut, and side seam pockets.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-dresses",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-17-2",
+  "text": "Beige Pleated Linen Mini Skirt. A light beige high-waisted linen mini skirt with a straight cut, front pleats, belt loops, two-button front closure, and side slash pockets.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-skirts",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-17-3",
+  "text": "Navy Quilted Nylon Sneakers. Front view of navy blue lace-up chunky sneakers with a quilted nylon padded upper, suede toe and eyestay overlays, tonal laces and padded tongue, perforated toe cap, and thick sculpted rubber sole.",
+  "metadata": {
+   "pricePiasters": 130000,
+   "categoryId": "category-shoes",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-17-4",
+  "text": "Olive Canvas Flap Bag. Olive green small square canvas crossbody bag with flap snap-button closure, front slip pocket, and adjustable shoulder strap with gold-tone hardware.",
+  "metadata": {
+   "pricePiasters": 30000,
+   "categoryId": "category-bags",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-17-5",
+  "text": "Burgundy Snap Button Coach Jacket. Oversized burgundy coach-style jacket with a pointed collar, front snap-button closure, long sleeves with ribbed cuffs, slanted side pockets and ribbed hem in a lightweight washed cotton fabric.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-jackets",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-17-6",
+  "text": "Grey Relaxed Kangaroo Hoodie. A heather gray pullover hoodie in a relaxed slightly cropped cut made of soft sweatshirt fleece fabric with a drawstring-lined hood, front kangaroo pocket, long sleeves with ribbed cuffs, and a ribbed hem.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-hoodies",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-17-7",
+  "text": "Brown Oversized Fleece Sweatshirt. A brown oversized pullover hoodie in soft fleece fabric with a drawstring hood, dropped shoulders, long sleeves with ribbed cuffs, ribbed hem, and a front kangaroo pocket.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-17-8",
+  "text": "Cream Cropped Crewneck Sweater. A cream-colored long-sleeve crewneck sweater with a relaxed slightly cropped cut in a soft fine-knit fabric featuring ribbed trim at the neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-knitwear",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-17-9",
+  "text": "Black Washed Barrel-Leg Jeans. Washed black high-rise loose barrel-leg denim jeans with five-pocket styling, belt loops, front fly, and straight stitched hems.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-jeans",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-17-10",
+  "text": "Beige Linen Button Front Pants. Beige linen straight-leg cropped trousers with button front closure, belt loops, slanted side pockets, and cuffed hems.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-pants",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-18-1",
+  "text": "Olive Linen Button Skirt. Olive green high-waisted long straight-cut maxi skirt in lightweight textured linen fabric with front button closure, belt loops, waist pleats and side slant pockets.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-skirts",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-18-2",
+  "text": "Burgundy Suede Platform Sneakers. Burgundy low-top lace-up platform sneaker with suede upper featuring perforated detailing, matching burgundy laces, cream faux-shearling lining around the collar, and a thick off-white chunky sole.",
+  "metadata": {
+   "pricePiasters": 110000,
+   "categoryId": "category-shoes",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-18-3",
+  "text": "Grey Pebbled Leather Flap Bag. A structured medium-gray pebbled leather top-handle handbag with a flap closure and silver-tone front clasp.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-bags",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-18-4",
+  "text": "Brown Corduroy Sherpa Collar Jacket. A brown relaxed-cut corduroy button-front jacket with long sleeves, a contrasting tan sherpa fleece collar, front button closure, slanted side pockets, and button cuffs.",
+  "metadata": {
+   "pricePiasters": 110000,
+   "categoryId": "category-jackets",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-18-5",
+  "text": "Cream Soft Pullover Hoodie. Cream-colored pullover hoodie in soft fleece fabric with a relaxed long-sleeve cut, featuring a drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-hoodies",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-18-6",
+  "text": "Black Fleece Kangaroo Pocket Sweatshirt. Black pullover hoodie in soft fleece fabric with a relaxed cut, raglan long sleeves, drawstring hood, front kangaroo pocket, and ribbed cuffs and hem.",
+  "metadata": {
+   "pricePiasters": 50000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-18-7",
+  "text": "Beige Textured Knit Sweater. A light beige long-sleeve crewneck sweater with a relaxed cut in a soft textured knit fabric featuring a ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-knitwear",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-18-8",
+  "text": "Navy Sherpa Lined Jeans. Dark indigo blue slim straight-leg full-length denim jeans with cream-colored sherpa fleece lining visible at the inner waistband and front pocket trim, featuring a button closure, belt loops, and classic five-pocket styling.",
+  "metadata": {
+   "pricePiasters": 95000,
+   "categoryId": "category-jeans",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-18-9",
+  "text": "Olive Straight Leg Pants. Olive green straight-leg chino pants in smooth cotton twill with button front closure, belt loops, slanted side pockets and flat-front detailing.",
+  "metadata": {
+   "pricePiasters": 40000,
+   "categoryId": "category-pants",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-18-10",
+  "text": "Burgundy Cable-Knit Turtleneck Dress. A burgundy turtleneck cable-knit sweater dress in a soft fuzzy knit fabric with a relaxed knee-length cut, long sleeves, vertical cable detailing on the front and sleeves, and ribbed turtleneck, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 85000,
+   "categoryId": "category-dresses",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-19-1",
+  "text": "Brown Metal Eyelet Sneakers. A brown low-top lace-up sneaker with a canvas and suede upper, round perforated toe, brown laces through metal eyelets, and a cream rubber sole.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-shoes",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-19-2",
+  "text": "Cream Quilted Puffer Tote Bag. An oversized cream-colored puffer tote bag in soft quilted padded fabric with vertical channel stitching and thick padded shoulder handles.",
+  "metadata": {
+   "pricePiasters": 35000,
+   "categoryId": "category-bags",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-19-3",
+  "text": "Black Bomber Jacket. A black bomber jacket with stand collar, full front zipper, long sleeves with ribbed cuffs, cropped relaxed fit in smooth matte fabric with ribbed hem and two diagonal zippered front pockets.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-jackets",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-19-4",
+  "text": "Beige Drop-Shoulder Kangaroo Hoodie. A light beige relaxed-fit pullover hoodie in soft fleece sweatshirt fabric with a drawstring hood, front kangaroo pocket, long drop-shoulder sleeves with ribbed cuffs, and a ribbed hem.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-hoodies",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-19-5",
+  "text": "Navy Cropped Fleece Sweatshirt. A navy blue cropped crewneck sweatshirt with long raglan sleeves made of soft fleece fabric featuring a ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-19-6",
+  "text": "Olive Textured Oversized Sweater. An olive-green oversized crew-neck sweater in textured knit fabric with long drop-shoulder sleeves and ribbed neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-knitwear",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-19-7",
+  "text": "Burgundy High Waisted Cropped Jeans. High-waisted burgundy straight-leg cropped denim jeans with a button and zip fly, belt loops, and classic five-pocket styling.",
+  "metadata": {
+   "pricePiasters": 75000,
+   "categoryId": "category-jeans",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-19-8",
+  "text": "Grey Drawstring Cargo Pants. Washed gray loose-fit cotton-twill cargo pants with an elastic drawstring waist, front pleats, large flap cargo pockets on the thighs, slanted side pockets, and cuffed hems.",
+  "metadata": {
+   "pricePiasters": 65000,
+   "categoryId": "category-pants",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-19-9",
+  "text": "Brown Linen Button-Front Dress. A brown linen two-piece style button-front dress with a cropped boxy short puff-sleeve collared shirt top with button-tab cuffs and a matching A-line mini skirt with side pockets.",
+  "metadata": {
+   "pricePiasters": 110000,
+   "categoryId": "category-dresses",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-19-10",
+  "text": "Cream Linen Drawstring Skirt. An off-white linen maxi skirt with a gathered full A-line cut, elastic waistband with front drawstring tie, and two large side patch pockets.",
+  "metadata": {
+   "pricePiasters": 30000,
+   "categoryId": "category-skirts",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-20-1",
+  "text": "Beige Boxy Sherpa Tote Bag. A beige boxy structured tote handbag with short top handles crafted from plush teddy sherpa fleece featuring horizontal quilted puffy stitching.",
+  "metadata": {
+   "pricePiasters": 60000,
+   "categoryId": "category-bags",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-20-2",
+  "text": "Navy Two-Button Notch Lapel Jacket. A dark navy single-breasted tailored blazer jacket in a soft matte fabric with notch lapels, a two-button front closure, two button-flap chest pockets, two flap lower patch pockets, and long sleeves with buttoned cuffs.",
+  "metadata": {
+   "pricePiasters": 70000,
+   "categoryId": "category-jackets",
+   "colorCode": "navy"
+  }
+ },
+ {
+  "id": "product-20-3",
+  "text": "Olive Fleece Drawstring Hoodie. Olive green pullover hoodie in soft fleece fabric with a relaxed cut, drawstring hood, long sleeves with ribbed cuffs, front kangaroo pocket, and ribbed hem.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-hoodies",
+   "colorCode": "olive"
+  }
+ },
+ {
+  "id": "product-20-4",
+  "text": "Burgundy Relaxed Ribbed Sweatshirt. A burgundy long-sleeve crewneck sweatshirt with a relaxed cut in soft sweatshirt-knit fabric featuring a ribbed crew neckline, ribbed cuffs, ribbed hem, and a plain front.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-sweatshirts",
+   "colorCode": "burgundy"
+  }
+ },
+ {
+  "id": "product-20-5",
+  "text": "Grey Nubby Knit Sweater. A heather gray crewneck sweater with a relaxed long-sleeve cut in textured nubby knit fabric with ribbed crew neckline, cuffs, and hem.",
+  "metadata": {
+   "pricePiasters": 80000,
+   "categoryId": "category-knitwear",
+   "colorCode": "grey"
+  }
+ },
+ {
+  "id": "product-20-6",
+  "text": "Brown Straight-Leg Five-Pocket Jeans. Brown straight-leg five-pocket jeans in washed brown denim fabric with button closure, belt loops, front scoop pockets and a small coin pocket.",
+  "metadata": {
+   "pricePiasters": 100000,
+   "categoryId": "category-jeans",
+   "colorCode": "brown"
+  }
+ },
+ {
+  "id": "product-20-7",
+  "text": "Cream Sherpa Fleece Jogger Pants. Cream-colored fuzzy sherpa fleece jogger sweatpants with a relaxed tapered cut, elastic drawstring waistband, side pockets, and ribbed ankle cuffs.",
+  "metadata": {
+   "pricePiasters": 45000,
+   "categoryId": "category-pants",
+   "colorCode": "cream"
+  }
+ },
+ {
+  "id": "product-20-8",
+  "text": "Black Patch Pocket Dress. Black long-sleeve shirt dress in textured linen fabric with a relaxed straight knee-length cut, pointed collar, front button placket, cuffed sleeves, and two patch pockets.",
+  "metadata": {
+   "pricePiasters": 90000,
+   "categoryId": "category-dresses",
+   "colorCode": "black"
+  }
+ },
+ {
+  "id": "product-20-9",
+  "text": "Beige Ribbed Knit Midi Skirt. A light beige knit midi skirt with a straight long cut, soft ribbed knit fabric, wide ribbed waistband, all-over vertical ribbed texture, and ribbed hem.",
+  "metadata": {
+   "pricePiasters": 55000,
+   "categoryId": "category-skirts",
+   "colorCode": "beige"
+  }
+ },
+ {
+  "id": "product-20-10",
+  "text": "Navy Canvas Lace Up Sneakers. Navy blue low-top lace-up canvas sneaker with matching navy laces tied in a bow, metal eyelets, stitched rounded toe cap, and off-white rubber sole.",
+  "metadata": {
+   "pricePiasters": 125000,
+   "categoryId": "category-shoes",
+   "colorCode": "navy"
+  }
+ }
+]

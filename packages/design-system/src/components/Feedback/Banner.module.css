@@ -3,7 +3,7 @@
   align-items: flex-start;
   gap: var(--space-s);
   padding: var(--space-m);
-  border: 1px solid var(--color-tonal-fill);
+  border: 1px solid var(--color-hairline);
   border-radius: var(--radius-card);
   background: var(--ground-fill);
   color: var(--ground-text);

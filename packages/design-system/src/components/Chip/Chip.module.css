@@ -9,8 +9,8 @@
   padding-inline: var(--space-m);
   border: 0;
   border-radius: var(--radius-action);
-  background: var(--button-secondary-fill);
-  color: var(--button-secondary-label);
+  background: var(--control-calm-fill);
+  color: var(--control-calm-label);
   font-family: var(--type-button-family);
   font-size: var(--type-supporting-size);
   font-weight: var(--type-button-weight);
@@ -23,8 +23,8 @@
 }
 
 .chip[aria-pressed='true'] {
-  background: var(--button-primary-fill);
-  color: var(--button-primary-label);
+  background: var(--control-strong-fill);
+  color: var(--control-strong-label);
 }
 
 @media (hover: hover) {

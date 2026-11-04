@@ -3,18 +3,18 @@ import { describe, expect, it } from 'vitest';
 import { Ground } from './Ground';
 
 describe('Ground', () => {
-  it('defaults to the red ground, the app\'s own', () => {
+  it('defaults to the cream page, the app\'s background', () => {
     render(<Ground data-testid="ground">words</Ground>);
-    expect(screen.getByTestId('ground')).toHaveAttribute('data-ground', 'brand');
+    expect(screen.getByTestId('ground')).toHaveAttribute('data-ground', 'plain');
   });
 
-  it('tells what is inside that it sits on the cream page', () => {
+  it('tells what is inside that it sits on the red ground, for big moments', () => {
     render(
-      <Ground kind="plain" data-testid="ground">
+      <Ground kind="brand" data-testid="ground">
         words
       </Ground>,
     );
-    expect(screen.getByTestId('ground')).toHaveAttribute('data-ground', 'plain');
+    expect(screen.getByTestId('ground')).toHaveAttribute('data-ground', 'brand');
   });
 
   it('can fill the screen', () => {

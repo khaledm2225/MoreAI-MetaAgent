@@ -1,0 +1,7 @@
+.preview {
+  display: block;
+  inline-size: 8rem;
+  block-size: 8rem;
+  border-radius: var(--radius-card);
+  object-fit: cover;
+}

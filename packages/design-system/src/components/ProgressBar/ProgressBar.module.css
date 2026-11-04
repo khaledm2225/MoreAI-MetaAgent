@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.track {
+  block-size: 0.75rem;
+  overflow: hidden;
+  border-radius: var(--radius-action);
+  background: var(--color-hairline);
+}
+
+.fill {
+  block-size: 100%;
+  border-radius: inherit;
+  background: var(--color-tonal-fill);
+  transition: inline-size var(--motion-pop-duration) var(--motion-pop-easing);
+}
+
+.text {
+  font-size: var(--type-supporting-size);
+  color: var(--ground-text-secondary);
+}

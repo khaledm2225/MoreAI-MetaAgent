@@ -5,7 +5,7 @@ export type GroundKind = 'plain' | 'brand';
 export type GroundElement = 'div' | 'main' | 'section' | 'header' | 'footer' | 'aside';
 
 export interface GroundProps extends ComponentPropsWithoutRef<'div'> {
-  /** `brand` is the app's red, edge to edge. `plain` is the cream page. */
+  /** `plain` is the cream page, the app's background. `brand` is the red, for big moments. */
   readonly kind?: GroundKind;
   readonly as?: GroundElement;
   /** At least as tall as the screen. */
@@ -14,7 +14,7 @@ export interface GroundProps extends ComponentPropsWithoutRef<'div'> {
 
 /** Paints a part of a screen, and tells the components inside what they sit on. */
 export function Ground({
-  kind = 'brand',
+  kind = 'plain',
   as = 'div',
   fillViewport = false,
   className,

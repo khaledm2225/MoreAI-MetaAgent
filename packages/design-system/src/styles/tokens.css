@@ -4,14 +4,14 @@
   --color-text-secondary: #4A3C34;
   --color-accent-text: #C8000F;
   --color-danger: #B8000E;
-  --color-action-fill: #C8000F;
+  --color-action-fill: #F50A16;
   --color-on-action: #F5ECD6;
-  --color-tonal-fill: #EBDDBF;
+  --color-tonal-fill: #C8000F;
+  --color-hairline: #EBDDBF;
   --color-brand-ground: #F50A16;
   --color-on-brand-ground: #F5ECD6;
   --color-brand-action: #F5ECD6;
   --color-on-brand-action: #1C1412;
-  --color-brand-tonal-fill: #C8000F;
 
   --space-xxs: 0.25rem;
   --space-xs: 0.5rem;
@@ -60,7 +60,7 @@
   --type-button-size: 1.0625rem;
   --type-strong-button-family: var(--font-body);
   --type-strong-button-weight: 700;
-  --type-strong-button-size: 1.0625rem;
+  --type-strong-button-size: 1.1875rem;
   --type-label-family: var(--font-body);
   --type-label-weight: 500;
   --type-label-size: 0.8125rem;
@@ -76,6 +76,10 @@
   --motion-spin-easing: linear;
   --motion-pulse-duration: 1500ms;
   --motion-pulse-easing: ease-in-out;
+  --motion-stagger-duration: 120ms;
+  --motion-stagger-easing: linear;
+  --motion-confetti-duration: 2600ms;
+  --motion-confetti-easing: ease-in;
 }
 
 @media (prefers-reduced-motion: reduce) {
