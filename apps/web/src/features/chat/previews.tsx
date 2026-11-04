@@ -31,7 +31,7 @@ const step = (id: string, kind: TraceStep['kind'], name: string, status: TraceSt
 });
 
 const view = (partial: Partial<ChatState>) => (
-  <ChatView
+  <ChatView createPhotoUrl={() => ''}
     state={{ items: [], trace: [], isThinking: false, hasFailed: false, ...partial }}
     sizeLabelOf={(id) => id.toUpperCase()}
     onSend={noop}

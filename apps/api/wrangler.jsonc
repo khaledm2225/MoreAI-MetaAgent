@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "moreai-metaagent",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "../web/dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "moreai-metaagent", "database_id": "826acfbe-8b54-41ce-ab99-8f1ac5cc2f21" }
+  ],
+  "vectorize": [{ "binding": "VECTORS", "index_name": "moreai-products" }],
+  "ai": { "binding": "AI" },
+  "observability": { "enabled": true }
+}

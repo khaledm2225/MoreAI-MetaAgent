@@ -1,5 +1,5 @@
 import { catalogProblems } from '@metaagent/i18n';
-import { screen, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { AgentEvent, AgentInput } from '../../../core/domain/agent';
@@ -165,6 +165,56 @@ describe('ChatScreen', () => {
     await say('a jacket');
     expect(await screen.findByRole('alert')).toHaveTextContent('That didn’t work');
     expect(screen.getByRole('textbox', { name: 'Your message' })).toBeEnabled();
+  });
+
+  it('keeps the conversation when the shopper leaves and comes back', async () => {
+    const memory = { state: null };
+    const { agent } = fakeAgent(() => []);
+    const first = renderInLocale(<ChatScreen agent={agent} catalog={catalog} onOpenProduct={vi.fn()} onOpenOrders={vi.fn()} onOpenPhotoToShop={vi.fn()} memory={memory} />);
+    await say('a jacket');
+    first.unmount();
+    renderInLocale(<ChatScreen agent={agent} catalog={catalog} onOpenProduct={vi.fn()} onOpenOrders={vi.fn()} onOpenPhotoToShop={vi.fn()} memory={memory} />);
+    expect(screen.getByText('a jacket')).toBeInTheDocument();
+  });
+
+  describe('adding a photo', () => {
+    const file = (type = 'image/jpeg') => new File(['x'], 'me.jpg', { type });
+    const attach = (photo: File) => fireEvent.change(document.querySelector('input[type="file"]') as HTMLInputElement, { target: { files: [photo] } });
+
+    it('sends the photo with the words, and shows it in the conversation', async () => {
+      URL.createObjectURL = vi.fn(() => 'blob:me');
+      const { agent, inputs } = fakeAgent(() => []);
+      setup(agent);
+      attach(file());
+      await say('A jacket in the same color');
+      expect(inputs[0]).toMatchObject({ kind: 'text', text: 'A jacket in the same color', photo: { previewUrl: 'blob:me', type: 'image/jpeg' } });
+      expect(within(screen.getByRole('log')).getByRole('img', { name: 'Your photo' })).toHaveAttribute('src', 'blob:me');
+    });
+
+    it('can send a photo with no words', async () => {
+      URL.createObjectURL = vi.fn(() => 'blob:me');
+      const { agent, inputs } = fakeAgent(() => []);
+      setup(agent);
+      attach(file());
+      await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+      expect(inputs[0]).toMatchObject({ text: 'What goes with this?' });
+    });
+
+    it('can remove it before sending', async () => {
+      URL.createObjectURL = vi.fn(() => 'blob:me');
+      const { agent, inputs } = fakeAgent(() => []);
+      setup(agent);
+      attach(file());
+      await userEvent.click(screen.getByRole('button', { name: 'Remove the photo' }));
+      await say('a jacket');
+      expect(inputs[0]).toEqual({ kind: 'text', text: 'a jacket' });
+    });
+
+    it('refuses a file that isn’t a photo', () => {
+      setup(fakeAgent(() => []).agent);
+      attach(file('application/pdf'));
+      expect(screen.getByRole('alert')).toHaveTextContent('Choose a JPG');
+    });
   });
 
   it('leads to photo search', async () => {

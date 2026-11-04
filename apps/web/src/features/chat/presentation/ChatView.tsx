@@ -1,10 +1,11 @@
 import { Badge, Banner, Bubble, Button, ButtonStack, Card, Chip, Confetti, Container, EmptyState, Icon, IconButton, Spinner, Stack, Text, TextField } from '@metaagent/design-system';
 import { useLocale, useTranslations } from '@metaagent/i18n';
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import type { SuggestedPiece } from '../../../core/domain/agent';
 import type { Id } from '../../../core/domain/catalog';
 import type { Address } from '../../../core/domain/order';
 import { isBuyable } from '../../../core/domain/search';
+import { photoProblem, PHOTO_TYPES, type PhotoInput } from '../../../core/domain/vision';
 import { AddressForm } from '../../../core/presentation/AddressForm';
 import { ProductCard } from '../../../core/presentation/ProductCard';
 import { strings as sharedStrings } from '../../../core/presentation/strings';
@@ -17,7 +18,9 @@ export interface ChatViewProps {
   readonly state: ChatState;
   /** Labels for a variant's size, since the view holds no catalog. */
   readonly sizeLabelOf: (sizeId: Id) => string;
-  readonly onSend: (text: string) => void;
+  readonly onSend: (text: string, photo?: PhotoInput) => void;
+  /** Makes a picked photo showable on the page. */
+  readonly createPhotoUrl: (file: File) => string;
   readonly onChooseVariant: (productId: Id, variantId: Id) => void;
   readonly onAnswer: (requestId: Id, accepted: boolean) => void;
   readonly onGiveAddress: (address: Address) => void;
@@ -74,7 +77,12 @@ function Item({ item, ...props }: { readonly item: ChatItem } & ChatViewProps) {
   const { locale, format } = useLocale();
   switch (item.kind) {
     case 'shopper':
-      return <Bubble from="self">{item.text}</Bubble>;
+      return (
+        <Bubble from="self">
+          {item.photoUrl !== undefined && <img className={styles.sentPhoto} src={item.photoUrl} alt={t('yourPhoto')} />}
+          {item.text}
+        </Bubble>
+      );
     case 'assistant':
       return <Bubble from="other">{item.text[locale]}</Bubble>;
     case 'learned':
@@ -164,16 +172,37 @@ function Item({ item, ...props }: { readonly item: ChatItem } & ChatViewProps) {
 
 /** The agent's conversation, from the first message to the placed order, with its live trace. */
 export function ChatView(props: ChatViewProps) {
-  const { state, onSend, onOpenPhotoToShop } = props;
+  const { state, onSend, onOpenPhotoToShop, createPhotoUrl } = props;
   const t = useTranslations(strings);
   const shared = useTranslations(sharedStrings);
   const [draft, setDraft] = useState('');
+  const [photo, setPhoto] = useState<PhotoInput | null>(null);
+  const [hasWrongPhoto, setHasWrongPhoto] = useState(false);
+  const picker = useRef<HTMLInputElement>(null);
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    if (draft.trim() !== '') {
+    if (photo !== null) {
+      onSend(draft.trim() === '' ? t('photoDefaultText') : draft, photo);
+    } else if (draft.trim() !== '') {
       onSend(draft);
-      setDraft('');
+    } else {
+      return;
+    }
+    setDraft('');
+    setPhoto(null);
+  }
+
+  function pickPhoto(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (file === undefined) {
+      return;
+    }
+    const isWrong = photoProblem({ type: file.type, sizeBytes: file.size }) !== null;
+    setHasWrongPhoto(isWrong);
+    if (!isWrong) {
+      setPhoto({ name: file.name, type: file.type, sizeBytes: file.size, previewUrl: createPhotoUrl(file) });
     }
   }
 
@@ -206,6 +235,9 @@ export function ChatView(props: ChatViewProps) {
                   </Chip>
                 ))}
               </Stack>
+              <Button size="compact" prominence="quiet" icon="search" onClick={onOpenPhotoToShop}>
+                {t('photoToShop')}
+              </Button>
             </>
           )}
 
@@ -219,16 +251,24 @@ export function ChatView(props: ChatViewProps) {
             {state.hasFailed && <Banner tone="error">{t('error')}</Banner>}
           </div>
 
+          {hasWrongPhoto && <Banner tone="error">{t('wrongPhoto')}</Banner>}
+          {photo !== null && (
+            <div className={styles.attached}>
+              <img className={styles.attachedPhoto} src={photo.previewUrl} alt={t('yourPhoto')} />
+              <IconButton icon="close" prominence="quiet" label={t('removePhoto')} onClick={() => setPhoto(null)} />
+            </div>
+          )}
           <form className={styles.composer} onSubmit={submit}>
             <TextField
               className={styles.composerField}
               label={t('messageLabel')}
-              placeholder={t('messagePlaceholder')}
+              placeholder={photo === null ? t('messagePlaceholder') : t('photoPlaceholder')}
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
             />
-            <IconButton type="submit" icon="send" label={t('send')} prominence="primary" disabled={draft.trim() === ''} />
-            <IconButton icon="camera" label={t('photoToShop')} onClick={onOpenPhotoToShop} />
+            <IconButton type="submit" icon="send" label={t('send')} prominence="primary" disabled={draft.trim() === '' && photo === null} />
+            <IconButton icon="camera" label={t('addPhoto')} onClick={() => picker.current?.click()} />
+            <input ref={picker} className={styles.picker} type="file" accept={PHOTO_TYPES.join(',')} aria-hidden="true" tabIndex={-1} onChange={pickPhoto} />
           </form>
         </section>
       </div>

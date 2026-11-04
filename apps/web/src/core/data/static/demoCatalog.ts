@@ -1,5 +1,4 @@
 import type { Category, Color, Gender, Merchant, Product, ProductVariant, Size } from '../../domain/catalog';
-import { productArtUrl } from './productArt';
 
 type ArabicGender = 'm' | 'f';
 
@@ -182,7 +181,7 @@ function buildProduct(merchantIndex: number, productIndex: number): Product {
     images: [
       {
         id: `${id}-image`,
-        path: productArtUrl(category.slug, color.hex),
+        path: `/products/${id}.jpg`,
         alt: { en: nameEn, ar: nameAr },
         position: 0,
       },

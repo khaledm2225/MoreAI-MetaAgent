@@ -208,6 +208,9 @@ export function createStaticAgentGateway({ world, search, cart, orders }: Static
       yield* placeOrder();
       return;
     }
+    if (request.kind === 'changeCart') {
+      return;
+    }
     yield* trace('tool', 'add_to_cart', { en: 'Adding it to your cart', ar: 'بضيفها للأوردر' });
     for (const piece of request.pieces) {
       await cart.addPiece(piece.productId, piece.variantId, piece.quantity);

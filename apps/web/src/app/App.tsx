@@ -1,6 +1,7 @@
-import { Fragment, Suspense, useMemo, type ReactNode } from 'react';
+import { Fragment, Suspense, useMemo, useRef, type ReactNode } from 'react';
 import { Navigate, Route, Routes, useNavigate, useParams } from 'react-router';
 import { LoadingState } from '../core/presentation/LoadStates';
+import type { ChatMemory } from '../features/chat';
 import { StartScreen } from '../features/start';
 import { ClientShell } from './ClientShell';
 import type { AppContainer } from './container';
@@ -26,6 +27,7 @@ export interface AppProps {
 export function App({ container }: AppProps) {
   const navigate = useNavigate();
   const coordinator = useMemo(() => createAppCoordinator((path) => void navigate(path)), [navigate]);
+  const chatMemory = useRef<ChatMemory>({ state: null }).current;
   const { session, catalog, cart, orders, follows, preferences, notifications, settings } = container;
   const { merchantProfile, merchantProducts, merchantOrders } = container;
 
@@ -50,7 +52,7 @@ export function App({ container }: AppProps) {
       </Route>
 
       <Route element={<ClientShell session={session} cart={cart} settings={settings} coordinator={coordinator} />}>
-        <Route path={routes.chat} element={<screens.ChatScreen agent={container.agent} catalog={catalog} onOpenProduct={coordinator.showProduct} onOpenOrders={coordinator.showOrders} onOpenPhotoToShop={coordinator.showPhotoToShop} />} />
+        <Route path={routes.chat} element={<screens.ChatScreen agent={container.agent} catalog={catalog} onOpenProduct={coordinator.showProduct} onOpenOrders={coordinator.showOrders} onOpenPhotoToShop={coordinator.showPhotoToShop} memory={chatMemory} />} />
         <Route path={routes.browse} element={<screens.BrowseScreen catalog={catalog} onOpenBrand={coordinator.showBrand} onOpenProduct={coordinator.showProduct} />} />
         <Route path={routes.search} element={<screens.SearchScreen search={container.productSearch} catalog={catalog} onOpenProduct={coordinator.showProduct} />} />
         <Route path={routes.brand} element={<WithParam name="merchantId" render={(id) => <screens.BrandScreen merchantId={id} catalog={catalog} follows={follows} onOpenProduct={coordinator.showProduct} />} />} />
@@ -63,7 +65,7 @@ export function App({ container }: AppProps) {
         <Route path={routes.rateOrder} element={<WithParam name="orderId" render={(id) => <screens.RateOrderScreen orderId={id} orders={orders} onBack={() => coordinator.showOrder(id)} />} />} />
         <Route path={routes.account} element={<screens.AccountScreen preferences={preferences} onOpenOrders={coordinator.showOrders} onOpenNotifications={coordinator.showNotifications} onOpenSettings={coordinator.showSettings} />} />
         <Route path={routes.notifications} element={<screens.NotificationsScreen notifications={notifications} />} />
-        <Route path={routes.settings} element={<screens.SettingsScreen settings={settings} notifications={notifications} session={session} onDeleted={coordinator.showStart} />} />
+        <Route path={routes.settings} element={<screens.SettingsScreen settings={settings} notifications={notifications} session={session} onDeleted={() => { chatMemory.state = null; coordinator.showStart(); }} />} />
       </Route>
 
       <Route element={<MerchantShell profile={merchantProfile} coordinator={coordinator} />}>

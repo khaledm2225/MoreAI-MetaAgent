@@ -51,6 +51,13 @@ describe('PhotoToShopScreen', () => {
     expect(onOpenProduct).toHaveBeenCalledWith('p');
   });
 
+  it('shows the first piece’s matches right away, with no tap needed', async () => {
+    renderInLocale(<PhotoToShopScreen gateway={gateway()} onOpenProduct={vi.fn()} />);
+    await pickPhoto();
+    expect(await screen.findByRole('button', { name: /Black jacket/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Jacket' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
   it('says when it finds no pieces', async () => {
     renderInLocale(<PhotoToShopScreen gateway={gateway({ detectPieces: () => Promise.resolve([]) })} onOpenProduct={() => {}} />);
     await pickPhoto();

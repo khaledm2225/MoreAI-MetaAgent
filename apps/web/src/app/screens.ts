@@ -1,4 +1,26 @@
-import { lazy } from 'react';
+import { lazy as reactLazy, type ComponentType } from 'react';
+
+const RELOADED = 'moreai.reloaded-for-new-version';
+
+/** After a new version goes live, an open page may ask for files that no longer exist. Reloading once fixes it. */
+function lazy<Screen extends ComponentType<any>>(load: () => Promise<{ default: Screen }>) {
+  return reactLazy(() =>
+    load().then(
+      (loaded) => {
+        sessionStorage.removeItem(RELOADED);
+        return loaded;
+      },
+      (error: unknown) => {
+        if (sessionStorage.getItem(RELOADED) === null) {
+          sessionStorage.setItem(RELOADED, '1');
+          window.location.reload();
+          return new Promise<never>(() => {});
+        }
+        throw error;
+      },
+    ),
+  );
+}
 
 /** Each screen loads when it's first opened, so the first screen stays light. */
 export const ClientGateScreen = lazy(() => import('../features/client-gate').then((m) => ({ default: m.ClientGateScreen })));

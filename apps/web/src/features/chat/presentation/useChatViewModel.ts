@@ -1,19 +1,27 @@
-import { useCallback, useReducer, useRef } from 'react';
+import { useCallback, useEffect, useReducer, useRef } from 'react';
 import type { AgentInput } from '../../../core/domain/agent';
 import type { Id } from '../../../core/domain/catalog';
 import type { Address } from '../../../core/domain/order';
 import type { AgentGateway } from '../../../core/domain/ports';
-import { chatReducer, initialChatState } from './chatState';
+import type { PhotoInput } from '../../../core/domain/vision';
+import { chatReducer, initialChatState, type ChatMemory } from './chatState';
 
-export function useChatViewModel(agent: AgentGateway) {
-  const [state, dispatch] = useReducer(chatReducer, initialChatState);
+export function useChatViewModel(agent: AgentGateway, memory?: ChatMemory) {
+  const [state, dispatch] = useReducer(chatReducer, memory?.state === null || memory?.state === undefined ? initialChatState : { ...memory.state, isThinking: false });
+
+  useEffect(() => {
+    if (memory !== undefined) {
+      memory.state = state;
+    }
+  }, [memory, state]);
   const nextId = useRef(1);
 
   const run = useCallback(
     async (input: AgentInput, shopperText: string | null) => {
       const id = `sent-${String(nextId.current)}`;
       nextId.current += 1;
-      dispatch({ type: 'sent', id, text: shopperText });
+      const photoUrl = input.kind === 'text' ? input.photo?.previewUrl : undefined;
+      dispatch({ type: 'sent', id, text: shopperText, ...(photoUrl === undefined ? {} : { photoUrl }) });
       try {
         for await (const event of agent.send(input)) {
           dispatch({ type: 'event', event });
@@ -29,10 +37,10 @@ export function useChatViewModel(agent: AgentGateway) {
   return {
     state,
     sendText: useCallback(
-      (text: string) => {
+      (text: string, photo?: PhotoInput) => {
         const trimmed = text.trim();
         if (trimmed !== '') {
-          void run({ kind: 'text', text: trimmed }, trimmed);
+          void run({ kind: 'text', text: trimmed, ...(photo === undefined ? {} : { photo }) }, trimmed);
         }
       },
       [run],

@@ -3,7 +3,7 @@ import type { Order } from '../../../core/domain/order';
 import type { LocalizedText } from '../../../core/domain/text';
 
 export type ChatItem =
-  | { readonly kind: 'shopper'; readonly id: string; readonly text: string }
+  | { readonly kind: 'shopper'; readonly id: string; readonly text: string; readonly photoUrl?: string }
   | { readonly kind: 'assistant'; readonly id: string; readonly text: LocalizedText }
   | { readonly kind: 'suggestions'; readonly id: string; readonly pieces: readonly SuggestedPiece[] }
   | { readonly kind: 'confirm'; readonly id: string; readonly request: ConfirmationRequest; readonly answer: boolean | null }
@@ -19,10 +19,15 @@ export interface ChatState {
   readonly hasFailed: boolean;
 }
 
+/** Holds the conversation while the shopper looks at other screens. */
+export interface ChatMemory {
+  state: ChatState | null;
+}
+
 export const initialChatState: ChatState = { items: [], trace: [], isThinking: false, hasFailed: false };
 
 export type ChatAction =
-  | { readonly type: 'sent'; readonly id: string; readonly text: string | null }
+  | { readonly type: 'sent'; readonly id: string; readonly text: string | null; readonly photoUrl?: string }
   | { readonly type: 'event'; readonly event: AgentEvent }
   | { readonly type: 'answered'; readonly requestId: string; readonly accepted: boolean }
   | { readonly type: 'addressGiven' }
@@ -71,7 +76,7 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
         ...state,
         isThinking: true,
         hasFailed: false,
-        items: action.text === null ? state.items : [...state.items, { kind: 'shopper', id: action.id, text: action.text }],
+        items: action.text === null ? state.items : [...state.items, { kind: 'shopper', id: action.id, text: action.text, ...(action.photoUrl === undefined ? {} : { photoUrl: action.photoUrl }) }],
       };
     case 'event':
       return applyEvent(state, action.event);

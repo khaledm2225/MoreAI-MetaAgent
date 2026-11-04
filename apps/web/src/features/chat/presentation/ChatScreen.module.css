@@ -24,6 +24,14 @@
   min-inline-size: 0;
 }
 
+/* On a phone, the conversation comes first and the trace follows it. */
+@media (max-width: 52rem) {
+  .trace {
+    position: static;
+    order: 1;
+  }
+}
+
 .messages {
   display: flex;
   flex-direction: column;
@@ -58,6 +66,37 @@
   display: flex;
   align-items: flex-end;
   gap: var(--space-xs);
+}
+
+.picker {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.attached {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+}
+
+.attachedPhoto {
+  display: block;
+  inline-size: auto;
+  max-inline-size: 8rem;
+  max-block-size: 8rem;
+  border-radius: var(--radius-card);
+}
+
+.sentPhoto {
+  display: block;
+  inline-size: auto;
+  max-inline-size: min(100%, 14rem);
+  max-block-size: 16rem;
+  margin-block-end: var(--space-xs);
+  border-radius: var(--space-s);
 }
 
 .composerField {

@@ -58,8 +58,7 @@ export interface AppPorts {
 }
 
 /** Every port, filled with static demo data. The backend replaces this one call later. */
-export function createStaticPorts(options: DemoWorldOptions): AppPorts {
-  const world = new DemoWorld(options);
+export function createStaticPorts(options: DemoWorldOptions, world: DemoWorld = new DemoWorld(options)): AppPorts {
   const productSearch = createProductSearch(world);
   const cart = createCartRepository(world);
   const orders = createOrdersRepository(world);

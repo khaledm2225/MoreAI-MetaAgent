@@ -1,3 +1,4 @@
+import { createRemotePorts, type RemotePortsOptions } from '../core/data/remote';
 import { createStaticPorts, type AppPorts } from '../core/data/static';
 
 /**
@@ -19,4 +20,9 @@ export function createAppContainer({
   clock = () => new Date(),
 }: AppContainerOptions = {}): AppContainer {
   return createStaticPorts({ latencyMs, clock });
+}
+
+/** The real backend. Phase 2's swap: nothing above the data layer knows the difference. */
+export function createRemoteAppContainer(options: RemotePortsOptions): Promise<AppContainer> {
+  return createRemotePorts(options);
 }

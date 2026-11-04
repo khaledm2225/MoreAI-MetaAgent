@@ -19,6 +19,18 @@ export function usePhotoToShopViewModel(gateway: PhotoToShopGateway) {
   const [state, setState] = useState<PhotoToShopState>({ kind: 'choosing', problem: null });
   const latest = useRef(0);
 
+  const selectPiece = useCallback(
+    (piece: DetectedPiece) => {
+      latest.current += 1;
+      const request = latest.current;
+      const update = (similar: 'loading' | 'failed' | readonly SimilarPiece[]) =>
+        setState((current) => (current.kind === 'pieces' && request === latest.current ? { ...current, selectedId: piece.id, similar } : current));
+      update('loading');
+      gateway.findSimilar(piece).then(update, () => update('failed'));
+    },
+    [gateway],
+  );
+
   const pick = useCallback(
     (file: Pick<File, 'name' | 'type' | 'size'>, previewUrl: string) => {
       const photo: PhotoInput = { name: file.name, type: file.type, sizeBytes: file.size, previewUrl };
@@ -38,6 +50,11 @@ export function usePhotoToShopViewModel(gateway: PhotoToShopGateway) {
                 ? { kind: 'noPieces', photoUrl: previewUrl }
                 : { kind: 'pieces', photoUrl: previewUrl, pieces, selectedId: null, similar: 'idle' },
             );
+            // Nobody should have to work out that a box can be tapped: the first piece's matches come right away.
+            const first = pieces[0];
+            if (first !== undefined) {
+              selectPiece(first);
+            }
           }
         },
         () => {
@@ -47,19 +64,7 @@ export function usePhotoToShopViewModel(gateway: PhotoToShopGateway) {
         },
       );
     },
-    [gateway],
-  );
-
-  const selectPiece = useCallback(
-    (piece: DetectedPiece) => {
-      latest.current += 1;
-      const request = latest.current;
-      const update = (similar: 'loading' | 'failed' | readonly SimilarPiece[]) =>
-        setState((current) => (current.kind === 'pieces' && request === latest.current ? { ...current, selectedId: piece.id, similar } : current));
-      update('loading');
-      gateway.findSimilar(piece).then(update, () => update('failed'));
-    },
-    [gateway],
+    [gateway, selectPiece],
   );
 
   const reset = useCallback(() => {

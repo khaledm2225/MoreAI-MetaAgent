@@ -2,6 +2,7 @@ import type { Id, Merchant, Product } from './catalog';
 import type { Address, Order } from './order';
 import type { Preference } from './taste';
 import type { LocalizedText } from './text';
+import type { PhotoInput } from './vision';
 
 export type TraceKind = 'model' | 'tool';
 export type TraceStatus = 'running' | 'done' | 'failed';
@@ -23,13 +24,21 @@ export interface SuggestedPiece {
   readonly reason: LocalizedText;
 }
 
-/** The agent never adds to the cart or places an order until the shopper answers one of these. */
+/** The agent never changes the cart or places an order until the shopper answers one of these. */
 export type ConfirmationRequest =
   | {
       readonly id: Id;
       readonly kind: 'addToCart';
       readonly question: LocalizedText;
       readonly pieces: readonly { readonly productId: Id; readonly variantId: Id; readonly quantity: number }[];
+    }
+  | {
+      readonly id: Id;
+      readonly kind: 'changeCart';
+      readonly question: LocalizedText;
+      readonly lineId: Id;
+      /** The new quantity. Zero removes the piece. */
+      readonly quantity: number;
     }
   | {
       readonly id: Id;
@@ -50,7 +59,7 @@ export type AgentEvent =
   | { readonly type: 'limitReached'; readonly text: LocalizedText };
 
 export type AgentInput =
-  | { readonly kind: 'text'; readonly text: string }
+  | { readonly kind: 'text'; readonly text: string; readonly photo?: PhotoInput }
   | { readonly kind: 'chooseVariant'; readonly productId: Id; readonly variantId: Id }
   | { readonly kind: 'address'; readonly address: Address }
   | { readonly kind: 'confirmation'; readonly requestId: Id; readonly accepted: boolean };

@@ -1,6 +1,20 @@
+/* Side by side when there's room, so the matches show without scrolling past the photo. */
+.results {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-l);
+}
+
+.matches {
+  flex: 2 1 22rem;
+  min-inline-size: 0;
+}
+
 .photoFrame {
   position: relative;
-  inline-size: min(100%, 28rem);
+  flex: 1 1 18rem;
+  max-inline-size: 26rem;
   margin-inline: auto;
   overflow: hidden;
   border-radius: var(--radius-card);

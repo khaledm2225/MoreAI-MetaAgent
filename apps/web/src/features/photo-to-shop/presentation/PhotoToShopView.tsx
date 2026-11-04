@@ -41,6 +41,7 @@ export function PhotoToShopView({ state, onPick, onSelectPiece, onReset, onOpenP
           </Stack>
         )}
         {state.kind === 'failed' && <ErrorState onRetry={onReset} />}
+        <div className={styles.results}>
         {(state.kind === 'outlining' || state.kind === 'noPieces' || state.kind === 'pieces') && (
           <div className={styles.photoFrame} dir="ltr">
             <img className={styles.photo} src={state.photoUrl} alt={t('photoAlt')} />
@@ -59,11 +60,13 @@ export function PhotoToShopView({ state, onPick, onSelectPiece, onReset, onOpenP
               ))}
           </div>
         )}
+        <div className={styles.matches}>
         {state.kind === 'outlining' && <Spinner label={t('outlining')} />}
         {state.kind === 'noPieces' && <EmptyState icon="image" title={t('noPiecesTitle')} body={t('noPiecesBody')} />}
         {state.kind === 'pieces' && (
           <Stack gap="s">
             {state.selectedId === null && <Banner>{t('choosePiece')}</Banner>}
+            {state.pieces.length > 1 && <Banner>{t('tapAnother', { count: state.pieces.length })}</Banner>}
             {state.similar === 'loading' && <Spinner label={t('findingSimilar')} />}
             {state.similar === 'failed' && <ErrorState onRetry={onReset} />}
             {Array.isArray(state.similar) &&
@@ -83,6 +86,8 @@ export function PhotoToShopView({ state, onPick, onSelectPiece, onReset, onOpenP
               ))}
           </Stack>
         )}
+        </div>
+        </div>
         {state.kind !== 'choosing' && state.kind !== 'failed' && (
           <Button prominence="secondary" icon="camera" onClick={onReset}>
             {t('chooseAnother')}
