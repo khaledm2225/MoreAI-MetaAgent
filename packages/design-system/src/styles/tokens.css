@@ -1,0 +1,84 @@
+:root {
+  --color-background: #F5ECD6;
+  --color-text-primary: #1C1412;
+  --color-text-secondary: #4A3C34;
+  --color-accent-text: #C8000F;
+  --color-danger: #B8000E;
+  --color-action-fill: #C8000F;
+  --color-on-action: #F5ECD6;
+  --color-tonal-fill: #EBDDBF;
+  --color-brand-ground: #F50A16;
+  --color-on-brand-ground: #F5ECD6;
+  --color-brand-action: #F5ECD6;
+  --color-on-brand-action: #1C1412;
+  --color-brand-tonal-fill: #C8000F;
+
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.75rem;
+  --space-m: 1rem;
+  --space-l: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
+
+  --radius-action: 1.875rem;
+  --radius-card: 1.25rem;
+
+  --touch-minimum: 2.75rem;
+
+  --content-reading: 42rem;
+  --content-regular: 70rem;
+  --content-wide: 90rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+
+  --font-heading: 'Baloo Bhaijaan 2 Variable', 'Baloo Bhaijaan 2', system-ui, sans-serif;
+  --font-body: 'Rubik Variable', 'Rubik', system-ui, sans-serif;
+
+  --type-hero-family: var(--font-heading);
+  --type-hero-weight: 800;
+  --type-hero-size: clamp(3rem, 1.5rem + 8vw, 6rem);
+  --type-display-family: var(--font-heading);
+  --type-display-weight: 800;
+  --type-display-size: 2.5rem;
+  --type-title-family: var(--font-heading);
+  --type-title-weight: 700;
+  --type-title-size: 1.75rem;
+  --type-section-family: var(--font-heading);
+  --type-section-weight: 700;
+  --type-section-size: 1.375rem;
+  --type-headline-family: var(--font-heading);
+  --type-headline-weight: 600;
+  --type-headline-size: 1.125rem;
+  --type-body-family: var(--font-body);
+  --type-body-weight: 400;
+  --type-body-size: 1.0625rem;
+  --type-supporting-family: var(--font-body);
+  --type-supporting-weight: 400;
+  --type-supporting-size: 0.9375rem;
+  --type-button-family: var(--font-body);
+  --type-button-weight: 600;
+  --type-button-size: 1.0625rem;
+  --type-strong-button-family: var(--font-body);
+  --type-strong-button-weight: 700;
+  --type-strong-button-size: 1.0625rem;
+  --type-label-family: var(--font-body);
+  --type-label-weight: 500;
+  --type-label-size: 0.8125rem;
+  --type-caption-family: var(--font-body);
+  --type-caption-weight: 400;
+  --type-caption-size: 0.75rem;
+
+  --motion-pop-duration: 500ms;
+  --motion-pop-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-quick-duration: 200ms;
+  --motion-quick-easing: ease-out;
+  --motion-spin-duration: 800ms;
+  --motion-spin-easing: linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-pop-duration: var(--motion-quick-duration);
+    --motion-pop-easing: var(--motion-quick-easing);
+  }
+}

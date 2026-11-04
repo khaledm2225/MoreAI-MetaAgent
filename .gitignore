@@ -1,25 +1,19 @@
 # Dependencies and build output
 node_modules/
-functions/lib/
+dist/
+coverage/
+*.tsbuildinfo
 
-# Firebase
-.firebase/
-firebase-debug.log*
-firestore-debug.log*
-ui-debug.log*
-emulator-data/
+# Cloudflare
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
 
 # Secrets: the Meta Model API key never enters the repo
 .env
 .env.*
 !.env.example
-functions/.secret.local
-functions/.runtimeconfig.json
-
-# Xcode
-xcuserdata/
-DerivedData/
-*.xcuserstate
 
 # macOS
 .DS_Store

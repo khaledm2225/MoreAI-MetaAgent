@@ -1,0 +1,17 @@
+/* As many columns as fit, from the space itself, so no screen size needs its own rule. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--item-width)), 1fr));
+}
+
+.grid[data-item-width='compact'] { --item-width: 14rem; }
+.grid[data-item-width='regular'] { --item-width: 20rem; }
+.grid[data-item-width='wide'] { --item-width: 28rem; }
+
+.grid[data-gap='xxs'] { gap: var(--space-xxs); }
+.grid[data-gap='xs'] { gap: var(--space-xs); }
+.grid[data-gap='s'] { gap: var(--space-s); }
+.grid[data-gap='m'] { gap: var(--space-m); }
+.grid[data-gap='l'] { gap: var(--space-l); }
+.grid[data-gap='xl'] { gap: var(--space-xl); }
+.grid[data-gap='xxl'] { gap: var(--space-xxl); }

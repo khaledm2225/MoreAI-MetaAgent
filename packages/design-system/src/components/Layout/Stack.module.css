@@ -1,0 +1,21 @@
+.stack {
+  display: flex;
+  min-inline-size: 0;
+}
+
+.stack[data-direction='column'] {
+  flex-direction: column;
+}
+
+.stack[data-direction='row'] {
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.stack[data-gap='xxs'] { gap: var(--space-xxs); }
+.stack[data-gap='xs'] { gap: var(--space-xs); }
+.stack[data-gap='s'] { gap: var(--space-s); }
+.stack[data-gap='m'] { gap: var(--space-m); }
+.stack[data-gap='l'] { gap: var(--space-l); }
+.stack[data-gap='xl'] { gap: var(--space-xl); }
+.stack[data-gap='xxl'] { gap: var(--space-xxl); }

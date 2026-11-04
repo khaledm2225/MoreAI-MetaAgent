@@ -1,0 +1,37 @@
+import type { Catalog } from '@metaagent/i18n';
+import type { MessageKey } from './en';
+
+export const ar = {
+  'gallery.title': 'نظام التصميم',
+  'gallery.switchLanguage': 'English',
+  'panel.redGround': 'الأرضية الحمرا',
+  'panel.page': 'الصفحة الكريمي',
+  'panel.buttonsOnRed': 'كل الزراير على الأحمر',
+  'panel.buttonsOnPage': 'كل الزراير على الكريمي',
+  'panel.type': 'الخطوط',
+  'panel.colors': 'الألوان',
+  'hero.words': 'فاهم ذوقك',
+  'hero.supporting': 'كل البراندات المحلية في مكان واحد.',
+  'action.next': 'اللي بعده',
+  'action.back': 'اللي قبله',
+  'action.skip': 'عدّي',
+  'action.main': 'الزرار الأساسي',
+  'action.calm': 'الزرار الهادي',
+  'action.remove': 'امسح',
+  'action.snap': 'صوّر اللبس',
+  'action.unavailable': 'مش متاح',
+  'action.loading': 'بيحمل',
+  'action.cancel': 'إلغاء',
+  'action.confirm': 'تأكيد',
+  'action.addToCart': 'ضيف للأوردر',
+  'product.name': 'جاكيت أسود',
+  'product.description': 'جاكيت واسع وهادي، ينفع مع أي Outfit.',
+  'product.pieces': {
+    zero: 'خلصت',
+    one: 'فاضل قطعة واحدة',
+    two: 'فاضل قطعتين',
+    few: 'فاضل {count} قطع',
+    many: 'فاضل {count} قطعة',
+    other: 'فاضل {count} قطعة',
+  },
+} as const satisfies Catalog<MessageKey>;
