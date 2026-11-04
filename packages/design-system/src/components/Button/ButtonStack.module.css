@@ -1,0 +1,17 @@
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+}
+
+.stack[data-widths='equal'] > * {
+  flex: 1 1 12rem;
+}
+
+.stack[data-widths='hugging'] > [data-size='regular'] {
+  flex: 1 1 12rem;
+}
+
+.stack[data-widths='hugging'] > [data-size='compact'] {
+  flex: 0 0 auto;
+}

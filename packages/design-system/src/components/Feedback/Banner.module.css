@@ -1,0 +1,29 @@
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-s);
+  padding: var(--space-m);
+  border: 1px solid var(--color-tonal-fill);
+  border-radius: var(--radius-card);
+  background: var(--ground-fill);
+  color: var(--ground-text);
+  font-size: var(--type-supporting-size);
+}
+
+.icon {
+  flex: none;
+  margin-block-start: 0.125rem;
+  color: var(--ground-text-secondary);
+}
+
+.banner[data-tone='error'] {
+  border-color: var(--color-danger);
+}
+
+.banner[data-tone='error'] .icon {
+  color: var(--ground-danger);
+}
+
+.words {
+  min-inline-size: 0;
+}

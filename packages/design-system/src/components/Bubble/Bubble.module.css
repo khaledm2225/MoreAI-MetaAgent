@@ -1,0 +1,23 @@
+.bubble {
+  inline-size: fit-content;
+  max-inline-size: min(85%, 36rem);
+  padding-block: var(--space-s);
+  padding-inline: var(--space-m);
+  border-radius: var(--radius-card);
+  font-size: var(--type-body-size);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bubble[data-from='self'] {
+  align-self: flex-end;
+  background: var(--color-action-fill);
+  color: var(--color-on-action);
+}
+
+.bubble[data-from='other'] {
+  align-self: flex-start;
+  border: 1px solid var(--color-tonal-fill);
+  background: var(--color-background);
+  color: var(--color-text-primary);
+}

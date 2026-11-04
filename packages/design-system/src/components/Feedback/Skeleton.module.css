@@ -1,0 +1,38 @@
+.skeleton {
+  display: block;
+  background: var(--color-tonal-fill);
+  animation: pulse var(--motion-pulse-duration) var(--motion-pulse-easing) infinite alternate;
+}
+
+.skeleton[data-shape='text'] {
+  block-size: 1em;
+  border-radius: var(--space-xxs);
+}
+
+.skeleton[data-shape='block'] {
+  inline-size: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-card);
+}
+
+.skeleton[data-shape='circle'] {
+  inline-size: var(--touch-minimum);
+  block-size: var(--touch-minimum);
+  border-radius: 50%;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

@@ -1,0 +1,87 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ground-fill);
+  color: var(--ground-text);
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-inline-size: 100%;
+}
+
+/* Read by screen readers, hidden from the eye. */
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* An arrow points where the reading goes, so it flips for right to left. */
+:dir(rtl) [data-mirrored='true'] {
+  transform: scaleX(-1);
+}
+
+/*
+ * What a part of a screen is painted with. Components read these, so they keep
+ * their contrast on either ground without knowing which one they sit on.
+ * The red ground is the app's own, so it's also the default.
+ */
+:root,
+[data-ground='brand'] {
+  --ground-fill: var(--color-brand-ground);
+  --ground-text: var(--color-on-brand-ground);
+  --ground-text-secondary: var(--color-on-brand-ground);
+  --ground-accent: var(--color-on-brand-ground);
+  --ground-danger: var(--color-on-brand-ground);
+  --button-primary-fill: var(--color-brand-action);
+  --button-primary-label: var(--color-on-brand-action);
+  --button-secondary-fill: var(--color-brand-tonal-fill);
+  --button-secondary-label: var(--color-on-brand-ground);
+  --button-quiet-label: var(--color-on-brand-ground);
+  --button-quiet-weight: var(--type-strong-button-weight);
+  --button-destructive-fill: var(--color-brand-tonal-fill);
+  --button-destructive-label: var(--color-on-brand-ground);
+}
+
+[data-ground='plain'] {
+  --ground-fill: var(--color-background);
+  --ground-text: var(--color-text-primary);
+  --ground-text-secondary: var(--color-text-secondary);
+  --ground-accent: var(--color-accent-text);
+  --ground-danger: var(--color-danger);
+  --button-primary-fill: var(--color-action-fill);
+  --button-primary-label: var(--color-on-action);
+  --button-secondary-fill: var(--color-tonal-fill);
+  --button-secondary-label: var(--color-text-primary);
+  --button-quiet-label: var(--color-text-primary);
+  --button-quiet-weight: var(--type-button-weight);
+  --button-destructive-fill: var(--color-tonal-fill);
+  --button-destructive-label: var(--color-danger);
+}

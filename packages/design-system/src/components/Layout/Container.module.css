@@ -1,0 +1,17 @@
+.container {
+  inline-size: 100%;
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+}
+
+.container[data-width='reading'] {
+  max-inline-size: var(--content-reading);
+}
+
+.container[data-width='regular'] {
+  max-inline-size: var(--content-regular);
+}
+
+.container[data-width='wide'] {
+  max-inline-size: var(--content-wide);
+}

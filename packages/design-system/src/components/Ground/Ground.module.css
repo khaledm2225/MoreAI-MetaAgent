@@ -1,0 +1,10 @@
+.ground {
+  background: var(--ground-fill);
+  color: var(--ground-text);
+}
+
+/* The dynamic height follows a phone's browser bars as they show and hide. */
+.ground[data-fill-viewport='true'] {
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}

@@ -1,0 +1,120 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--touch-minimum);
+  min-inline-size: var(--touch-minimum);
+  padding-block: var(--space-s);
+  padding-inline: var(--space-l);
+  border: 0;
+  border-radius: var(--radius-action);
+  background: var(--fill);
+  color: var(--label);
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
+  font-weight: var(--type-button-weight);
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--motion-pop-duration) var(--motion-pop-easing),
+    filter var(--motion-quick-duration) var(--motion-quick-easing),
+    opacity var(--motion-quick-duration) var(--motion-quick-easing);
+}
+
+.button[data-size='regular'] {
+  inline-size: 100%;
+}
+
+.button[data-size='compact'] {
+  inline-size: fit-content;
+  padding-block: var(--space-xs);
+  padding-inline: var(--space-m);
+}
+
+.button[data-prominence='primary'] {
+  --fill: var(--button-primary-fill);
+  --label: var(--button-primary-label);
+}
+
+.button[data-prominence='secondary'] {
+  --fill: var(--button-secondary-fill);
+  --label: var(--button-secondary-label);
+}
+
+.button[data-prominence='quiet'] {
+  --fill: transparent;
+  --label: var(--button-quiet-label);
+  font-weight: var(--button-quiet-weight);
+}
+
+.button[data-prominence='destructive'] {
+  --fill: var(--button-destructive-fill);
+  --label: var(--button-destructive-label);
+}
+
+@media (hover: hover) {
+  .button:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ground-text);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.button[aria-busy='true'] {
+  cursor: progress;
+  opacity: 1;
+}
+
+.content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Hidden by opacity, not removed, so the words still name the button for screen readers. */
+.button[aria-busy='true'] .content {
+  opacity: 0;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  border: 2px solid currentColor;
+  border-block-start-color: transparent;
+  border-radius: 50%;
+  animation: spin var(--motion-spin-duration) var(--motion-spin-easing) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (forced-colors: active) {
+  .button {
+    border: 1px solid ButtonText;
+  }
+}

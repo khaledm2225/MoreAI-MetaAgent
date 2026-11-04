@@ -1,0 +1,59 @@
+.iconButton {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--touch-minimum);
+  block-size: var(--touch-minimum);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--fill);
+  color: var(--label);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--motion-pop-duration) var(--motion-pop-easing),
+    filter var(--motion-quick-duration) var(--motion-quick-easing);
+}
+
+.iconButton[data-prominence='primary'] {
+  --fill: var(--button-primary-fill);
+  --label: var(--button-primary-label);
+}
+
+.iconButton[data-prominence='secondary'] {
+  --fill: var(--button-secondary-fill);
+  --label: var(--button-secondary-label);
+}
+
+.iconButton[data-prominence='quiet'] {
+  --fill: transparent;
+  --label: var(--button-quiet-label);
+}
+
+@media (hover: hover) {
+  .iconButton:hover:not(:disabled) {
+    filter: brightness(0.94);
+  }
+}
+
+.iconButton:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--ground-text);
+  outline-offset: 2px;
+}
+
+.iconButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (forced-colors: active) {
+  .iconButton {
+    border: 1px solid ButtonText;
+  }
+}

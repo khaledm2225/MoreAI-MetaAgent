@@ -1,0 +1,60 @@
+.page {
+  padding-block: var(--space-l);
+}
+
+.header {
+  justify-content: space-between;
+  padding-block-end: var(--space-l);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  min-inline-size: 0;
+}
+
+.screen {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-m);
+  padding: var(--space-l);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-tonal-fill);
+}
+
+.hero {
+  min-block-size: 36rem;
+}
+
+.push {
+  margin-block-start: auto;
+}
+
+.photo {
+  aspect-ratio: 4 / 5;
+  max-block-size: 22rem;
+  border-radius: var(--radius-card);
+  background: var(--color-tonal-fill);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 6.5rem), 1fr));
+  gap: var(--space-s);
+}
+
+.chip {
+  block-size: 2.75rem;
+  border-radius: var(--space-s);
+  border: 1px solid var(--color-tonal-fill);
+}
+
+/* Token names and values stay left to right in both languages. */
+.code {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
+  overflow-wrap: anywhere;
+}
