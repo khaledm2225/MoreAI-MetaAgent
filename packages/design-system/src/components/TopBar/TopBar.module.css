@@ -1,0 +1,30 @@
+.bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 5;
+  background: var(--ground-fill);
+  border-block-end: 1px solid var(--color-hairline);
+}
+
+@media (max-height: 30rem) {
+  .bar {
+    position: static;
+  }
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding-block: var(--space-xs);
+}
+
+.slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+}

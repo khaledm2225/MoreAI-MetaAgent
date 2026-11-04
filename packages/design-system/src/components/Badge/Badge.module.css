@@ -12,11 +12,11 @@
 }
 
 .badge[data-tone='calm'] {
-  background: var(--button-secondary-fill);
-  color: var(--button-secondary-label);
+  background: var(--control-calm-fill);
+  color: var(--control-calm-label);
 }
 
 .badge[data-tone='strong'] {
-  background: var(--button-primary-fill);
-  color: var(--button-primary-label);
+  background: var(--control-strong-fill);
+  color: var(--control-strong-label);
 }

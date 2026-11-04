@@ -1,0 +1,33 @@
+.stars {
+  display: inline-flex;
+  gap: var(--space-xxs);
+  color: var(--ground-accent);
+}
+
+.filled svg {
+  fill: currentColor;
+}
+
+.option {
+  display: grid;
+  place-items: center;
+  inline-size: var(--touch-minimum);
+  block-size: var(--touch-minimum);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform var(--motion-pop-duration) var(--motion-pop-easing);
+}
+
+.option:active {
+  transform: scale(0.9);
+}
+
+.option:has(input:focus-visible) {
+  outline: 2px solid var(--ground-text);
+}
+
+.option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}

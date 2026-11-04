@@ -1,0 +1,73 @@
+.frame {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  outline: none;
+}
+
+.skip {
+  position: absolute;
+  inset-block-start: -100rem;
+  inset-inline-start: var(--space-xs);
+  z-index: 10;
+  padding: var(--space-xs) var(--space-s);
+  background: var(--ground-fill);
+  border: 1px solid var(--color-hairline);
+  color: inherit;
+}
+
+.skip:focus {
+  inset-block-start: var(--space-xs);
+}
+
+.footerInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding-block: var(--space-m);
+}
+
+.logoButton {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.logo {
+  display: block;
+  block-size: 2rem;
+  inline-size: auto;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.navRow {
+  padding-block: var(--space-xs);
+  border-block-end: 1px solid var(--color-hairline);
+}
+
+.cart {
+  position: relative;
+  display: inline-flex;
+}
+
+.count {
+  position: absolute;
+  inset-block-start: -0.25rem;
+  inset-inline-end: -0.25rem;
+  pointer-events: none;
+}

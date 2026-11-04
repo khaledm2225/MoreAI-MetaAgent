@@ -11,13 +11,13 @@
 
 .bubble[data-from='self'] {
   align-self: flex-end;
-  background: var(--color-action-fill);
+  background: var(--color-tonal-fill);
   color: var(--color-on-action);
 }
 
 .bubble[data-from='other'] {
   align-self: flex-start;
-  border: 1px solid var(--color-tonal-fill);
+  border: 1px solid var(--color-hairline);
   background: var(--color-background);
   color: var(--color-text-primary);
 }

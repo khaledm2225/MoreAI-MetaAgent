@@ -1,0 +1,41 @@
+import { defineCatalogs } from '@metaagent/i18n';
+
+export const strings = defineCatalogs(
+  {
+    title: 'Search',
+    subtitle: 'Closest to your words first. Your budget is always respected.',
+    queryLabel: 'What are you looking for?',
+    queryPlaceholder: 'Black jacket',
+    budgetLabel: 'Budget in EGP (optional)',
+    budgetPlaceholder: '500',
+    budgetError: 'Write the budget as a whole number',
+    search: 'Search',
+    resultsLabel: { one: '{count} piece found', other: '{count} pieces found' },
+    nothingInBudgetTitle: 'Nothing in your budget',
+    nothingInBudgetBody: 'We found pieces like this, but they all cost more. Try a bigger budget.',
+    noResultsTitle: 'No results',
+    noResultsBody: 'Try different words.',
+  },
+  {
+    title: 'دور',
+    subtitle: 'الأقرب لكلامك الأول، وميزانيتك دايما محترمة.',
+    queryLabel: 'بتدور على إيه؟',
+    queryPlaceholder: 'جاكيت أسود',
+    budgetLabel: 'الميزانية بالجنيه (اختياري)',
+    budgetPlaceholder: '500',
+    budgetError: 'اكتب الميزانية رقم صحيح',
+    search: 'دور',
+    resultsLabel: {
+      zero: 'مفيش قطع',
+      one: 'لقينا قطعة واحدة',
+      two: 'لقينا قطعتين',
+      few: 'لقينا {count} قطع',
+      many: 'لقينا {count} قطعة',
+      other: 'لقينا {count} قطعة',
+    },
+    nothingInBudgetTitle: 'مفيش حاجة في ميزانيتك',
+    nothingInBudgetBody: 'لقينا قطع شبه كده، بس كلها أغلى. جرب ميزانية أكبر.',
+    noResultsTitle: 'مفيش نتايج',
+    noResultsBody: 'جرب كلام تاني.',
+  },
+);

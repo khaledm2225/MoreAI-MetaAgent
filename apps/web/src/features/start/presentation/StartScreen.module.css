@@ -1,0 +1,55 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-l);
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+}
+
+.logo {
+  display: block;
+  inline-size: auto;
+  block-size: 2.25rem;
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.character {
+  display: block;
+  justify-self: center;
+  inline-size: min(100%, 26rem);
+  image-rendering: pixelated;
+}
+
+.words {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  min-inline-size: 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  max-inline-size: 28rem;
+}

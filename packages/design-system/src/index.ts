@@ -33,6 +33,22 @@ export {
 } from './components/IconButton/IconButton';
 export { Media, type MediaProps, type MediaRatio } from './components/Media/Media';
 export { TextField, type TextFieldProps } from './components/TextField/TextField';
+export { AnimatedBullets, type AnimatedBulletsProps, type BulletItem } from './components/AnimatedBullets/AnimatedBullets';
+export { Confetti } from './components/Confetti/Confetti';
+export { EmptyState, type EmptyStateProps } from './components/EmptyState/EmptyState';
+export { PhotoPicker, type PhotoPickerProps } from './components/PhotoPicker/PhotoPicker';
+export { ProgressBar, type ProgressBarProps } from './components/ProgressBar/ProgressBar';
+export { QuantityStepper, type QuantityStepperProps } from './components/QuantityStepper/QuantityStepper';
+export { RatingStars, type RatingStarsProps } from './components/RatingStars/RatingStars';
+export {
+  StatusTimeline,
+  type StatusTimelineProps,
+  type TimelineStep,
+  type TimelineStepState,
+} from './components/StatusTimeline/StatusTimeline';
+export { Switch, type SwitchProps } from './components/Switch/Switch';
+export { Tabs, type TabItem, type TabsProps } from './components/Tabs/Tabs';
+export { TopBar, type TopBarProps } from './components/TopBar/TopBar';
 export { Icon, type IconName, type IconProps } from './components/Icon/Icon';
 export { Text, type TextElement, type TextProps, type TextRole, type TextTone } from './components/Text/Text';
 export * from './tokens';

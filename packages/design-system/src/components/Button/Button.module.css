@@ -38,6 +38,8 @@
 .button[data-prominence='primary'] {
   --fill: var(--button-primary-fill);
   --label: var(--button-primary-label);
+  font-size: var(--button-primary-size);
+  font-weight: var(--button-primary-weight);
 }
 
 .button[data-prominence='secondary'] {
@@ -48,6 +50,7 @@
 .button[data-prominence='quiet'] {
   --fill: transparent;
   --label: var(--button-quiet-label);
+  font-size: var(--button-quiet-size);
   font-weight: var(--button-quiet-weight);
 }
 

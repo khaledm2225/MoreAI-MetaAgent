@@ -27,8 +27,8 @@ export const typography = {
   supporting: { family: 'body', weight: 400, size: '0.9375rem' },
   /** A button's words. */
   button: { family: 'body', weight: 600, size: '1.0625rem' },
-  /** A quiet button's words on the red ground, where cream only passes as bold text. */
-  strongButton: { family: 'body', weight: 700, size: '1.0625rem' },
+  /** Words on the bright red, where cream only passes as large, bold text. */
+  strongButton: { family: 'body', weight: 700, size: '1.1875rem' },
   /** Chips and small labels. */
   label: { family: 'body', weight: 500, size: '0.8125rem' },
   /** The smallest text. */

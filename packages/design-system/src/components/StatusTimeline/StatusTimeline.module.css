@@ -1,0 +1,55 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding-block: var(--space-xs);
+}
+
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 2.5rem;
+  inset-block-end: -0.5rem;
+  inset-inline-start: 0.9375rem;
+  inline-size: 2px;
+  background: var(--color-hairline);
+}
+
+.dot {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: 50%;
+  background: var(--control-calm-fill);
+  color: var(--control-calm-label);
+}
+
+.step[data-state='done'] .dot,
+.step[data-state='current'] .dot {
+  background: var(--control-strong-fill);
+  color: var(--control-strong-label);
+}
+
+.step[data-state='failed'] .dot {
+  background: var(--ground-danger);
+  color: var(--color-on-action);
+}
+
+.step[data-state='current'] .label {
+  font-weight: var(--type-button-weight);
+}
+
+.step[data-state='upcoming'] .label {
+  color: var(--ground-text-secondary);
+}

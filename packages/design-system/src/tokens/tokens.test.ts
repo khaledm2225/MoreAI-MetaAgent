@@ -31,12 +31,13 @@ const WCAG_AA_TEXT = 4.5;
 const WCAG_AA_LARGE_TEXT = 3;
 
 describe('colors', () => {
-  it('uses the brand palette', () => {
-    expect(colors.brandGround).toBe('#F50A16');
+  it('uses the approved palette', () => {
     expect(colors.background).toBe('#F5ECD6');
     expect(colors.textPrimary).toBe('#1C1412');
-    expect(colors.actionFill).toBe('#C8000F');
-    expect(colors.tonalFill).toBe('#EBDDBF');
+    expect(colors.actionFill).toBe('#F50A16');
+    expect(colors.tonalFill).toBe('#C8000F');
+    expect(colors.brandGround).toBe('#F50A16');
+    expect(colors.hairline).toBe('#EBDDBF');
   });
 
   it.each([
@@ -44,20 +45,27 @@ describe('colors', () => {
     ['textSecondary on background', colors.textSecondary, colors.background],
     ['accentText on background', colors.accentText, colors.background],
     ['danger on background', colors.danger, colors.background],
-    ['onAction on actionFill', colors.onAction, colors.actionFill],
-    ['textPrimary on tonalFill', colors.textPrimary, colors.tonalFill],
-    ['danger on tonalFill', colors.danger, colors.tonalFill],
+    ['textPrimary on hairline', colors.textPrimary, colors.hairline],
+    ['onAction on tonalFill', colors.onAction, colors.tonalFill],
     ['onBrandAction on brandAction', colors.onBrandAction, colors.brandAction],
-    ['onBrandGround on brandTonalFill', colors.onBrandGround, colors.brandTonalFill],
   ])('%s passes AA for text', (_pair, text, fill) => {
     expect(contrast(text, fill)).toBeGreaterThanOrEqual(WCAG_AA_TEXT);
   });
 
-  it('keeps cream on the red ground for large or bold words only', () => {
-    expect(contrast(colors.onBrandGround, colors.brandGround)).toBeGreaterThanOrEqual(
-      WCAG_AA_LARGE_TEXT,
+  it.each([
+    ['cream on the main button', colors.onAction, colors.actionFill],
+    ['cream on the red ground', colors.onBrandGround, colors.brandGround],
+  ])('%s passes for large or bold words only', (_pair, text, fill) => {
+    expect(contrast(text, fill)).toBeGreaterThanOrEqual(WCAG_AA_LARGE_TEXT);
+    expect(contrast(text, fill)).toBeLessThan(WCAG_AA_TEXT);
+  });
+
+  it('makes the strong button words large enough to pass on the bright red', () => {
+    const REM_FOR_LARGE_BOLD_TEXT = 18.66 / 16;
+    expect(typography.strongButton.weight).toBeGreaterThanOrEqual(700);
+    expect(Number.parseFloat(typography.strongButton.size)).toBeGreaterThanOrEqual(
+      REM_FOR_LARGE_BOLD_TEXT,
     );
-    expect(contrast(colors.onBrandGround, colors.brandGround)).toBeLessThan(WCAG_AA_TEXT);
   });
 });
 

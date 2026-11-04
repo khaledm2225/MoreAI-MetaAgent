@@ -1,6 +1,6 @@
 .skeleton {
   display: block;
-  background: var(--color-tonal-fill);
+  background: var(--color-hairline);
   animation: pulse var(--motion-pulse-duration) var(--motion-pulse-easing) infinite alternate;
 }
 

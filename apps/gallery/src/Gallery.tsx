@@ -21,9 +21,10 @@ import {
   type GroundKind,
   type TextRole,
 } from '@metaagent/design-system';
+import { useLocale, useTranslations } from '@metaagent/i18n';
 import { useState, type ReactNode } from 'react';
 import styles from './Gallery.module.css';
-import { useI18n } from './i18n';
+import { strings } from './strings';
 
 const SAMPLE_PRICE_PIASTERS = 50_000;
 const SAMPLE_PIECES_LEFT = 3;
@@ -43,7 +44,7 @@ function Panel({ name, children }: { name: string; children: ReactNode }) {
 }
 
 function EveryButton({ kind }: { kind: GroundKind }) {
-  const { t } = useI18n();
+  const t = useTranslations(strings);
   return (
     <Ground kind={kind} className={styles.screen}>
       <Stack gap="s">
@@ -71,7 +72,7 @@ function EveryButton({ kind }: { kind: GroundKind }) {
 }
 
 function Choices() {
-  const { t } = useI18n();
+  const t = useTranslations(strings);
   const [size, setSize] = useState<'S' | 'M' | 'L'>('M');
   return (
     <Stack gap="m">
@@ -103,7 +104,7 @@ function Choices() {
 }
 
 function ConfirmDialog() {
-  const { t } = useI18n();
+  const t = useTranslations(strings);
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -131,7 +132,8 @@ function ConfirmDialog() {
 
 /** A page for reviewing the design system by eye. It never ships. */
 export function Gallery() {
-  const { t, locale, setLocale, format } = useI18n();
+  const t = useTranslations(strings);
+  const { locale, setLocale, format } = useLocale();
   return (
     <Ground kind="plain" as="main" fillViewport className={styles.page}>
       <Container width="wide">

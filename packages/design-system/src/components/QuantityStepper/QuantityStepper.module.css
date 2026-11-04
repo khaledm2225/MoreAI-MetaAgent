@@ -1,0 +1,11 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.value {
+  min-inline-size: 2rem;
+  font-weight: var(--type-button-weight);
+  text-align: center;
+}

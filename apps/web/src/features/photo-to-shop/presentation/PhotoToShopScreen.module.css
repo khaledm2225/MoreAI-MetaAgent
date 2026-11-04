@@ -1,0 +1,47 @@
+.photoFrame {
+  position: relative;
+  inline-size: min(100%, 28rem);
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-hairline);
+}
+
+.photo {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.box {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  border: 2px solid var(--color-action-fill);
+  border-radius: var(--space-s);
+  background: transparent;
+  cursor: pointer;
+  transition: transform var(--motion-pop-duration) var(--motion-pop-easing);
+}
+
+.box[aria-pressed='true'] {
+  border-width: 3px;
+  background: color-mix(in srgb, var(--color-action-fill) 15%, transparent);
+}
+
+.box:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
+.boxLabel {
+  margin: var(--space-xxs);
+  padding-inline: var(--space-xs);
+  border-radius: var(--radius-action);
+  background: var(--color-tonal-fill);
+  color: var(--color-on-action);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-button-weight);
+}

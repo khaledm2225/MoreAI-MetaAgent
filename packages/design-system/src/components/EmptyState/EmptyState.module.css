@@ -1,0 +1,33 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+  padding-block: var(--space-xl);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  inline-size: 4rem;
+  block-size: 4rem;
+  border-radius: 50%;
+  background: var(--control-calm-fill);
+  color: var(--control-calm-label);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--type-title-family);
+  font-size: var(--type-section-size);
+  font-weight: var(--type-section-weight);
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-inline-size: 28rem;
+  color: var(--ground-text-secondary);
+  text-wrap: pretty;
+}
