@@ -1,37 +1,36 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useCallback, useState, useSyncExternalStore } from 'react';
 import type { AgentInput } from '../../../core/domain/agent';
 import type { Id } from '../../../core/domain/catalog';
 import type { Address } from '../../../core/domain/order';
 import type { AgentGateway } from '../../../core/domain/ports';
 import type { PhotoInput } from '../../../core/domain/vision';
-import { chatReducer, initialChatState, type ChatMemory } from './chatState';
+import { createChatStore, type ChatMemory } from './chatState';
 
-export function useChatViewModel(agent: AgentGateway, memory?: ChatMemory) {
-  const [state, dispatch] = useReducer(chatReducer, memory?.state === null || memory?.state === undefined ? initialChatState : { ...memory.state, isThinking: false });
-
-  useEffect(() => {
-    if (memory !== undefined) {
-      memory.state = state;
+export function useChatViewModel(agent: Pick<AgentGateway, 'send'>, memory?: ChatMemory) {
+  const [store] = useState(() => {
+    if (memory === undefined) {
+      return createChatStore();
     }
-  }, [memory, state]);
-  const nextId = useRef(1);
+    memory.store ??= createChatStore();
+    return memory.store;
+  });
+  const state = useSyncExternalStore(store.subscribe, store.getState);
+  const isBusy = useCallback(() => store.getState().isThinking, [store]);
 
   const run = useCallback(
     async (input: AgentInput, shopperText: string | null) => {
-      const id = `sent-${String(nextId.current)}`;
-      nextId.current += 1;
       const photoUrl = input.kind === 'text' ? input.photo?.previewUrl : undefined;
-      dispatch({ type: 'sent', id, text: shopperText, ...(photoUrl === undefined ? {} : { photoUrl }) });
+      store.dispatch({ type: 'sent', id: store.nextId(), text: shopperText, ...(photoUrl === undefined ? {} : { photoUrl }) });
       try {
         for await (const event of agent.send(input)) {
-          dispatch({ type: 'event', event });
+          store.dispatch({ type: 'event', event });
         }
-        dispatch({ type: 'finished' });
+        store.dispatch({ type: 'finished' });
       } catch {
-        dispatch({ type: 'failed' });
+        store.dispatch({ type: 'failed' });
       }
     },
-    [agent],
+    [agent, store],
   );
 
   return {
@@ -39,29 +38,40 @@ export function useChatViewModel(agent: AgentGateway, memory?: ChatMemory) {
     sendText: useCallback(
       (text: string, photo?: PhotoInput) => {
         const trimmed = text.trim();
-        if (trimmed !== '') {
+        if (trimmed !== '' && !isBusy()) {
+          // Moving on leaves an open question unanswered, and the agent treats it as a no.
+          store.dispatch({ type: 'questionsExpired' });
           void run({ kind: 'text', text: trimmed, ...(photo === undefined ? {} : { photo }) }, trimmed);
         }
       },
-      [run],
+      [isBusy, run, store],
     ),
     chooseVariant: useCallback(
-      (productId: Id, variantId: Id) => void run({ kind: 'chooseVariant', productId, variantId }, null),
-      [run],
+      (productId: Id, variantId: Id) => {
+        if (!isBusy()) {
+          store.dispatch({ type: 'questionsExpired' });
+          void run({ kind: 'chooseVariant', productId, variantId }, null);
+        }
+      },
+      [isBusy, run, store],
     ),
     answer: useCallback(
       (requestId: Id, accepted: boolean) => {
-        dispatch({ type: 'answered', requestId, accepted });
-        void run({ kind: 'confirmation', requestId, accepted }, null);
+        if (!isBusy()) {
+          store.dispatch({ type: 'answered', requestId, accepted });
+          void run({ kind: 'confirmation', requestId, accepted }, null);
+        }
       },
-      [run],
+      [isBusy, run, store],
     ),
     giveAddress: useCallback(
       (address: Address) => {
-        dispatch({ type: 'addressGiven' });
-        void run({ kind: 'address', address }, null);
+        if (!isBusy()) {
+          store.dispatch({ type: 'addressGiven' });
+          void run({ kind: 'address', address }, null);
+        }
       },
-      [run],
+      [isBusy, run, store],
     ),
   };
 }

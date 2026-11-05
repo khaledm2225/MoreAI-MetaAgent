@@ -2,10 +2,15 @@ import type { Merchant } from '../../domain/catalog';
 import type { ListingDraft } from '../../domain/merchant';
 import type { ListingAssistant, PhotoToShopGateway, ProductSearch } from '../../domain/ports';
 import type { DetectedPiece, PhotoInput, PieceBox, SimilarPiece } from '../../domain/vision';
+import { demoCategories, demoColors } from '../static/demoCatalog';
 import type { ApiClient } from './api';
 import { firstBoxOf, outputTextOf } from './metaResponse';
 
 const SIMILAR_PIECES = 4;
+const FALLBACK_CATEGORY = 'sweatshirts';
+const FALLBACK_COLOR = 'black';
+const MAX_PIECES = 4;
+const MAX_CONCEPT_CHARS = 80;
 const WHOLE_PHOTO: PieceBox = { left: 0, top: 0, right: 1, bottom: 1 };
 
 const DEFAULT_SIZES: Readonly<Record<string, readonly string[]>> = {
@@ -36,13 +41,16 @@ export function createRemoteListingAssistant(api: Pick<ApiClient, 'readProductPh
   return {
     readPhoto: async (photo: PhotoInput): Promise<ListingDraft> => {
       const answer = JSON.parse(outputTextOf(await api.readProductPhoto(await toDataUrl(photo.previewUrl)))) as ListingAnswer;
+      // The schema guides the model but guarantees nothing, so these are checked against the catalog.
+      const categorySlug = demoCategories.some(({ slug }) => slug === answer.categorySlug) ? answer.categorySlug : FALLBACK_CATEGORY;
+      const colorCode = demoColors.some(({ code }) => code === answer.colorCode) ? answer.colorCode : FALLBACK_COLOR;
       return {
         name: { en: answer.nameEn, ar: answer.nameAr },
         description: { en: answer.descriptionEn, ar: answer.descriptionAr },
         visualDescription: answer.visualDescription,
-        categoryId: `category-${answer.categorySlug}`,
-        colorCodes: [answer.colorCode],
-        sizeLabels: DEFAULT_SIZES[answer.categorySlug] ?? ['S', 'M', 'L', 'XL'],
+        categoryId: `category-${categorySlug}`,
+        colorCodes: [colorCode],
+        sizeLabels: DEFAULT_SIZES[categorySlug] ?? ['S', 'M', 'L', 'XL'],
         pricePiasters: null,
       };
     },
@@ -63,10 +71,10 @@ export function createRemotePhotoToShop({ api, search, merchantById, toDataUrl }
       const image = await toDataUrl(photo.previewUrl);
       const { pieces } = JSON.parse(outputTextOf(await api.detectPieces(image))) as PiecesAnswer;
       return Promise.all(
-        pieces.map(async (piece, index) => ({
+        pieces.slice(0, MAX_PIECES).map(async (piece, index) => ({
           id: `piece-${String(index + 1)}`,
           label: { en: piece.labelEn, ar: piece.labelAr },
-          box: firstBoxOf(outputTextOf(await api.segment(image, piece.concept))) ?? WHOLE_PHOTO,
+          box: (await api.segment(image, piece.concept.slice(0, MAX_CONCEPT_CHARS)).then((answer) => firstBoxOf(outputTextOf(answer)), () => null)) ?? WHOLE_PHOTO,
           description: piece.description,
         })),
       );

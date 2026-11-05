@@ -22,9 +22,10 @@ export type ListingProblem = 'nameEn' | 'nameAr' | 'descriptionEn' | 'descriptio
 export function fieldsFromDraft(draft: ListingDraft): ListingFields {
   return {
     nameEn: draft.name.en,
-    nameAr: draft.name.ar,
+    // A missing translation can't block a merchant, so it falls back to the English.
+    nameAr: draft.name.ar.trim() === '' ? draft.name.en : draft.name.ar,
     descriptionEn: draft.description.en,
-    descriptionAr: draft.description.ar,
+    descriptionAr: draft.description.ar.trim() === '' ? draft.description.en : draft.description.ar,
     visualDescription: draft.visualDescription,
     categoryId: draft.categoryId,
     colorCodes: draft.colorCodes,

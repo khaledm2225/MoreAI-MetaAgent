@@ -13,10 +13,15 @@ import { argumentsOf, functionCallsOf, outputTextOf, type FunctionCall } from '.
 const MODEL = 'muse-spark-1.3';
 /** A loop that goes on longer than this has lost its way. */
 const MAX_STEPS = 8;
+const MAX_FAILURES_IN_A_ROW = 2;
 const CANDIDATES = 6;
 const PHOTOS = 4;
 const PIASTERS = 100;
 const MAX_QUANTITY = 10;
+const MAX_SHOWN = 6;
+const MAX_REASON_CHARS = 300;
+const MAX_PREFERENCE_CHARS = 100;
+const WAITS_FOR_SHOPPER: readonly string[] = ['add_to_cart', 'update_cart_item', 'remove_from_cart', 'request_address', 'place_order'];
 const PREFERENCE_KINDS: readonly string[] = ['color', 'size', 'style', 'budget'];
 
 const same = (text: string): LocalizedText => ({ en: text, ar: text });
@@ -67,8 +72,13 @@ const toolOutput = (callId: string, value: unknown): AgentInputItem => ({ type: 
  * budgets, stock and totals are checked here in code, and anything that changes the
  * cart or places an order waits for the shopper. The address never reaches the model.
  */
-export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway {
+export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway & { readonly reset: () => void } {
   let previousResponseId: string | null = null;
+  /** What the latest search found. The model can only show these, so a budget can't be stepped around. */
+  let candidates: ReadonlySet<Id> = new Set();
+  let failuresInARow = 0;
+  /** Each send waits for the one before it, since a conversation has one thread. */
+  let queue: Promise<void> = Promise.resolve();
   let pending: Pending | null = null;
   let address: Address | null = null;
   /** Answers to tool calls from the last turn, sent along with the shopper's next message. */
@@ -86,6 +96,35 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
       yield { type: 'trace', step: { id, kind, name, summary, status: 'failed', durationMs: ports.now() - started } };
       throw error;
     }
+  }
+
+  function startOver(): void {
+    previousResponseId = null;
+    pending = null;
+    carried = [];
+    candidates = new Set();
+    failuresInARow = 0;
+  }
+
+  /** Answers that never reached the model go out with the next message, or Meta refuses it for good. */
+  function keepToolOutputs(input: readonly AgentInputItem[]): void {
+    carried = [...input.filter((item) => 'type' in item && item.type === 'function_call_output'), ...carried];
+  }
+
+  function oneAtATime(work: () => AsyncGenerator<AgentEvent, void, void>): AsyncGenerator<AgentEvent, void, void> {
+    return (async function* () {
+      const before = queue;
+      let release = () => {};
+      queue = new Promise<void>((resolve) => {
+        release = resolve;
+      });
+      await before;
+      try {
+        yield* work();
+      } finally {
+        release();
+      }
+    })();
   }
 
   async function* modelStep(input: readonly AgentInputItem[]): AsyncGenerator<AgentEvent, MetaResponse, void> {
@@ -130,6 +169,11 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
     const summary = TOOL_SUMMARIES[call.name] ?? same(call.name);
     const answer = (value: unknown, extra: { stop?: boolean; photos?: AgentInputItem } = {}) => ({ output: toolOutput(call.call_id, value), ...extra });
 
+    // One open question at a time, so an answer always belongs to the question on screen.
+    if (pending !== null && WAITS_FOR_SHOPPER.includes(call.name)) {
+      return answer({ error: 'The shopper is still answering another question. Do this after they answer.' });
+    }
+
     switch (call.name) {
       case 'search_catalog': {
         const text = typeof args.text === 'string' ? args.text : '';
@@ -143,6 +187,7 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
             ...(budget === undefined ? {} : { maxPricePiasters: budget }),
           }),
         );
+        candidates = new Set([...candidates, ...found.map(({ id }) => id)]);
         if (found.length === 0 && !isOnlyCall) {
           // Part of a search across several colors, so the other results still count.
           return answer({ results: [] });
@@ -178,13 +223,13 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
       }
       case 'show_pieces': {
         const list = Array.isArray(args.pieces) ? (args.pieces as readonly Record<string, unknown>[]) : [];
-        const pieces: SuggestedPiece[] = list.flatMap((piece) => {
-          const product = typeof piece.productId === 'string' ? ports.productById(piece.productId) : undefined;
+        const pieces: SuggestedPiece[] = list.slice(0, MAX_SHOWN).flatMap((piece) => {
+          const product = typeof piece.productId === 'string' && candidates.has(piece.productId) ? ports.productById(piece.productId) : undefined;
           const merchant = product === undefined ? undefined : ports.merchantById(product.merchantId);
-          return product === undefined || merchant === undefined ? [] : [{ product, merchant, reason: same(typeof piece.reason === 'string' ? piece.reason : '') }];
+          return product === undefined || merchant === undefined ? [] : [{ product, merchant, reason: same(typeof piece.reason === 'string' ? piece.reason.slice(0, MAX_REASON_CHARS) : '') }];
         });
         if (pieces.length === 0) {
-          return answer({ error: 'Those products don’t exist. Only use ids from search_catalog.' });
+          return answer({ error: 'Only show products from the latest search_catalog results.' });
         }
         yield { type: 'suggestions', id: ports.newId('suggestions'), pieces };
         return answer({ shown: pieces.length, next: 'The shopper is choosing a size.' }, { stop: true });
@@ -198,7 +243,7 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
         if (known.some(({ text }) => text.en.toLowerCase() === textEn.toLowerCase())) {
           return answer({ saved: true, alreadyKnown: true });
         }
-        const preference = yield* traced('tool', 'remember_preference', summary, () => ports.preferences.add({ kind: kind as PreferenceKind, text: { en: textEn, ar: textAr } }));
+        const preference = yield* traced('tool', 'remember_preference', summary, () => ports.preferences.add({ kind: kind as PreferenceKind, text: { en: textEn.slice(0, MAX_PREFERENCE_CHARS), ar: textAr.slice(0, MAX_PREFERENCE_CHARS) } }));
         yield { type: 'preferenceLearned', preference };
         return answer({ saved: true });
       }
@@ -209,8 +254,9 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
           return answer({ error: 'That piece or size isn’t available.' });
         }
         const quantity = args.quantity === undefined ? 1 : args.quantity;
-        if (!isQuantity(quantity) || quantity > variant.stockQuantity) {
-          return answer({ error: `Only ${String(variant.stockQuantity)} left in that size.` });
+        const inCart = (await ports.cart.listLines()).find(({ variantId }) => variantId === variant.id)?.quantity ?? 0;
+        if (!isQuantity(quantity) || inCart + quantity > variant.stockQuantity) {
+          return answer({ error: `Only ${String(variant.stockQuantity)} left in that size, and the cart has ${String(inCart)}.` });
         }
         const request: ConfirmationRequest = {
           id: ports.newId('confirmation'),
@@ -304,6 +350,7 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
     try {
       for (let step = 0; step < MAX_STEPS; step += 1) {
         const response = yield* modelStep(input);
+        failuresInARow = 0;
         const text = outputTextOf(response).replace(/\s+[—–]\s+/g, ', ');
         if (text !== '') {
           yield { type: 'message', id: ports.newId('message'), text: same(text) };
@@ -312,11 +359,20 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
         if (calls.length === 0) {
           return;
         }
+        if (calls.some(({ name }) => name === 'search_catalog')) {
+          candidates = new Set();
+        }
         const outputs: AgentInputItem[] = [];
         const photos: AgentInputItem[] = [];
         let stop = false;
         for (const call of calls) {
-          const result = yield* runTool(call, calls.length === 1);
+          let result: { output: AgentInputItem; photos?: AgentInputItem; stop?: boolean };
+          try {
+            result = yield* runTool(call, calls.length === 1);
+          } catch {
+            // Every call needs an answer, or the conversation can't go on.
+            result = { output: toolOutput(call.call_id, { error: 'That didn’t work. Tell the shopper, and offer another way.' }) };
+          }
           // A call waiting on the shopper is answered when they respond.
           if (pending === null || pending.callId !== call.call_id) {
             outputs.push(result.output);
@@ -332,11 +388,18 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
         }
         input = [...outputs, ...photos];
       }
+      keepToolOutputs(input);
       yield { type: 'message', id: ports.newId('message'), text: LOOP_TEXT };
     } catch (error) {
+      keepToolOutputs(input);
       if (error instanceof ApiLimitError) {
         yield { type: 'limitReached', text: LIMIT_TEXT };
         return;
+      }
+      failuresInARow += 1;
+      if (failuresInARow >= MAX_FAILURES_IN_A_ROW) {
+        // Whatever went wrong, the next message starts clean instead of failing forever.
+        startOver();
       }
       throw error;
     }
@@ -369,28 +432,50 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
       return;
     }
     if (request.kind === 'addToCart') {
-      yield* traced('tool', 'add_to_cart', { en: 'Adding it to your cart', ar: 'بضيفها للأوردر' }, async () => {
-        for (const piece of request.pieces) {
-          await ports.cart.addPiece(piece.productId, piece.variantId, piece.quantity);
-        }
-      });
+      try {
+        yield* traced('tool', 'add_to_cart', { en: 'Adding it to your cart', ar: 'بضيفها للأوردر' }, async () => {
+          for (const piece of request.pieces) {
+            await ports.cart.addPiece(piece.productId, piece.variantId, piece.quantity);
+          }
+        });
+      } catch {
+        yield* run([...takeCarried(), toolOutput(callId, { added: false, reason: 'It couldn’t be added.' })]);
+        return;
+      }
       yield* run([...takeCarried(), toolOutput(callId, { added: true })]);
       return;
     }
     if (request.kind === 'changeCart') {
       const isRemoving = request.quantity === 0;
       const name = isRemoving ? 'remove_from_cart' : 'update_cart_item';
-      yield* traced('tool', name, TOOL_SUMMARIES[name] ?? same(name), () =>
-        isRemoving ? ports.cart.removeLine(request.lineId) : ports.cart.setQuantity(request.lineId, request.quantity),
-      );
+      try {
+        yield* traced('tool', name, TOOL_SUMMARIES[name] ?? same(name), () =>
+          isRemoving ? ports.cart.removeLine(request.lineId) : ports.cart.setQuantity(request.lineId, request.quantity),
+        );
+      } catch {
+        yield* run([...takeCarried(), toolOutput(callId, { done: false, reason: 'The cart couldn’t be changed.' })]);
+        return;
+      }
       yield* run([...takeCarried(), toolOutput(callId, { done: true, cart: cartSummary(await ports.cart.listLines()) })]);
       return;
     }
     if (address === null) {
+      yield* run([...takeCarried(), toolOutput(callId, { placed: false, reason: 'No address yet.' })]);
+      return;
+    }
+    // The shopper agreed to one exact total, so a changed cart has to be asked about again.
+    if (ports.cartTotal() !== request.totalPiasters) {
+      yield* run([...takeCarried(), toolOutput(callId, { placed: false, reason: 'The cart changed after the shopper confirmed. Tell them the new total, and ask again with place_order.' })]);
       return;
     }
     const given = address;
-    const result = yield* traced('tool', 'place_order', { en: 'Placing your order', ar: 'بطلب الأوردر' }, () => ports.orders.placeOrder(given));
+    let result: Awaited<ReturnType<typeof ports.orders.placeOrder>>;
+    try {
+      result = yield* traced('tool', 'place_order', { en: 'Placing your order', ar: 'بطلب الأوردر' }, () => ports.orders.placeOrder(given));
+    } catch {
+      yield* run([...takeCarried(), toolOutput(callId, { placed: false, reason: 'The order couldn’t be placed.' })]);
+      return;
+    }
     switch (result.kind) {
       case 'placed':
         carried = [...takeCarried(), toolOutput(callId, { placed: true, orders: result.orders.length })];
@@ -423,17 +508,17 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
       yield* run([...takeCarried(), toolOutput(callId, { saved: true })]);
       return;
     }
-    yield* run([...takeCarried(), { role: 'user', content: 'I saved my delivery address.' }]);
+    yield* run([...takeCarried(), ...abandonPending(), { role: 'user', content: 'I saved my delivery address.' }]);
   }
 
   async function* handleText(text: string, photo: PhotoInput | undefined): AsyncGenerator<AgentEvent, void, void> {
-    const earlier = [...takeCarried(), ...abandonPending()];
     if (photo === undefined) {
-      yield* run([...earlier, { role: 'user', content: text }]);
+      yield* run([...takeCarried(), ...abandonPending(), { role: 'user', content: text }]);
       return;
     }
+    // Reading the photo can fail, so nothing waiting to be sent is touched before it succeeds.
     const image = await ports.toDataUrl(photo.previewUrl);
-    yield* run([...earlier, { type: 'message', role: 'user', content: [{ type: 'input_text', text }, { type: 'input_image', image_url: image }] }]);
+    yield* run([...takeCarried(), ...abandonPending(), { type: 'message', role: 'user', content: [{ type: 'input_text', text }, { type: 'input_image', image_url: image }] }]);
   }
 
   function chosenPieceMessage(productId: Id, variantId: Id): string {
@@ -448,14 +533,18 @@ export function createRemoteAgentGateway(ports: RemoteAgentPorts): AgentGateway 
     send(input: AgentInput): AsyncIterable<AgentEvent> {
       switch (input.kind) {
         case 'text':
-          return handleText(input.text, input.photo);
+          return oneAtATime(() => handleText(input.text, input.photo));
         case 'chooseVariant':
-          return run([...takeCarried(), ...abandonPending(), { role: 'user', content: chosenPieceMessage(input.productId, input.variantId) }]);
+          return oneAtATime(() => run([...takeCarried(), ...abandonPending(), { role: 'user', content: chosenPieceMessage(input.productId, input.variantId) }]));
         case 'address':
-          return handleAddress(input.address);
+          return oneAtATime(() => handleAddress(input.address));
         case 'confirmation':
-          return handleConfirmation(input.requestId, input.accepted);
+          return oneAtATime(() => handleConfirmation(input.requestId, input.accepted));
       }
+    },
+    reset: () => {
+      startOver();
+      address = null;
     },
   };
 }

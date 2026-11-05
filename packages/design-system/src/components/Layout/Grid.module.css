@@ -4,7 +4,11 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--item-width)), 1fr));
 }
 
-.grid[data-item-width='compact'] { --item-width: 14rem; }
+/* Small cards keep their size, so a single result doesn't stretch across the whole screen. */
+.grid[data-item-width='compact'] {
+  --item-width: 14rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--item-width)), 1fr));
+}
 .grid[data-item-width='regular'] { --item-width: 20rem; }
 .grid[data-item-width='wide'] { --item-width: 28rem; }
 

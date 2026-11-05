@@ -220,6 +220,157 @@ describe('the real agent loop', () => {
     expect(of(events, 'message')[0]?.text.en).toBe('Black goes great, let me look');
   });
 
+  describe('never getting stuck', () => {
+    function flaky(script: readonly (MetaResponse | Error)[]) {
+      const world = new DemoWorld({ latencyMs: 0, clock: () => new Date('2026-11-04T20:00:00+02:00') });
+      const ports = createStaticPorts({ latencyMs: 0, clock: () => new Date('2026-11-04T20:00:00+02:00') }, world);
+      const steps: AgentStepRequest[] = [];
+      let index = 0;
+      const gateway = createRemoteAgentGateway({
+        api: {
+          agentStep: (request) => {
+            steps.push(request);
+            const next = script[index];
+            index += 1;
+            return next instanceof Error || next === undefined ? Promise.reject(next ?? new Error('The script ended')) : Promise.resolve(next);
+          },
+        },
+        search: ports.productSearch,
+        cart: ports.cart,
+        orders: ports.orders,
+        preferences: ports.preferences,
+        productById: (id) => world.productById(id),
+        merchantById: (id) => world.merchantById(id),
+        sizes: () => demoSizes,
+        cartTotal: () => cartGrandTotal(world),
+        locale: () => 'en',
+        publicPhotoUrl: () => null,
+        now: () => 0,
+        newId: (prefix) => world.nextId(prefix),
+        toDataUrl: () => Promise.resolve(''),
+      });
+      const send = async (input: AgentInput) => {
+        const events: AgentEvent[] = [];
+        for await (const event of gateway.send(input)) {
+          events.push(event);
+        }
+        return events;
+      };
+      return { send, steps, gateway, world };
+    }
+
+    it('resends a tool’s answer after a failed request, since Meta refuses the next message without it', async () => {
+      const { send, steps } = flaky([call('get_cart', {}, 'cart-call'), new Error('down'), say('Back')]);
+      await expect(send({ kind: 'text', text: 'my cart?' })).rejects.toThrow('down');
+      await send({ kind: 'text', text: 'hello again' });
+      expect(steps[2]?.previousResponseId).toBe('r-cart-call');
+      expect(JSON.stringify(steps[2]?.input)).toContain('cart-call');
+    });
+
+    it('starts over if failures keep coming, instead of failing forever', async () => {
+      const { send, steps } = flaky([say('Hi'), new Error('one'), new Error('two'), say('Fresh start')]);
+      await send({ kind: 'text', text: 'hi' });
+      await expect(send({ kind: 'text', text: 'a' })).rejects.toThrow('one');
+      await expect(send({ kind: 'text', text: 'b' })).rejects.toThrow('two');
+      await send({ kind: 'text', text: 'c' });
+      expect(steps[3]?.previousResponseId).toBeNull();
+    });
+
+    it('resends the answers after a loop that ran too long', async () => {
+      const { send, steps } = flaky([...Array.from({ length: 8 }, (_, index) => call('get_cart', {}, `c${String(index)}`)), say('Ok')]);
+      await send({ kind: 'text', text: 'hi' });
+      await send({ kind: 'text', text: 'hello' });
+      expect(JSON.stringify(steps[8]?.input)).toContain('c7');
+    });
+
+    it('waits for one answer before starting the next', async () => {
+      const { send, steps } = flaky([call('get_cart', {}, 'x'), say('First done'), say('Second done')]);
+      await Promise.all([send({ kind: 'text', text: 'first' }), send({ kind: 'text', text: 'second' })]);
+      expect(steps[1]?.input.some((item) => 'content' in item && item.content === 'second')).toBe(false);
+      expect(steps[2]?.previousResponseId).toBe('r');
+    });
+
+    it('asks one question at a time when the model calls several tools at once', async () => {
+      const context = setup([]);
+      const variants = context.world.products.find(({ id }) => id === 'product-1-2')?.variants.filter(({ stockQuantity }) => stockQuantity > 0) ?? [];
+      const { send, steps, world } = setupWith(context, [
+        { id: 'r1', output: [
+          { type: 'function_call', name: 'add_to_cart', arguments: JSON.stringify({ productId: 'product-1-2', variantId: variants[0]?.id }), call_id: 'a' },
+          { type: 'function_call', name: 'add_to_cart', arguments: JSON.stringify({ productId: 'product-1-2', variantId: variants[1]?.id }), call_id: 'b' },
+        ] },
+        say('Added the first'),
+      ]);
+      const events = await send({ kind: 'text', text: 'add both' });
+      expect(of(events, 'confirm')).toHaveLength(1);
+      await send({ kind: 'confirmation', requestId: of(events, 'confirm')[0]?.request.id ?? '', accepted: true });
+      expect(world.cart).toHaveLength(1);
+      const outputs = JSON.stringify(steps[1]?.input);
+      expect(outputs).toContain('"call_id":"a"');
+      expect(outputs).toContain('"call_id":"b"');
+    });
+
+    it('forgets the conversation and the address when the account is deleted', async () => {
+      const { send, steps, gateway } = flaky([say('Hi'), say('Hello')]);
+      await send({ kind: 'text', text: 'hi' });
+      gateway.reset();
+      await send({ kind: 'text', text: 'hello' });
+      expect(steps[1]?.previousResponseId).toBeNull();
+    });
+  });
+
+  it('won’t place an order if the cart changed after the shopper agreed to the total', async () => {
+    const context = setup([]);
+    const product = context.world.products.find(({ id }) => id === 'product-1-2');
+    const variant = product?.variants.find(({ stockQuantity }) => stockQuantity >= 2);
+    await context.ports.cart.addPiece('product-1-2', variant?.id ?? '', 1);
+    const { send, world, ports, steps } = setupWith(context, [call('request_address', { message: 'Where to?' }, 'a'), call('place_order', {}, 'p'), say('The total changed')]);
+    await send({ kind: 'text', text: 'check out' });
+    const asked = await send({ kind: 'address', address });
+    await ports.cart.setQuantity(world.cart[0]?.id ?? '', 2);
+    await send({ kind: 'confirmation', requestId: of(asked, 'confirm')[0]?.request.id ?? '', accepted: true });
+    expect(world.orders).toHaveLength(0);
+    expect(JSON.stringify(steps.at(-1)?.input)).toContain('placed\\":false');
+  });
+
+  it('keeps what’s waiting to be sent if a photo can’t be read', async () => {
+    const world = new DemoWorld({ latencyMs: 0, clock: () => new Date('2026-11-04T20:00:00+02:00') });
+    const ports = createStaticPorts({ latencyMs: 0, clock: () => new Date('2026-11-04T20:00:00+02:00') }, world);
+    const steps: AgentStepRequest[] = [];
+    const script = [call('search_catalog', { text: 'jacket', maxPriceEgp: 1 }, 'kept'), say('Ok')];
+    const gateway = createRemoteAgentGateway({
+      api: { agentStep: (request) => { steps.push(request); return Promise.resolve(script[steps.length - 1] as MetaResponse); } },
+      search: ports.productSearch, cart: ports.cart, orders: ports.orders, preferences: ports.preferences,
+      productById: (id) => world.productById(id), merchantById: (id) => world.merchantById(id), sizes: () => demoSizes,
+      cartTotal: () => cartGrandTotal(world), locale: () => 'en', publicPhotoUrl: () => null, now: () => 0, newId: (prefix) => world.nextId(prefix),
+      toDataUrl: () => Promise.reject(new Error('unreadable')),
+    });
+    const drain = async (input: AgentInput) => { for await (const _event of gateway.send(input)) { /* only the requests matter */ } };
+    await drain({ kind: 'text', text: 'a jacket for 1 EGP' });
+    await expect(drain({ kind: 'text', text: 'this', photo: { name: 'a.jpg', type: 'image/jpeg', sizeBytes: 1, previewUrl: 'blob:a' } })).rejects.toThrow('unreadable');
+    await drain({ kind: 'text', text: 'never mind' });
+    expect(JSON.stringify(steps[1]?.input)).toContain('kept');
+  });
+
+  it('won’t show a piece the latest search didn’t return, so a budget can’t be stepped around', async () => {
+    const { send, world } = setup([
+      call('search_catalog', { text: 'jacket', categorySlug: 'jackets', colorCode: 'black', maxPriceEgp: 500 }, 's'),
+      call('show_pieces', { pieces: [{ productId: 'product-1-1', reason: 'Over the budget' }] }, 'p'),
+      say('Sorry'),
+    ]);
+    expect(world.productById('product-1-1')?.pricePiasters).toBe(100_000);
+    const events = await send({ kind: 'text', text: 'black jacket under 500' });
+    expect(of(events, 'suggestions')).toHaveLength(0);
+  });
+
+  it('counts what’s already in the cart against the stock', async () => {
+    const context = setup([]);
+    const variant = context.world.products.find(({ id }) => id === 'product-1-2')?.variants.find(({ stockQuantity }) => stockQuantity > 0);
+    await context.ports.cart.addPiece('product-1-2', variant?.id ?? '', variant?.stockQuantity ?? 0);
+    const { send } = setupWith(context, [call('add_to_cart', { productId: 'product-1-2', variantId: variant?.id }), say('Sold out')]);
+    const events = await send({ kind: 'text', text: 'one more' });
+    expect(of(events, 'confirm')).toHaveLength(0);
+  });
+
   it('won’t place an order without an address', async () => {
     const { send, world } = setup([call('place_order', {}), say('Where to?')]);
     const events = await send({ kind: 'text', text: 'order it' });

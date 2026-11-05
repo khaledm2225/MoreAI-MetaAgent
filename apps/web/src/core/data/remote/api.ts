@@ -62,9 +62,26 @@ export interface ApiClient {
 /** Today's limit is used up, or the model is busy. */
 export class ApiLimitError extends Error {}
 
+/** A dropped connection is common on a phone, so one retry hides it. A timeout or a refusal isn't retried. */
+async function withOneRetry(attempt: () => Promise<Response>): Promise<Response> {
+  try {
+    return await attempt();
+  } catch (error) {
+    if (error instanceof TypeError) {
+      return attempt();
+    }
+    throw error;
+  }
+}
+
+const START_TIMEOUT_MS = 6_000;
+const SEARCH_TIMEOUT_MS = 10_000;
+const MODEL_TIMEOUT_MS = 90_000;
+
 export function createApiClient(request: typeof fetch = (...args) => fetch(...args)): ApiClient {
-  async function send<T>(path: string, init?: RequestInit): Promise<T> {
-    const response = await request(path, init);
+  /** Nothing waits forever: a request that hangs becomes an error the screen can show. */
+  async function send<T>(path: string, timeoutMs: number, init: RequestInit = {}): Promise<T> {
+    const response = await withOneRetry(() => request(path, { ...init, signal: AbortSignal.timeout(timeoutMs) }));
     if (response.status === 429) {
       throw new ApiLimitError('limit');
     }
@@ -73,19 +90,19 @@ export function createApiClient(request: typeof fetch = (...args) => fetch(...ar
     }
     return (await response.json()) as T;
   }
-  const post = <T,>(path: string, body: unknown) =>
-    send<T>(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const post = <T,>(path: string, body: unknown, timeoutMs = MODEL_TIMEOUT_MS) =>
+    send<T>(path, timeoutMs, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
   return {
-    catalog: () => send('/api/catalog'),
+    catalog: () => send('/api/catalog', START_TIMEOUT_MS),
     agentStep: (body) => post('/api/agent/step', body),
-    search: (body) => post('/api/search', body),
+    search: (body) => post('/api/search', body, SEARCH_TIMEOUT_MS),
     readProductPhoto: (image) => post('/api/vision/read', { image }),
     detectPieces: (image) => post('/api/vision/detect', { image }),
     segment: (image, concept) => post('/api/vision/segment', { image, concept }),
-    getTaste: (visitorId) => send(`/api/taste/${encodeURIComponent(visitorId)}`),
+    getTaste: (visitorId) => send(`/api/taste/${encodeURIComponent(visitorId)}`, START_TIMEOUT_MS),
     putTaste: async (visitorId, preferences) => {
-      await send(`/api/taste/${encodeURIComponent(visitorId)}`, { method: 'PUT', body: JSON.stringify(preferences) });
+      await send(`/api/taste/${encodeURIComponent(visitorId)}`, START_TIMEOUT_MS, { method: 'PUT', keepalive: true, body: JSON.stringify(preferences) });
     },
   };
 }

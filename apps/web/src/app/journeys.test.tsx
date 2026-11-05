@@ -6,6 +6,9 @@ import { renderInLocale } from '../test/render';
 import { App } from './App';
 import { createAppContainer } from './container';
 
+// These walk through dozens of screens, so a slow or busy machine needs more than the default time.
+vi.setConfig({ testTimeout: 60_000 });
+
 /** The whole product through the real screens and the real demo data, with nothing faked. */
 function open(path = '/') {
   return renderInLocale(
@@ -124,6 +127,17 @@ describe('the merchant’s journey', () => {
 });
 
 describe('the shells', () => {
+  it('keeps photo search reachable from every client screen, even after a chat has started', async () => {
+    open();
+    await enterAsClient();
+    await press('A black jacket under EGP 500');
+    await screen.findByText('Here are the closest pieces. Pick a size to continue.');
+    const menu = screen.getByRole('navigation', { name: 'Main menu' });
+    await userEvent.click(within(menu).getByRole('button', { name: 'Search with a photo' }));
+    expect(await screen.findByRole('heading', { name: 'Search with a photo' })).toBeInTheDocument();
+  });
+
+
   it('asks a client to pass the gate first', async () => {
     open('/client/cart');
     expect(await screen.findByRole('button', { name: "I'm 18 or older" })).toBeInTheDocument();

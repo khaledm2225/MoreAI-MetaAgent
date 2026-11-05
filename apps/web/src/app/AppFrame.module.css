@@ -55,6 +55,13 @@
   gap: var(--space-xs);
 }
 
+/* Six icons still fit one line on the narrowest phones. */
+@media (max-width: 26rem) {
+  .nav {
+    gap: var(--space-xxs);
+  }
+}
+
 .navRow {
   padding-block: var(--space-xs);
   border-block-end: 1px solid var(--color-hairline);

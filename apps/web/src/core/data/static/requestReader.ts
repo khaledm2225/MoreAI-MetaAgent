@@ -41,9 +41,17 @@ const CHECKOUT_WORDS: readonly string[] = ['checkout', 'check out', 'place the o
 const PIASTERS = 100;
 /** Below this, a number is a clothing size, not a budget in pounds. */
 const SMALLEST_BUDGET_POUNDS = 50;
+const BUDGET_WORDS = /under|below|less|max|budget|up to|within|egp|pound|جنيه|حدود|تحت|اقل|أقل|ميزانية/;
+const STATES_A_MINIMUM = /over|above|more than|at least|between|فوق|اكتر من|أكتر من/;
+const NEGATION = /\b(not|no|without|except)\b|بدون|مش |غير /;
+
+/** English words match whole, so "baggy" isn't a bag and "dressy" isn't a dress. */
+function hasWord(text: string, word: string): boolean {
+  return /^[a-z ]+$/.test(word) ? new RegExp(`\\b${word}(s|es)?\\b`).test(text) : text.includes(word);
+}
 
 function firstMatch(text: string, table: Readonly<Record<string, readonly string[]>>): string | undefined {
-  return Object.entries(table).find(([, words]) => words.some((word) => text.includes(word)))?.[0];
+  return Object.entries(table).find(([, words]) => words.some((word) => hasWord(text, word)))?.[0];
 }
 
 function latinDigits(text: string): string {
@@ -51,9 +59,39 @@ function latinDigits(text: string): string {
 }
 
 function readBudget(text: string): number | undefined {
-  const numbers = [...latinDigits(text).replaceAll(/(\d),(\d{3})/g, '$1$2').matchAll(/\d+/g)].map((match) => Number(match[0]));
+  // A number is only a budget when the words say so: not 100% cotton, size 52, 2026, or over 1000.
+  const clean = latinDigits(text).replaceAll(/(\d),(\d{3})/g, '$1$2');
+  if (!BUDGET_WORDS.test(clean) || STATES_A_MINIMUM.test(clean)) {
+    return undefined;
+  }
+  const numbers = [...clean.matchAll(/\d+(?!\d|\s*%)/g)].map((match) => Number(match[0]));
   const budget = numbers.find((value) => value >= SMALLEST_BUDGET_POUNDS);
   return budget === undefined ? undefined : budget * PIASTERS;
+}
+
+function allMatches(text: string, table: Readonly<Record<string, readonly string[]>>): readonly string[] {
+  return Object.entries(table)
+    .filter(([, words]) => words.some((word) => hasWord(text, word)))
+    .map(([key]) => key);
+}
+
+export interface StatedFilters {
+  readonly categorySlug?: string;
+  readonly colorCode?: string;
+  readonly maxPricePiasters?: number;
+}
+
+/** Only what's clear becomes a hard filter. "Not black", "black or navy" and "pants to match a jacket" stay to the meaning alone. */
+export function readStatedFilters(rawText: string): StatedFilters {
+  const text = rawText.toLowerCase();
+  const categories = allMatches(text, CATEGORY_WORDS);
+  const colors = NEGATION.test(text) ? [] : allMatches(text, COLOR_WORDS);
+  const budget = readBudget(text);
+  return {
+    ...(categories.length === 1 && categories[0] !== undefined ? { categorySlug: categories[0] } : {}),
+    ...(colors.length === 1 && colors[0] !== undefined ? { colorCode: colors[0] } : {}),
+    ...(budget === undefined ? {} : { maxPricePiasters: budget }),
+  };
 }
 
 /**

@@ -76,7 +76,7 @@ export function AccountView({ state, edit, onRetry, onStartEditing, onCancelEdit
           {isEditing ? (
             <form onSubmit={submit}>
               <Stack gap="s">
-                <TextField label={t('newPreference')} placeholder={t('newPlaceholder')} value={draft} onChange={(event) => setDraft(event.target.value)} />
+                <TextField label={t('newPreference')} placeholder={t('newPlaceholder')} maxLength={100} value={draft} onChange={(event) => setDraft(event.target.value)} />
                 <ButtonStack>
                   <Button prominence="secondary" onClick={onCancelEditing}>
                     {t('cancel')}

@@ -28,5 +28,6 @@ export interface Env {
   readonly AI: WorkersAi;
   readonly VECTORS: VectorIndex;
   readonly MODEL_API_KEY: string;
-  readonly ADMIN_TOKEN: string;
+  /** Only set while seeding the search index. Without it, the admin route stays closed. */
+  readonly ADMIN_TOKEN?: string;
 }

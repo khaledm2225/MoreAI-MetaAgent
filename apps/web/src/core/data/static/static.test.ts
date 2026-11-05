@@ -300,3 +300,31 @@ describe('new records', () => {
     expect(new Set(merchants.map(({ id }) => id)).size).toBe(merchants.length);
   });
 });
+
+describe('the cart and the stock', () => {
+  it('never goes above what’s in stock, so a piece can’t turn itself sold out', async () => {
+    const ports = createStaticPorts({ latencyMs: 0, clock: () => new Date('2026-11-04T20:00:00+02:00') });
+    const product = await ports.catalog.getProduct('product-1-2');
+    const variant = product?.variants.find(({ stockQuantity }) => stockQuantity > 0);
+    const stock = variant?.stockQuantity ?? 0;
+    await ports.cart.addPiece('product-1-2', variant?.id ?? '', stock + 5);
+    expect((await ports.cart.listLines())[0]?.quantity).toBe(stock);
+    await ports.cart.addPiece('product-1-2', variant?.id ?? '', 1);
+    expect((await ports.cart.listLines())[0]?.quantity).toBe(stock);
+    const [line] = await ports.cart.listLines();
+    await ports.cart.setQuantity(line?.id ?? '', stock + 9);
+    const [changed] = await ports.cart.listLines();
+    expect(changed?.quantity).toBe(stock);
+    expect(changed?.availability).toBe('available');
+  });
+});
+
+describe('a size a merchant makes up', () => {
+  it('shows up with its own label', async () => {
+    const ports = createStaticPorts({ latencyMs: 0, clock: () => new Date('2026-11-04T20:00:00+02:00') });
+    await ports.merchantProfile.join({ name: 'Night Studio', bio: 'Calm', imageUrl: null });
+    const created = await ports.merchantProducts.publish({ name: { en: 'A', ar: 'أ' }, description: { en: 'B', ar: 'ب' }, visualDescription: 'v', categoryId: 'category-jackets', colorCodes: ['black'], sizeLabels: ['XXS'], pricePiasters: 100, stockPerVariant: 1, imageUrls: [] });
+    const sizes = await ports.catalog.listSizes();
+    expect(sizes.find(({ id }) => id === created.variants[0]?.sizeId)?.label).toBe('XXS');
+  });
+});

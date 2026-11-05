@@ -39,6 +39,7 @@
 }
 
 .pop {
+  scroll-margin-block-start: 9rem;
   animation: rise var(--motion-pop-duration) var(--motion-pop-easing) both;
 }
 
@@ -106,7 +107,7 @@
 
 .pieces {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
   gap: var(--space-s);
 }
 

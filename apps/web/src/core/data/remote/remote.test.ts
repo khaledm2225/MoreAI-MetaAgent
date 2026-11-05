@@ -3,6 +3,7 @@ import type { Product } from '../../domain/catalog';
 import type { ProductSearch } from '../../domain/ports';
 import type { ProductQuery } from '../../domain/search';
 import { testProduct } from '../../../test/ports';
+import { ApiLimitError, createApiClient } from './api';
 import { firstBoxOf } from './metaResponse';
 import { createRemoteProductSearch, toIndexWords, withStatedFilters } from './search';
 import { createRemoteListingAssistant, createRemotePhotoToShop } from './vision';
@@ -51,6 +52,26 @@ describe('search', () => {
     expect(sent.mock.calls[0]?.[0].text.length).toBe(300);
   });
 
+  it('doesn’t read filters from the agent’s words, since it states them itself', async () => {
+    const sent = vi.fn((_request: { readonly text: string }) => Promise.resolve({ limited: false, matches: [] }));
+    await createRemoteProductSearch({ search: sent }, local([]), { readsFiltersFromWords: false }).search({ text: 'beige pants to match a black jacket' });
+    expect(sent).toHaveBeenCalledWith({ text: 'beige pants to match a black jacket' });
+  });
+
+  it('measures closeness from what’s really available, so a sold out piece can’t hide the rest', async () => {
+    const search = createRemoteProductSearch(
+      { search: () => Promise.resolve({ limited: false, matches: [{ id: 'sold-out', score: 0.9 }, { id: 'a', score: 0.7 }] }) },
+      local([product('a')]),
+    );
+    expect((await search.search({ text: 'soft jacket with a zip and two side pockets in black' })).map(({ id }) => id)).toEqual(['a']);
+  });
+
+  it('falls back to the filters when nothing from the vectors is available', async () => {
+    const products = [product('a')];
+    const search = createRemoteProductSearch({ search: () => Promise.resolve({ limited: false, matches: [{ id: 'gone', score: 0.9 }] }) }, local(products));
+    expect(await search.search({ text: 'x' })).toEqual(products);
+  });
+
   it('leaves a long description from a photo to the meaning alone', () => {
     const text = 'A black zip up bomber jacket with a shirt collar and two flap pockets';
     expect(withStatedFilters({ text })).toEqual({ text });
@@ -84,6 +105,19 @@ describe('photos', () => {
     expect(await assistant.readPhoto(photo)).toMatchObject({ categoryId: 'category-jeans', colorCodes: ['black'], sizeLabels: ['30', '32', '34', '36'], pricePiasters: null });
   });
 
+  it('keeps the pieces when SAM fails on one of them', async () => {
+    const gateway = createRemotePhotoToShop({
+      api: {
+        detectPieces: () => Promise.resolve(answer(JSON.stringify({ pieces: [{ concept: 'jacket', labelEn: 'Jacket', labelAr: 'جاكيت', description: 'd' }] }))),
+        segment: () => Promise.reject(new Error('busy')),
+      },
+      search: local([]),
+      merchantById: () => undefined,
+      toDataUrl,
+    });
+    expect((await gateway.detectPieces(photo))[0]?.box).toEqual({ left: 0, top: 0, right: 1, bottom: 1 });
+  });
+
   it('asks SAM about each piece Muse named, one concept at a time', async () => {
     const segment = vi.fn((_image: string, _concept: string) => Promise.resolve(answer('<0f>0<|box;x1=0;y1=0;x2=50;y2=50;w=100;h=100|>')));
     const gateway = createRemotePhotoToShop({
@@ -95,5 +129,28 @@ describe('photos', () => {
     const pieces = await gateway.detectPieces(photo);
     expect(segment.mock.calls.map(([, concept]) => concept)).toEqual(['black jacket', 'blue jeans']);
     expect(pieces[0]?.box).toEqual({ left: 0, top: 0, right: 0.5, bottom: 0.5 });
+  });
+});
+
+describe('the connection to the backend', () => {
+  const ok = () => new Response(JSON.stringify({ id: 'r', output: [] }));
+
+  it('tries once more when the connection drops', async () => {
+    const request = vi.fn<typeof fetch>().mockRejectedValueOnce(new TypeError('Failed to fetch')).mockResolvedValueOnce(ok());
+    const step = await createApiClient(request).agentStep({ input: [{ role: 'user', content: 'hi' }], previousResponseId: null, preferences: [], locale: 'en' });
+    expect(step.id).toBe('r');
+    expect(request).toHaveBeenCalledTimes(2);
+  });
+
+  it('doesn’t retry a refusal, and reports a limit', async () => {
+    const request = vi.fn<typeof fetch>().mockResolvedValue(new Response('{}', { status: 429 }));
+    await expect(createApiClient(request).catalog()).rejects.toBeInstanceOf(ApiLimitError);
+    expect(request).toHaveBeenCalledTimes(1);
+  });
+
+  it('gives every request a time limit', async () => {
+    const request = vi.fn<typeof fetch>().mockResolvedValue(ok());
+    await createApiClient(request).catalog();
+    expect(request.mock.calls[0]?.[1]?.signal).toBeInstanceOf(AbortSignal);
   });
 });
