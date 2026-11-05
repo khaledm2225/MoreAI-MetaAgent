@@ -66,6 +66,7 @@ export function ClientShell({ session, cart, settings, coordinator }: ClientShel
               {showMoreAi && <IconButton icon="sparkles" label={t('askMoreAi')} prominence="primary" {...(pathname === routes.chat ? { 'aria-current': 'page' as const } : {})} onClick={coordinator.showChat} />}
               {link('store', t('browse'), routes.browse, coordinator.showBrowse)}
               {link('search', t('search'), routes.search, coordinator.showSearch)}
+              {link('camera', t('photoSearch'), routes.photoToShop, coordinator.showPhotoToShop)}
               <span className={styles.cart}>
                 {link('bag', pieces > 0 ? t('cartWithCount', { count: pieces }) : t('cart'), routes.cart, coordinator.showCart)}
                 {pieces > 0 && (

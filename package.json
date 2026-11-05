@@ -17,7 +17,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "gallery": "npm run dev --workspace @metaagent/gallery",
     "local:setup": "cd apps/api && npx wrangler d1 execute moreai-metaagent --local --file schema.sql && npx wrangler d1 execute moreai-metaagent --local --file seed/seed.sql",
-    "local:start": "cd apps/web && VITE_BACKEND=remote npx vite build --emptyOutDir && cd ../api && npx wrangler dev"
+    "local:start": "npm run build:live --workspace @metaagent/web && cd apps/api && npx wrangler dev"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.2",

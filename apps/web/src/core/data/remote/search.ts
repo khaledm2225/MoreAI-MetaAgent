@@ -1,7 +1,7 @@
 import type { Product } from '../../domain/catalog';
 import type { ProductSearch } from '../../domain/ports';
 import type { ProductQuery } from '../../domain/search';
-import { readShopperRequest } from '../static/requestReader';
+import { readShopperRequest, readStatedFilters } from '../static/requestReader';
 import type { ApiClient, SearchRequest } from './api';
 
 /** How far below the best match a piece can be and still be about the same thing. */
@@ -30,7 +30,7 @@ export function withStatedFilters(query: ProductQuery): ProductQuery {
   if (text.trim().split(/\s+/).length > SHORT_REQUEST_WORDS) {
     return query;
   }
-  const stated = readShopperRequest(text);
+  const stated = readStatedFilters(text);
   return {
     ...query,
     ...(query.categoryId === undefined && stated.categorySlug !== undefined ? { categoryId: `category-${stated.categorySlug}` } : {}),
@@ -39,10 +39,15 @@ export function withStatedFilters(query: ProductQuery): ProductQuery {
   };
 }
 
-export function createRemoteProductSearch(api: Pick<ApiClient, 'search'>, local: ProductSearch): ProductSearch {
+export interface RemoteSearchOptions {
+  /** A person's typed words are read for filters. The agent states its filters itself, so its words aren't. */
+  readonly readsFiltersFromWords?: boolean;
+}
+
+export function createRemoteProductSearch(api: Pick<ApiClient, 'search'>, local: ProductSearch, { readsFiltersFromWords = true }: RemoteSearchOptions = {}): ProductSearch {
   return {
     search: async (given: ProductQuery): Promise<readonly Product[]> => {
-      const query = withStatedFilters(given);
+      const query = readsFiltersFromWords ? withStatedFilters(given) : given;
       const words = toIndexWords(query.text ?? '');
       if (words.trim() === '') {
         return local.search(query);
@@ -62,15 +67,16 @@ export function createRemoteProductSearch(api: Pick<ApiClient, 'search'>, local:
         }
         // The budget and filters are checked again here, in code, against what the page knows.
         const byId = new Map(allowed.map((product) => [product.id, product]));
-        const best = answer.matches[0]?.score ?? 0;
-        const closest = answer.matches
-          .filter(({ score }) => score >= best - SCORE_BAND)
-          .flatMap(({ id }) => {
-            const product = byId.get(id);
-            return product === undefined ? [] : [product];
-          });
+        // What passes the filters decides the best match, so a sold out piece can't hide the rest.
+        const available = answer.matches.flatMap(({ id, score }) => {
+          const product = byId.get(id);
+          return product === undefined ? [] : [{ product, score }];
+        });
+        const best = available[0]?.score ?? 0;
+        const closest = available.filter(({ score }) => score >= best - SCORE_BAND).map(({ product }) => product);
         const own = (await local.search(query)).filter(isOwnProduct);
-        return [...own, ...closest].slice(0, limit ?? DEFAULT_LIMIT);
+        const results = [...own, ...closest].slice(0, limit ?? DEFAULT_LIMIT);
+        return results.length > 0 ? results : await local.search(query);
       } catch {
         return local.search(query);
       }

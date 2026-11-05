@@ -36,6 +36,11 @@ describe('listing rules', () => {
     });
   });
 
+  it('falls back to the English when a translation is missing, so it can’t block a merchant', () => {
+    const draft = { name: { en: 'A', ar: ' ' }, description: { en: 'B', ar: '' }, visualDescription: 'v', categoryId: 'c', colorCodes: ['black'], sizeLabels: ['S'], pricePiasters: null };
+    expect(fieldsFromDraft(draft)).toMatchObject({ nameAr: 'A', descriptionAr: 'B' });
+  });
+
   it('starts from what the AI read, leaving the price to the merchant', () => {
     const draft = { name: { en: 'A', ar: 'أ' }, description: { en: 'B', ar: 'ب' }, visualDescription: 'v', categoryId: 'c', colorCodes: ['black'], sizeLabels: ['S', 'M'], pricePiasters: null };
     expect(fieldsFromDraft(draft)).toMatchObject({ nameEn: 'A', sizes: 'S, M', pounds: '' });

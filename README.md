@@ -6,7 +6,7 @@ An Agentic Commerce assistant, built on Meta's models for local Egyptian brands.
 
 The brands and products are made up for this demo, and the product photos are generated with Muse Image.
 
-Built by Khaled Mohammed for the Meta Global AI Developer Hackathon 2026, on the Indie Developer track, from 26 October to 4 November 2026.
+Built by Khaled Mohammed for the Meta Global AI Developer Hackathon 2026, on the Indie Developer track, from 26 October to 4 November 2026. Everything in this repo was built during that time, for this hackathon.
 
 ## What it does
 
@@ -62,11 +62,11 @@ flowchart LR
 
 **The model only proposes.** Budgets, stock and totals are checked in code. Tool arguments are validated. Every change to the cart, and placing an order, waits for the shopper's confirmation. The delivery address never reaches the model.
 
-**Spending is guarded on the server.** The key, instructions and tools live only in the Worker, and a page can't change them. Daily limits are enforced in D1, and the agent only sees this site's own product photos.
+**Spending is guarded on the server.** The key, instructions and tools live only in the Worker, and a page can't change them. It only accepts the shopper's own words, this site's product photos, one attached photo and tool results. Every answer has a token ceiling, and the real cost of each call adds up against a hard daily cap in D1, along with limits per visitor.
 
 **Clean architecture.** Features never import each other, and view models never navigate: a coordinator does. Every outside dependency is a port, and only `apps/web/src/app/container.ts` picks an implementation, so the demo data and the real backend swap in one place. `apps/web/src/architecture.test.ts` enforces these rules on every test run.
 
-Each visitor's cart and orders stay in their own browser, so people testing the public link never see each other's. A merchant's new products stay in that browser too, so no public upload is possible.
+Each visitor's cart and orders stay in their own browser, so people testing the public link never see each other's. A merchant's new products stay in that browser too, so nothing a visitor adds is shown to anyone else. Photos go to Meta's API to be read, and this app doesn't store them.
 
 ## Run it yourself
 
@@ -114,5 +114,5 @@ npm run typecheck
 
 - `apps/web`: the React app. `src/features` holds the screens, `src/core/data/remote` the real backend and agent loop, and `src/core/data/static` the demo data
 - `apps/api`: the Cloudflare Worker
-- `packages/design-system`, `packages/i18n`: the UI parts, and English and Arabic support
+- `packages/design-system`, `packages/i18n`: the UI parts, and language support. The live version is in English, and Arabic is built in and switched off for now
 - `scripts`: generating the photos, reading them with Muse, and seeding the database and index

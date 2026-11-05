@@ -1,7 +1,6 @@
 import type { Id } from '../../domain/catalog';
 import type { Preference } from '../../domain/taste';
 import { createStaticPorts, type AppPorts } from '../static';
-import { demoSizes } from '../static/demoCatalog';
 import { DemoWorld } from '../static/demoWorld';
 import { cartGrandTotal } from '../static/repositories';
 import { createRemoteAgentGateway } from './agent';
@@ -28,18 +27,18 @@ export interface RemotePortsOptions {
 export async function createRemotePorts({ api = createApiClient(), clock, visitorId, origin, locale }: RemotePortsOptions): Promise<AppPorts> {
   const world = new DemoWorld({ latencyMs: 0, clock });
   const [catalog, taste] = await Promise.allSettled([api.catalog(), api.getTaste(visitorId)]);
-  let sizes = demoSizes;
   if (catalog.status === 'fulfilled' && catalog.value.products.length > 0) {
     world.merchants = catalog.value.merchants;
     world.products = catalog.value.products;
-    sizes = catalog.value.sizes;
+    world.sizes = catalog.value.sizes;
   }
-  if (taste.status === 'fulfilled') {
+  if (taste.status === 'fulfilled' && Array.isArray(taste.value)) {
     world.preferences = taste.value;
   }
 
   const ports = createStaticPorts({ latencyMs: 0, clock }, world);
   const productSearch = createRemoteProductSearch(api, ports.productSearch);
+  const agentSearch = createRemoteProductSearch(api, ports.productSearch, { readsFiltersFromWords: false });
   const merchantById = (id: Id) => world.merchantById(id);
 
   let saved: readonly Preference[] = world.preferences;
@@ -50,26 +49,36 @@ export async function createRemotePorts({ api = createApiClient(), clock, visito
     }
   });
 
-  return {
-    ...ports,
-    productSearch,
-    agent: createRemoteAgentGateway({
+  const agent = createRemoteAgentGateway({
       api,
-      search: productSearch,
+      search: agentSearch,
       cart: ports.cart,
       orders: ports.orders,
       preferences: ports.preferences,
       productById: (id) => world.productById(id),
       merchantById,
-      sizes: () => sizes,
+      sizes: () => world.sizes,
       cartTotal: () => cartGrandTotal(world),
       locale,
       publicPhotoUrl: (path) => (path.startsWith('/products/') && origin.startsWith('https://') ? `${origin}${path}` : null),
       now: () => clock().getTime(),
       newId: (prefix) => world.nextId(prefix),
       toDataUrl: photoToDataUrl,
-    }),
-    photoToShop: createRemotePhotoToShop({ api, search: productSearch, merchantById, toDataUrl: photoToDataUrl }),
+  });
+
+  return {
+    ...ports,
+    productSearch,
+    agent,
+    session: {
+      ...ports.session,
+      deleteAccount: async () => {
+        const session = await ports.session.deleteAccount();
+        agent.reset();
+        return session;
+      },
+    },
+    photoToShop: createRemotePhotoToShop({ api, search: agentSearch, merchantById, toDataUrl: photoToDataUrl }),
     listingAssistant: createRemoteListingAssistant(api, photoToDataUrl),
   };
 }

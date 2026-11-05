@@ -6,7 +6,7 @@ import { ChatView } from './ChatView';
 import { useChatViewModel } from './useChatViewModel';
 
 export interface ChatScreenProps {
-  readonly agent: AgentGateway;
+  readonly agent: Pick<AgentGateway, 'send'>;
   readonly catalog: Pick<CatalogRepository, 'listSizes'>;
   readonly onOpenProduct: (productId: Id) => void;
   readonly onOpenOrders: () => void;

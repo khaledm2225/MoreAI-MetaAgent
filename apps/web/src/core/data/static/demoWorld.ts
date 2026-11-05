@@ -1,9 +1,9 @@
 import type { AppNotification, AppSettings, NotificationPreferences, Session } from '../../domain/account';
-import type { Id, Merchant, Product } from '../../domain/catalog';
+import type { Id, Merchant, Product, Size } from '../../domain/catalog';
 import type { Campaign, ShopperRecord } from '../../domain/merchant';
 import type { Order } from '../../domain/order';
 import type { Preference } from '../../domain/taste';
-import { buildDemoProducts, demoMerchants } from './demoCatalog';
+import { buildDemoProducts, demoMerchants, demoSizes } from './demoCatalog';
 
 export interface StoredCartLine {
   readonly id: Id;
@@ -31,6 +31,7 @@ type Topic = 'cart' | 'orders' | 'preferences' | 'settings';
 export class DemoWorld {
   merchants: readonly Merchant[] = demoMerchants;
   products: readonly Product[] = buildDemoProducts();
+  sizes: readonly Size[] = demoSizes;
   cart: readonly StoredCartLine[] = [];
   orders: readonly StoredOrder[] = [];
   preferences: readonly Preference[] = [];

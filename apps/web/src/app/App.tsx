@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useNavigate, useParams } from 'react-router';
 import { LoadingState } from '../core/presentation/LoadStates';
 import type { ChatMemory } from '../features/chat';
 import { StartScreen } from '../features/start';
+import { AppErrorBoundary } from './AppErrorBoundary';
 import { ClientShell } from './ClientShell';
 import type { AppContainer } from './container';
 import { createAppCoordinator } from './coordinator';
@@ -27,7 +28,7 @@ export interface AppProps {
 export function App({ container }: AppProps) {
   const navigate = useNavigate();
   const coordinator = useMemo(() => createAppCoordinator((path) => void navigate(path)), [navigate]);
-  const chatMemory = useRef<ChatMemory>({ state: null }).current;
+  const chatMemory = useRef<ChatMemory>({ store: null }).current;
   const { session, catalog, cart, orders, follows, preferences, notifications, settings } = container;
   const { merchantProfile, merchantProducts, merchantOrders } = container;
 
@@ -43,6 +44,7 @@ export function App({ container }: AppProps) {
     );
 
   return (
+    <AppErrorBoundary>
     <Routes>
       <Route path={routes.start} element={<StartScreen onJoinAsClient={joinAsClient} onJoinAsMerchant={joinAsMerchant} />} />
 
@@ -65,7 +67,7 @@ export function App({ container }: AppProps) {
         <Route path={routes.rateOrder} element={<WithParam name="orderId" render={(id) => <screens.RateOrderScreen orderId={id} orders={orders} onBack={() => coordinator.showOrder(id)} />} />} />
         <Route path={routes.account} element={<screens.AccountScreen preferences={preferences} onOpenOrders={coordinator.showOrders} onOpenNotifications={coordinator.showNotifications} onOpenSettings={coordinator.showSettings} />} />
         <Route path={routes.notifications} element={<screens.NotificationsScreen notifications={notifications} />} />
-        <Route path={routes.settings} element={<screens.SettingsScreen settings={settings} notifications={notifications} session={session} onDeleted={() => { chatMemory.state = null; coordinator.showStart(); }} />} />
+        <Route path={routes.settings} element={<screens.SettingsScreen settings={settings} notifications={notifications} session={session} onDeleted={() => { chatMemory.store = null; coordinator.showStart(); }} />} />
       </Route>
 
       <Route element={<MerchantShell profile={merchantProfile} coordinator={coordinator} />}>
@@ -80,5 +82,6 @@ export function App({ container }: AppProps) {
       {showReview && <Route path={routes.review} element={<Suspense fallback={<LoadingState />}><screens.ReviewScreen /></Suspense>} />}
       <Route path="*" element={<Navigate to={routes.start} replace />} />
     </Routes>
+    </AppErrorBoundary>
   );
 }

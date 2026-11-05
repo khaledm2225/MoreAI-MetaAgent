@@ -5,7 +5,7 @@ export const strings = defineCatalogs(
     title: 'MoreAI',
     subtitle: 'Tell me what you want. I find it across the brands and stay with you until checkout.',
     emptyTitle: 'What are you looking for?',
-    emptyBody: 'Write it your own way, in English or Arabic.',
+    emptyBody: 'Write it your own way.',
     examplesLabel: 'Examples',
     exampleJacket: 'A black jacket under EGP 500',
     exampleHoodie: 'An oversized hoodie in olive',

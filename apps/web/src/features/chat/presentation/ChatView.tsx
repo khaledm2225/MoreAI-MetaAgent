@@ -1,6 +1,6 @@
 import { Badge, Banner, Bubble, Button, ButtonStack, Card, Chip, Confetti, Container, EmptyState, Icon, IconButton, Spinner, Stack, Text, TextField } from '@metaagent/design-system';
 import { useLocale, useTranslations } from '@metaagent/i18n';
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import type { SuggestedPiece } from '../../../core/domain/agent';
 import type { Id } from '../../../core/domain/catalog';
 import type { Address } from '../../../core/domain/order';
@@ -13,6 +13,9 @@ import type { ChatItem, ChatState } from './chatState';
 import styles from './ChatScreen.module.css';
 import { strings } from './strings';
 import { TracePanel } from './TracePanel';
+
+/** The backend's limit for one message. */
+const MAX_MESSAGE_CHARS = 2_000;
 
 export interface ChatViewProps {
   readonly state: ChatState;
@@ -29,13 +32,27 @@ export interface ChatViewProps {
   readonly onOpenPhotoToShop: () => void;
 }
 
+const celebrated = new WeakSet<object>();
+
+/** Confetti for the moment an order is placed, not every time the shopper comes back to the chat. */
+function CelebrateOnce({ order }: { readonly order: object }) {
+  const [isNew] = useState(() => {
+    const isFirstTime = !celebrated.has(order);
+    celebrated.add(order);
+    return isFirstTime;
+  });
+  return isNew ? <Confetti /> : null;
+}
+
 function Piece({
   piece,
   sizeLabelOf,
   onChooseVariant,
   onOpenProduct,
+  isBusy,
 }: {
   readonly piece: SuggestedPiece;
+  readonly isBusy: boolean;
 } & Pick<ChatViewProps, 'sizeLabelOf' | 'onChooseVariant' | 'onOpenProduct'>) {
   const t = useTranslations(strings);
   const { locale } = useLocale();
@@ -57,7 +74,7 @@ function Piece({
             <Chip
               key={variant.id}
               selected={chosen === variant.id}
-              disabled={!isBuyable(variant) || chosen !== null}
+              disabled={!isBuyable(variant) || isBusy}
               onClick={() => {
                 setChosen(variant.id);
                 onChooseVariant(piece.product.id, variant.id);
@@ -104,6 +121,7 @@ function Item({ item, ...props }: { readonly item: ChatItem } & ChatViewProps) {
               sizeLabelOf={props.sizeLabelOf}
               onChooseVariant={props.onChooseVariant}
               onOpenProduct={props.onOpenProduct}
+              isBusy={props.state.isThinking}
             />
           ))}
         </div>
@@ -147,7 +165,7 @@ function Item({ item, ...props }: { readonly item: ChatItem } & ChatViewProps) {
     case 'placed':
       return (
         <Card>
-          <Confetti />
+          <CelebrateOnce order={item} />
           <Text role="title" as="h2">
             {t('placedTitle')}
           </Text>
@@ -179,9 +197,30 @@ export function ChatView(props: ChatViewProps) {
   const [photo, setPhoto] = useState<PhotoInput | null>(null);
   const [hasWrongPhoto, setHasWrongPhoto] = useState(false);
   const picker = useRef<HTMLInputElement>(null);
+  const newest = useRef<HTMLDivElement>(null);
+  const thinking = useRef<HTMLDivElement>(null);
+
+  const count = state.items.length;
+  useEffect(() => {
+    if (count === 0) {
+      return undefined;
+    }
+    // Each new reply comes into view, under the sticky bar, after the page's own jump to the top on opening.
+    const timer = setTimeout(() => newest.current?.scrollIntoView?.({ block: 'start' }), 0);
+    return () => clearTimeout(timer);
+  }, [count]);
+
+  useEffect(() => {
+    if (state.isThinking) {
+      thinking.current?.scrollIntoView?.({ block: 'nearest' });
+    }
+  }, [state.isThinking]);
 
   function submit(event: FormEvent) {
     event.preventDefault();
+    if (state.isThinking) {
+      return;
+    }
     if (photo !== null) {
       onSend(draft.trim() === '' ? t('photoDefaultText') : draft, photo);
     } else if (draft.trim() !== '') {
@@ -242,12 +281,16 @@ export function ChatView(props: ChatViewProps) {
           )}
 
           <div className={styles.messages} role="log" aria-live="polite">
-            {state.items.map((item) => (
-              <div key={`${item.kind}-${item.id}`} className={styles.pop}>
+            {state.items.map((item, index) => (
+              <div key={`${item.kind}-${item.id}`} ref={index === count - 1 ? newest : undefined} className={styles.pop}>
                 <Item item={item} {...props} />
               </div>
             ))}
-            {state.isThinking && <Spinner label={t('thinking')} />}
+            {state.isThinking && (
+              <div ref={thinking}>
+                <Spinner label={t('thinking')} />
+              </div>
+            )}
             {state.hasFailed && <Banner tone="error">{t('error')}</Banner>}
           </div>
 
@@ -264,9 +307,10 @@ export function ChatView(props: ChatViewProps) {
               label={t('messageLabel')}
               placeholder={photo === null ? t('messagePlaceholder') : t('photoPlaceholder')}
               value={draft}
+              maxLength={MAX_MESSAGE_CHARS}
               onChange={(event) => setDraft(event.target.value)}
             />
-            <IconButton type="submit" icon="send" label={t('send')} prominence="primary" disabled={draft.trim() === '' && photo === null} />
+            <IconButton type="submit" icon="send" label={t('send')} prominence="primary" disabled={state.isThinking || (draft.trim() === '' && photo === null)} />
             <IconButton icon="camera" label={t('addPhoto')} onClick={() => picker.current?.click()} />
             <input ref={picker} className={styles.picker} type="file" accept={PHOTO_TYPES.join(',')} aria-hidden="true" tabIndex={-1} onChange={pickPhoto} />
           </form>

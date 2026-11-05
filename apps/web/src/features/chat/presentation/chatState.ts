@@ -19,9 +19,17 @@ export interface ChatState {
   readonly hasFailed: boolean;
 }
 
-/** Holds the conversation while the shopper looks at other screens. */
+/** Lives outside the screen, so an answer keeps arriving while the shopper looks at other screens. */
+export interface ChatStore {
+  readonly getState: () => ChatState;
+  readonly subscribe: (listener: () => void) => () => void;
+  readonly dispatch: (action: ChatAction) => void;
+  readonly nextId: () => string;
+}
+
+/** Where the app keeps the conversation's store between visits to the chat. */
 export interface ChatMemory {
-  state: ChatState | null;
+  store: ChatStore | null;
 }
 
 export const initialChatState: ChatState = { items: [], trace: [], isThinking: false, hasFailed: false };
@@ -31,6 +39,7 @@ export type ChatAction =
   | { readonly type: 'event'; readonly event: AgentEvent }
   | { readonly type: 'answered'; readonly requestId: string; readonly accepted: boolean }
   | { readonly type: 'addressGiven' }
+  | { readonly type: 'questionsExpired' }
   | { readonly type: 'finished' }
   | { readonly type: 'failed' };
 
@@ -87,6 +96,8 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
           item.kind === 'confirm' && item.request.id === action.requestId ? { ...item, answer: action.accepted } : item,
         ),
       };
+    case 'questionsExpired':
+      return { ...state, items: closeAddressForms(state.items).map((item) => (item.kind === 'confirm' && item.answer === null ? { ...item, answer: false } : item)) };
     case 'addressGiven':
       return { ...state, items: closeAddressForms(state.items) };
     case 'finished':
@@ -94,4 +105,27 @@ export function chatReducer(state: ChatState, action: ChatAction): ChatState {
     case 'failed':
       return { ...state, isThinking: false, hasFailed: true };
   }
+}
+
+export function createChatStore(): ChatStore {
+  let state = initialChatState;
+  let count = 0;
+  const listeners = new Set<() => void>();
+  return {
+    getState: () => state,
+    subscribe: (listener) => {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
+    dispatch: (action) => {
+      state = chatReducer(state, action);
+      for (const listener of listeners) {
+        listener();
+      }
+    },
+    nextId: () => {
+      count += 1;
+      return `sent-${String(count)}`;
+    },
+  };
 }

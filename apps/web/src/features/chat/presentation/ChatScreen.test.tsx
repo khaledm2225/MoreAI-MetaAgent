@@ -1,5 +1,5 @@
 import { catalogProblems } from '@metaagent/i18n';
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import type { AgentEvent, AgentInput } from '../../../core/domain/agent';
@@ -8,6 +8,7 @@ import type { Order } from '../../../core/domain/order';
 import type { AgentGateway } from '../../../core/domain/ports';
 import { renderInLocale } from '../../../test/render';
 import { ChatScreen, type ChatScreenProps } from './ChatScreen';
+import type { ChatMemory } from './chatState';
 import { strings } from './strings';
 
 const merchant: Merchant = { id: 'm', slug: 'b', name: 'Brand', bio: { en: 'b', ar: 'ب' }, logoPath: null, status: 'LIVE', deliveryFeePiasters: 0 };
@@ -146,6 +147,21 @@ describe('ChatScreen', () => {
     expect(onOpenOrders).toHaveBeenCalledTimes(1);
   });
 
+  it('celebrates an order once, not every time the shopper comes back', async () => {
+    const memory: ChatMemory = { store: null };
+    const order = { id: 'o', merchantName: 'Brand', totalPiasters: 50_000 } as Order;
+    const { agent } = fakeAgent(() => [{ type: 'orderPlaced', orders: [order] }]);
+    const props = { agent, catalog, onOpenProduct: vi.fn(), onOpenOrders: vi.fn(), onOpenPhotoToShop: vi.fn(), memory };
+    const first = renderInLocale(<ChatScreen {...props} />);
+    await say('yes');
+    await screen.findByRole('heading', { name: 'Your order is placed' });
+    expect(document.querySelectorAll('[data-piece]').length).toBeGreaterThan(0);
+    first.unmount();
+    renderInLocale(<ChatScreen {...props} />);
+    expect(screen.getByRole('heading', { name: 'Your order is placed' })).toBeInTheDocument();
+    expect(document.querySelectorAll('[data-piece]')).toHaveLength(0);
+  });
+
   it('shows a limit', async () => {
     const { agent } = fakeAgent(() => [{ type: 'limitReached', text: { en: 'Limit reached', ar: 'الحد' } }]);
     setup(agent);
@@ -168,7 +184,7 @@ describe('ChatScreen', () => {
   });
 
   it('keeps the conversation when the shopper leaves and comes back', async () => {
-    const memory = { state: null };
+    const memory = { store: null };
     const { agent } = fakeAgent(() => []);
     const first = renderInLocale(<ChatScreen agent={agent} catalog={catalog} onOpenProduct={vi.fn()} onOpenOrders={vi.fn()} onOpenPhotoToShop={vi.fn()} memory={memory} />);
     await say('a jacket');
@@ -215,6 +231,93 @@ describe('ChatScreen', () => {
       attach(file('application/pdf'));
       expect(screen.getByRole('alert')).toHaveTextContent('Choose a JPG');
     });
+  });
+
+  describe('while the agent is answering', () => {
+    function slowAgent() {
+      let finish = () => {};
+      const inputs: AgentInput[] = [];
+      const agent = {
+        async *send(input: AgentInput): AsyncGenerator<AgentEvent, void, void> {
+          inputs.push(input);
+          await new Promise<void>((resolve) => {
+            finish = resolve;
+          });
+        },
+      };
+      return { agent, inputs, finish: () => finish() };
+    }
+
+    it('won’t send a second message, and keeps what the shopper typed', async () => {
+      const { agent, inputs, finish } = slowAgent();
+      setup(agent as unknown as AgentGateway);
+      await say('first');
+      await userEvent.type(screen.getByRole('textbox', { name: 'Your message' }), 'second{Enter}');
+      expect(inputs).toHaveLength(1);
+      expect(screen.getByRole('button', { name: 'Send' })).toBeDisabled();
+      expect(screen.getByRole('textbox', { name: 'Your message' })).toHaveValue('second');
+      finish();
+      await waitFor(() => expect(screen.getByRole('button', { name: 'Send' })).toBeEnabled());
+    });
+
+    it('keeps receiving the answer after the shopper leaves the screen', async () => {
+      const memory: ChatMemory = { store: null };
+      let finish = () => {};
+      const agent = {
+        async *send(): AsyncGenerator<AgentEvent, void, void> {
+          await new Promise<void>((resolve) => {
+            finish = resolve;
+          });
+          yield { type: 'message', id: 'm', text: { en: 'Here you go', ar: 'اتفضل' } };
+        },
+      };
+      const props = { agent, catalog, onOpenProduct: vi.fn(), onOpenOrders: vi.fn(), onOpenPhotoToShop: vi.fn(), memory };
+      const first = renderInLocale(<ChatScreen {...props} />);
+      await say('a jacket');
+      first.unmount();
+      finish();
+      await waitFor(() => expect(memory.store?.getState().isThinking).toBe(false));
+      renderInLocale(<ChatScreen {...props} />);
+      expect(screen.getByText('Here you go')).toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Your message' })).toBeEnabled();
+    });
+  });
+
+  it('closes an open question when the shopper moves on, so it can’t say confirmed and do nothing', async () => {
+    const { agent, inputs } = fakeAgent((input) =>
+      input.kind === 'text' && input.text === 'add it'
+        ? [{ type: 'confirm', request: { id: 'c', kind: 'addToCart', question: { en: 'Add it?', ar: 'أضيف؟' }, pieces: [] } }]
+        : [],
+    );
+    setup(agent);
+    await say('add it');
+    expect(await screen.findByRole('button', { name: 'Yes, confirm' })).toBeInTheDocument();
+    await say('actually, something else');
+    expect(screen.queryByRole('button', { name: 'Yes, confirm' })).not.toBeInTheDocument();
+    expect(screen.getByText('You said no')).toBeInTheDocument();
+    expect(inputs.filter(({ kind }) => kind === 'confirmation')).toHaveLength(0);
+  });
+
+  it('lets the shopper pick another size after saying no', async () => {
+    const { agent, inputs } = fakeAgent((input) => {
+      if (input.kind === 'text') {
+        return [{ type: 'suggestions', id: 's', pieces: [{ product, merchant, reason: { en: 'r', ar: 'ر' } }] }];
+      }
+      if (input.kind === 'chooseVariant') {
+        return [{ type: 'confirm', request: { id: `c${String(inputs.length)}`, kind: 'addToCart', question: { en: 'Add it?', ar: 'أضيف؟' }, pieces: [] } }];
+      }
+      return [];
+    });
+    setup(agent);
+    await say('a jacket');
+    await userEvent.click(await screen.findByRole('button', { name: 'M' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'No, not now' }));
+    await waitFor(() => expect(screen.getByRole('button', { name: 'M' })).toBeEnabled());
+  });
+
+  it('limits a message to what the backend accepts', () => {
+    setup(fakeAgent(() => []).agent);
+    expect(screen.getByRole('textbox', { name: 'Your message' })).toHaveAttribute('maxlength', '2000');
   });
 
   it('leads to photo search', async () => {

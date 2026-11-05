@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { readShopperRequest } from './requestReader';
+import { readShopperRequest, readStatedFilters } from './requestReader';
 
 describe('readShopperRequest', () => {
   it.each([
@@ -29,5 +29,35 @@ describe('readShopperRequest', () => {
 
   it('reads nothing from a plain greeting', () => {
     expect(readShopperRequest('hello')).toEqual({ wantsCheckout: false });
+  });
+
+  it('doesn’t read a fabric percentage or a year as a budget', () => {
+    expect(readShopperRequest('a 100% cotton hoodie').maxPricePiasters).toBeUndefined();
+    expect(readShopperRequest('the 2026 black jacket').maxPricePiasters).toBeUndefined();
+    expect(readShopperRequest('a jacket under 2,000 EGP').maxPricePiasters).toBe(200_000);
+  });
+
+  it('matches English words whole', () => {
+    expect(readShopperRequest('something baggy').categorySlug).toBeUndefined();
+    expect(readShopperRequest('two bags').categorySlug).toBe('bags');
+    expect(readShopperRequest('a dressy top').categorySlug).toBeUndefined();
+  });
+
+  it.each([
+    ['jacket size 52'],
+    ['hoodie over 1000'],
+    ['jacket between 800 and 1000'],
+    ['a jacket at least 900 pounds'],
+  ])('doesn’t read "%s" as a limit on the price', (text) => {
+    expect(readShopperRequest(text).maxPricePiasters).toBeUndefined();
+  });
+
+  it.each([
+    ['hoodie, not black', { categorySlug: 'hoodies' }],
+    ['black or navy hoodie', { categorySlug: 'hoodies' }],
+    ['beige pants to match a black jacket', {}],
+    ['black jacket under 500', { categorySlug: 'jackets', colorCode: 'black', maxPricePiasters: 50_000 }],
+  ])('only turns what’s clear in "%s" into hard filters', (text, expected) => {
+    expect(readStatedFilters(text)).toEqual(expected);
   });
 });

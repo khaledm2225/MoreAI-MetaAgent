@@ -91,7 +91,7 @@ export function createCatalogRepository(world: DemoWorld): CatalogRepository {
     },
     listSizes: async () => {
       await world.wait();
-      return demoSizes;
+      return world.sizes;
     },
   };
 }
@@ -163,9 +163,10 @@ export function createCartRepository(world: DemoWorld): CartRepository {
       await world.wait();
       const product = required(world.productById(productId), `Product ${productId}`);
       const existing = world.cart.find((line) => line.variantId === variantId);
+      const stock = variantOf(product, variantId).stockQuantity;
       world.cart = existing
         ? world.cart.map((line) =>
-            line.id === existing.id ? { ...line, quantity: line.quantity + quantity } : line,
+            line.id === existing.id ? { ...line, quantity: Math.min(stock, line.quantity + quantity) } : line,
           )
         : [
             ...world.cart,
@@ -173,7 +174,7 @@ export function createCartRepository(world: DemoWorld): CartRepository {
               id: world.nextId('line'),
               productId,
               variantId,
-              quantity,
+              quantity: Math.min(stock, quantity),
               addedUnitPricePiasters: priceOfVariant(product, variantOf(product, variantId)),
             },
           ];
@@ -181,7 +182,13 @@ export function createCartRepository(world: DemoWorld): CartRepository {
     },
     setQuantity: async (lineId, quantity) => {
       await world.wait();
-      world.cart = world.cart.map((line) => (line.id === lineId ? { ...line, quantity } : line));
+      world.cart = world.cart.map((line) => {
+        if (line.id !== lineId) {
+          return line;
+        }
+        const stock = world.productById(line.productId)?.variants.find(({ id }) => id === line.variantId)?.stockQuantity ?? quantity;
+        return { ...line, quantity: Math.min(stock, quantity) };
+      });
       world.notify('cart');
     },
     removeLine: async (lineId) => {
@@ -448,6 +455,17 @@ export function createMerchantProfileRepository(world: DemoWorld): MerchantProfi
   };
 }
 
+/** A merchant can write any size, and it has to show up with its own label everywhere. */
+function sizeIdFor(world: DemoWorld, label: string): Id {
+  const known = world.sizes.find((size) => size.label.toLowerCase() === label.toLowerCase());
+  if (known !== undefined) {
+    return known.id;
+  }
+  const id = world.nextId('size');
+  world.sizes = [...world.sizes, { id, label, sortOrder: world.sizes.length }];
+  return id;
+}
+
 function productFromForm(world: DemoWorld, form: ProductForm, status: Product['status']): Product {
   const id = world.nextId('product');
   const category = demoCategories.find(({ id: categoryId }) => categoryId === form.categoryId);
@@ -459,7 +477,7 @@ function productFromForm(world: DemoWorld, form: ProductForm, status: Product['s
       id: `${id}-${code}-${label}`,
       productId: id,
       colorId: `color-${code}`,
-      sizeId: demoSizes.find((size) => size.label === label)?.id ?? `size-${label}`,
+      sizeId: sizeIdFor(world, label),
       pricePiasters: null,
       stockQuantity: form.stockPerVariant,
       isAvailable: true,

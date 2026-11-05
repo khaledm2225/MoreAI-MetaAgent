@@ -2,17 +2,26 @@ import { lazy as reactLazy, type ComponentType } from 'react';
 
 const RELOADED = 'moreai.reloaded-for-new-version';
 
+/** Site data can be blocked in a private window, and that must never break a screen. */
+function attempt<T>(work: () => T): T | undefined {
+  try {
+    return work();
+  } catch {
+    return undefined;
+  }
+}
+
 /** After a new version goes live, an open page may ask for files that no longer exist. Reloading once fixes it. */
 function lazy<Screen extends ComponentType<any>>(load: () => Promise<{ default: Screen }>) {
   return reactLazy(() =>
     load().then(
       (loaded) => {
-        sessionStorage.removeItem(RELOADED);
+        attempt(() => sessionStorage.removeItem(RELOADED));
         return loaded;
       },
       (error: unknown) => {
-        if (sessionStorage.getItem(RELOADED) === null) {
-          sessionStorage.setItem(RELOADED, '1');
+        if (attempt(() => sessionStorage.getItem(RELOADED) === null) === true) {
+          attempt(() => sessionStorage.setItem(RELOADED, '1'));
           window.location.reload();
           return new Promise<never>(() => {});
         }
